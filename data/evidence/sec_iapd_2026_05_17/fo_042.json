@@ -1,0 +1,35 @@
+{
+  "record_id": "fo_042",
+  "family_office_name": "Homrich Berg",
+  "queried_at_utc": "2026-05-17T09:56:15.340157+00:00",
+  "queries_tried": [
+    {
+      "query": "Homrich Berg",
+      "hit_count": 2
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.25,
+  "match_reason": "name_jaccard=1.00 (vs 'HOMRICH BERG'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "108189",
+  "sec_file_number": "801-35646",
+  "sec_registration_status": "INACTIVE",
+  "firm_name_iapd": "HOMRICH BERG",
+  "firm_other_names": [
+    "HOMRICH & BERG INC",
+    "HOMRICH BERG WEALTH MANAGEMENT",
+    "HOMRICH BERG"
+  ],
+  "firm_branches_count": 0,
+  "sec_address": {
+    "street1": "3550 LENOX ROAD, NE",
+    "street2": "SUITE 2700",
+    "city": "ATLANTA",
+    "state": "GA",
+    "country": "United States",
+    "postal_code": "30326"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/108189/PDF/108189.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/108189"
+}

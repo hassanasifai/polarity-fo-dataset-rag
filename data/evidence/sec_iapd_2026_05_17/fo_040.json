@@ -1,0 +1,37 @@
+{
+  "record_id": "fo_040",
+  "family_office_name": "Laird Norton Wetherby",
+  "queried_at_utc": "2026-05-17T09:56:14.382023+00:00",
+  "queries_tried": [
+    {
+      "query": "Laird Norton Wetherby",
+      "hit_count": 1
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 0.75,
+  "match_reason": "name_jaccard=0.50 (vs 'LAIRD NORTON WETHERBY WEALTH MANAGEMENT, LLC'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "107341",
+  "sec_file_number": "801-36445",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "LNW",
+  "firm_other_names": [
+    "KARETSKY/WETHERBY ASSET MANAGEMENT",
+    "WETHERBY ASSET MANAGEMENT LLC",
+    "WETHERBY ASSET MANAGEMENT",
+    "LNW",
+    "LAIRD NORTON WETHERBY WEALTH MANAGEMENT, LLC"
+  ],
+  "firm_branches_count": 25,
+  "sec_address": {
+    "street1": "801 SECOND AVENUE, SUITE 1600",
+    "street2": null,
+    "city": "SEATTLE",
+    "state": "WA",
+    "country": "United States",
+    "postal_code": "98104"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/107341/PDF/107341.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/107341"
+}

@@ -1,0 +1,21 @@
+record_id,family_office_name,principal_name,principal_role,source_url,extraction_method
+fo_015,Haven Private,Marc Angle,Chief Executive Officer Executive Managing Director,https://www.havenprivate.com/about-1,firecrawl_markdown_pattern_match
+fo_015,Haven Private,Judd Hershiser,Chief Operating Officer Executive Managing Director,https://www.havenprivate.com/about-1,firecrawl_markdown_pattern_match
+fo_015,Haven Private,James Oswald,Director of Planning,https://www.havenprivate.com/about-1,firecrawl_markdown_pattern_match
+fo_020,Verlinvest,Roberto Italia,Chief Executive Officer,https://www.verlinvest.com/team/,firecrawl_markdown_pattern_match
+fo_020,Verlinvest,Arjun Anand,"Managing Director, Singapore",https://www.verlinvest.com/team/,firecrawl_markdown_pattern_match
+fo_020,Verlinvest,Ben Black,"Managing Director, London",https://www.verlinvest.com/team/,firecrawl_markdown_pattern_match
+fo_020,Verlinvest,Rachel Citera,"Principal, New York",https://www.verlinvest.com/team/,firecrawl_markdown_pattern_match
+fo_020,Verlinvest,Wouter De Wit,"Senior Finance Manager, Brussels",https://www.verlinvest.com/team/,firecrawl_markdown_pattern_match
+fo_021,Okabena Company,Courtney A. Grimsrud,Senior Client Relationship Manager,https://okabena.com/team/,firecrawl_markdown_pattern_match
+fo_021,Okabena Company,Erika Benson,Director of Human Resources,https://okabena.com/team/,firecrawl_markdown_pattern_match
+fo_021,Okabena Company,Mindy J. Burkart,Associate Director - Individual Tax,https://okabena.com/team/,firecrawl_markdown_pattern_match
+fo_021,Okabena Company,Kaitie A. Eke,"President and CEO, Okabena Company",https://okabena.com/team/,firecrawl_markdown_pattern_match
+fo_021,Okabena Company,Stacey A. Hanson,Senior Client Service Associate,https://okabena.com/team/,firecrawl_markdown_pattern_match
+fo_021,Okabena Company,Leslie M. Kuehn,Senior Director - Head of Tax,https://okabena.com/team/,firecrawl_markdown_pattern_match
+fo_021,Okabena Company,Emma-Jo R. Nevin,Senior Investment Analyst,https://okabena.com/team/,firecrawl_markdown_pattern_match
+fo_021,Okabena Company,Olyvia G. Null,Senior Accountant,https://okabena.com/team/,firecrawl_markdown_pattern_match
+fo_021,Okabena Company,Colleen R. Stauber,"Executive, Marketing and Family Council Coordinator",https://okabena.com/team/,firecrawl_markdown_pattern_match
+fo_021,Okabena Company,Nancy Vang,Senior Investment Operations Associate,https://okabena.com/team/,firecrawl_markdown_pattern_match
+fo_021,Okabena Company,Stephanie A. Vitt,Senior Client Relationship Manager,https://okabena.com/team/,firecrawl_markdown_pattern_match
+fo_021,Okabena Company,Kristina L. Walch,Director of Operations and Data,https://okabena.com/team/,firecrawl_markdown_pattern_match

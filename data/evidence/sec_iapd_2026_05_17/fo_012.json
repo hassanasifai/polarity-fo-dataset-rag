@@ -1,0 +1,37 @@
+{
+  "record_id": "fo_012",
+  "family_office_name": "SSA Swiss Advisors AG",
+  "queried_at_utc": "2026-05-17T09:55:53.314917+00:00",
+  "queries_tried": [
+    {
+      "query": "SSA Swiss Advisors AG",
+      "hit_count": 6
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.0,
+  "match_reason": "name_jaccard=1.00 (vs 'SSA SWISS ADVISORS AG')",
+  "sec_registered": true,
+  "sec_crd_number": "161357",
+  "sec_file_number": "801-74460",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "SSA WEALTH ADVISORS",
+  "firm_other_names": [
+    "SSA SWISS ADVISORS AG",
+    "SYZ SWISS ADVISORS S.A.",
+    "SSA WEALTH ADVISORS",
+    "SSA SWISS WEALTH ADVISORS AG",
+    "SSA SWISS ADVISORS S.A."
+  ],
+  "firm_branches_count": 0,
+  "sec_address": {
+    "street1": "URANIASTRASSE 34",
+    "street2": "3RD FLOOR",
+    "city": "ZURICH",
+    "state": null,
+    "country": "Switzerland",
+    "postal_code": "8001"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/161357/PDF/161357.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/161357"
+}

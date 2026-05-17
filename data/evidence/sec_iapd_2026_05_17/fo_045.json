@@ -1,0 +1,37 @@
+{
+  "record_id": "fo_045",
+  "family_office_name": "Matter Family Office",
+  "queried_at_utc": "2026-05-17T09:56:17.097465+00:00",
+  "queries_tried": [
+    {
+      "query": "Matter Family Office",
+      "hit_count": 1
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.0,
+  "match_reason": "name_jaccard=1.00 (vs 'MATTER FAMILY OFFICE')",
+  "sec_registered": true,
+  "sec_crd_number": "106806",
+  "sec_file_number": "801-37738",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "MATTER FAMILY OFFICE",
+  "firm_other_names": [
+    "FINANCIAL MANAGEMENT PARTNERS",
+    "MATTER, LLC",
+    "MATTER, INC.",
+    "MATTER FAMILY OFFICE",
+    "FINANCIAL MANAGEMENT PARTNERS CORPORATION"
+  ],
+  "firm_branches_count": 18,
+  "sec_address": {
+    "street1": "8001 FORSYTH BLVD",
+    "street2": "SUITE 950",
+    "city": "ST LOUIS",
+    "state": "MO",
+    "country": "United States",
+    "postal_code": "63105"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/106806/PDF/106806.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/106806"
+}

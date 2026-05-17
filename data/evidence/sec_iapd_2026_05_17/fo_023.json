@@ -1,0 +1,34 @@
+{
+  "record_id": "fo_023",
+  "family_office_name": "Persimmon Capital Management",
+  "queried_at_utc": "2026-05-17T09:56:01.813853+00:00",
+  "queries_tried": [
+    {
+      "query": "Persimmon Capital Management",
+      "hit_count": 2
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.25,
+  "match_reason": "name_jaccard=1.00 (vs 'PERSIMMON CAPITAL MANAGEMENT'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "334563",
+  "sec_file_number": "801-131898",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "PERSIMMON CAPITAL MANAGEMENT",
+  "firm_other_names": [
+    "PERSIMMON CAPITAL MANAGEMENT",
+    "PERSIMMON CAPITAL MANAGEMENT, LP"
+  ],
+  "firm_branches_count": 1,
+  "sec_address": {
+    "street1": "1777 SENTRY PARKWAY WEST",
+    "street2": "VEVA 14, SUITE 102",
+    "city": "BLUE BELL",
+    "state": "PA",
+    "country": "United States",
+    "postal_code": "19422"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/334563/PDF/334563.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/334563"
+}

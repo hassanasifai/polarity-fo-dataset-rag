@@ -1,0 +1,269 @@
+============================= test session starts =============================
+platform win32 -- Python 3.12.7, pytest-7.4.3, pluggy-1.6.0 -- C:\Users\Hassa\anaconda3\python.exe
+cachedir: .pytest_cache
+rootdir: D:\PolarityIQ_Workspace\fo_dataset_pipeline
+configfile: pyproject.toml
+plugins: anyio-4.10.0, asyncio-0.21.1, cov-7.1.0, httpx-0.25.0
+asyncio: mode=Mode.STRICT
+collecting ... collected 180 items
+
+tests/test_apify_research.py::test_actor_path_uses_apify_api_actor_id_format PASSED [  0%]
+tests/test_apify_research.py::test_google_search_input_disables_costly_addons PASSED [  1%]
+tests/test_apify_research.py::test_website_crawler_input_is_depth_zero_and_bounded PASSED [  1%]
+tests/test_apify_research.py::test_source_urls_from_dataset_removes_pdfs_and_dedupes PASSED [  2%]
+tests/test_apify_research.py::test_canonical_url_strips_fragment_and_trailing_slash PASSED [  2%]
+tests/test_apify_research.py::test_evidence_snippet_prefers_family_office_sentence PASSED [  3%]
+tests/test_apify_research.py::test_triage_serp_result_rejects_social_directory_domains PASSED [  3%]
+tests/test_apify_research.py::test_flatten_serp_items_extracts_nested_organic_results PASSED [  4%]
+tests/test_apply_audit.py::test_apply_decisions_sets_explicit_verdict PASSED [  5%]
+tests/test_apply_audit.py::test_apply_decisions_appends_note_addendum_when_present PASSED [  5%]
+tests/test_apply_audit.py::test_apply_decisions_is_idempotent PASSED     [  6%]
+tests/test_apply_audit.py::test_apply_decisions_defaults_unmatched_rows PASSED [  6%]
+tests/test_apply_audit.py::test_apply_decisions_creates_status_column_when_missing PASSED [  7%]
+tests/test_apply_audit.py::test_audit_decisions_targets_all_pre_screen_flags PASSED [  7%]
+tests/test_apply_audit.py::test_cli_run_apply_updates_csv PASSED         [  8%]
+tests/test_apply_audit.py::test_cli_rejects_invalid_default_verdict PASSED [  8%]
+tests/test_audit_prescreen.py::test_h1_fires_for_sfo_without_specific_principal PASSED [  9%]
+tests/test_audit_prescreen.py::test_h1_fires_for_sfo_with_only_generic_family_token PASSED [ 10%]
+tests/test_audit_prescreen.py::test_h1_silent_for_sfo_with_specific_principal PASSED [ 10%]
+tests/test_audit_prescreen.py::test_h8_fires_for_service_provider_mfo PASSED [ 11%]
+tests/test_audit_prescreen.py::test_h5_silent_when_domain_contains_name_token PASSED [ 11%]
+tests/test_audit_prescreen.py::test_h5_fires_for_abbreviated_domain PASSED [ 12%]
+tests/test_audit_prescreen.py::test_clean_row_passes_all_heuristics PASSED [ 12%]
+tests/test_audit_prescreen.py::test_all_heuristics_registered PASSED     [ 13%]
+tests/test_audit_prescreen.py::test_run_prescreen_writes_columns_and_worksheet PASSED [ 13%]
+tests/test_audit_prescreen.py::test_write_worksheet_preserves_existing_human_status PASSED [ 14%]
+tests/test_audit_prescreen.py::test_write_worksheet_handles_no_flagged_rows PASSED [ 15%]
+tests/test_augment_field_evidence.py::test_build_augmented_rows_adds_promoted_field_evidence PASSED [ 15%]
+tests/test_augment_field_evidence.py::test_build_augmented_rows_documents_sec_no_match PASSED [ 16%]
+tests/test_augment_field_evidence.py::test_cli_replaces_prior_augmented_rows PASSED [ 16%]
+tests/test_chain_snippets.py::test_clean_markdown_strips_image_and_link_noise PASSED [ 17%]
+tests/test_chain_snippets.py::test_extract_quotes_picks_primary_keyword_sentence PASSED [ 17%]
+tests/test_chain_snippets.py::test_extract_quotes_returns_empty_when_no_keyword_match PASSED [ 18%]
+tests/test_chain_snippets.py::test_extract_quotes_trims_long_sentences_to_max_words PASSED [ 18%]
+tests/test_chain_snippets.py::test_extract_quotes_skips_signatures PASSED [ 19%]
+tests/test_chain_snippets.py::test_load_firecrawl_index_keeps_longest_markdown PASSED [ 20%]
+tests/test_chain_snippets.py::test_build_snippet_rows_records_unavailable_for_missing_url PASSED [ 20%]
+tests/test_chain_snippets.py::test_build_snippet_rows_uses_per_chain_signature_dedup PASSED [ 21%]
+tests/test_chain_snippets.py::test_cli_run_writes_outputs PASSED         [ 21%]
+tests/test_dataset_contract.py::test_raw_seed_dataset_has_50_valid_original_records PASSED [ 22%]
+tests/test_enrich_columns.py::test_derive_domain_strips_www_and_scheme PASSED [ 22%]
+tests/test_enrich_columns.py::test_derive_url_quality_categorizes_status_codes PASSED [ 23%]
+tests/test_enrich_columns.py::test_load_email_evidence_lookup_keys_by_lowercased_email PASSED [ 23%]
+tests/test_enrich_columns.py::test_load_email_evidence_lookup_empty_when_file_missing PASSED [ 24%]
+tests/test_enrich_columns.py::test_enrich_dataframe_adds_all_new_columns PASSED [ 25%]
+tests/test_enrich_columns.py::test_enrich_dataframe_leaves_email_columns_blank_when_no_email PASSED [ 25%]
+tests/test_enrich_columns.py::test_split_principal_name_splits_first_and_last PASSED [ 26%]
+tests/test_enrich_columns.py::test_split_principal_name_rejects_collective_references PASSED [ 26%]
+tests/test_enrich_columns.py::test_derive_contact_location_joins_present_parts PASSED [ 27%]
+tests/test_enrich_columns.py::test_enrich_dataframe_adds_sample_parity_columns PASSED [ 27%]
+tests/test_enrich_columns.py::test_enrich_dataframe_skips_split_when_principal_is_collective PASSED [ 28%]
+tests/test_enrich_columns.py::test_cli_run_enrich_persists_changes PASSED [ 28%]
+tests/test_extract_team_rosters.py::test_is_plausible_name_accepts_two_token_titlecase PASSED [ 29%]
+tests/test_extract_team_rosters.py::test_is_plausible_name_rejects_section_headings PASSED [ 30%]
+tests/test_extract_team_rosters.py::test_is_plausible_name_rejects_too_few_or_too_many_tokens PASSED [ 30%]
+tests/test_extract_team_rosters.py::test_is_plausible_name_rejects_lowercase_or_all_caps PASSED [ 31%]
+tests/test_extract_team_rosters.py::test_is_role_line_detects_known_roles PASSED [ 31%]
+tests/test_extract_team_rosters.py::test_is_role_line_rejects_non_roles PASSED [ 32%]
+tests/test_extract_team_rosters.py::test_extract_from_markdown_bold_pattern PASSED [ 32%]
+tests/test_extract_team_rosters.py::test_extract_from_markdown_heading_then_role PASSED [ 33%]
+tests/test_extract_team_rosters.py::test_extract_from_markdown_ignores_section_heading_as_name PASSED [ 33%]
+tests/test_extract_team_rosters.py::test_extract_from_markdown_dedupes_repeated_names PASSED [ 34%]
+tests/test_extract_team_rosters.py::test_run_extraction_writes_team_rosters_csv PASSED [ 35%]
+tests/test_io_reports_validators_cli.py::test_read_and_write_outputs PASSED [ 35%]
+tests/test_io_reports_validators_cli.py::test_reports_include_review_and_chain_details PASSED [ 36%]
+tests/test_io_reports_validators_cli.py::test_write_reports_and_missing_sample_workbook PASSED [ 36%]
+tests/test_io_reports_validators_cli.py::test_domain_and_dns_helpers PASSED [ 37%]
+tests/test_io_reports_validators_cli.py::test_low_score_record_needs_review PASSED [ 37%]
+tests/test_io_reports_validators_cli.py::test_cli_validate_with_patched_validator PASSED [ 38%]
+tests/test_io_reports_validators_cli.py::test_check_url_handles_http_errors PASSED [ 38%]
+tests/test_models.py::test_source_urls_split_from_semicolon_string PASSED [ 39%]
+tests/test_models.py::test_requires_two_source_urls PASSED               [ 40%]
+tests/test_models.py::test_rejects_placeholder_values_and_domains PASSED [ 40%]
+tests/test_promote_addresses.py::test_load_places_streets_keys_by_domain_skips_closed PASSED [ 41%]
+tests/test_promote_addresses.py::test_load_linkedin_streets_requires_company_url PASSED [ 41%]
+tests/test_promote_addresses.py::test_promote_row_prefers_places_over_linkedin PASSED [ 42%]
+tests/test_promote_addresses.py::test_promote_row_falls_back_to_linkedin PASSED [ 42%]
+tests/test_promote_addresses.py::test_promote_row_does_not_overwrite_existing PASSED [ 43%]
+tests/test_promote_addresses.py::test_promote_row_returns_empty_when_no_evidence PASSED [ 43%]
+tests/test_promote_addresses.py::test_cli_run_promotion_persists PASSED  [ 44%]
+tests/test_promote_contacts.py::test_pick_corporate_email_prefers_info_address PASSED [ 45%]
+tests/test_promote_contacts.py::test_pick_corporate_email_uses_prefix_match PASSED [ 45%]
+tests/test_promote_contacts.py::test_pick_corporate_email_returns_none_for_personal_only PASSED [ 46%]
+tests/test_promote_contacts.py::test_pick_corporate_email_handles_nan PASSED [ 46%]
+tests/test_promote_contacts.py::test_pick_phone_returns_first_with_enough_digits PASSED [ 47%]
+tests/test_promote_contacts.py::test_pick_phone_returns_none_when_no_valid_number PASSED [ 47%]
+tests/test_promote_contacts.py::test_pick_company_linkedin_only_company_urls PASSED [ 48%]
+tests/test_promote_contacts.py::test_pick_company_linkedin_returns_none_for_personal_only PASSED [ 48%]
+tests/test_promote_contacts.py::test_promote_row_skips_when_record_already_has_value PASSED [ 49%]
+tests/test_promote_contacts.py::test_promote_row_promotes_when_evidence_available PASSED [ 50%]
+tests/test_promote_contacts.py::test_promote_row_prefers_linkedin_scraper_evidence PASSED [ 50%]
+tests/test_promote_contacts.py::test_load_contact_lookup_keys_by_domain PASSED [ 51%]
+tests/test_promote_contacts.py::test_load_linkedin_lookup_only_company_urls PASSED [ 51%]
+tests/test_promote_contacts.py::test_run_promotion_writes_csv_and_json PASSED [ 52%]
+tests/test_promote_google_places.py::test_digits_only_strips_punctuation PASSED [ 52%]
+tests/test_promote_google_places.py::test_phones_match_compares_last_10_digits PASSED [ 53%]
+tests/test_promote_google_places.py::test_load_places_lookup_keys_by_returned_website_domain PASSED [ 53%]
+tests/test_promote_google_places.py::test_load_places_lookup_skips_closed_listings PASSED [ 54%]
+tests/test_promote_google_places.py::test_promote_row_refuses_when_website_domain_mismatches PASSED [ 55%]
+tests/test_promote_google_places.py::test_promote_row_promotes_when_domain_matches PASSED [ 55%]
+tests/test_promote_google_places.py::test_promote_row_flags_phone_corroboration_match PASSED [ 56%]
+tests/test_promote_google_places.py::test_promote_row_flags_phone_corroboration_conflict PASSED [ 56%]
+tests/test_promote_google_places.py::test_promote_row_does_not_overwrite_existing_values PASSED [ 57%]
+tests/test_promote_google_places.py::test_promote_row_returns_empty_when_no_places_row PASSED [ 57%]
+tests/test_promote_google_places.py::test_promote_row_returns_empty_when_evidence_url_missing PASSED [ 58%]
+tests/test_promote_google_places.py::test_run_promotion_writes_csv_and_json PASSED [ 58%]
+tests/test_promote_linkedin_company.py::test_format_specialties_parses_python_list_literal PASSED [ 59%]
+tests/test_promote_linkedin_company.py::test_format_specialties_handles_plain_string PASSED [ 60%]
+tests/test_promote_linkedin_company.py::test_format_specialties_handles_empty_and_nan PASSED [ 60%]
+tests/test_promote_linkedin_company.py::test_format_int_strips_decimal_from_float_string PASSED [ 61%]
+tests/test_promote_linkedin_company.py::test_format_int_returns_empty_for_nan PASSED [ 61%]
+tests/test_promote_linkedin_company.py::test_format_headquarters_joins_present_parts_only PASSED [ 62%]
+tests/test_promote_linkedin_company.py::test_format_headquarters_skips_nan_parts PASSED [ 62%]
+tests/test_promote_linkedin_company.py::test_domain_strips_scheme_and_www PASSED [ 63%]
+tests/test_promote_linkedin_company.py::test_load_linkedin_lookup_keeps_only_company_urls PASSED [ 63%]
+tests/test_promote_linkedin_company.py::test_promote_row_returns_empty_when_no_linkedin_row PASSED [ 64%]
+tests/test_promote_linkedin_company.py::test_promote_row_refuses_domain_mismatch PASSED [ 65%]
+tests/test_promote_linkedin_company.py::test_promote_row_refuses_personal_linkedin_url PASSED [ 65%]
+tests/test_promote_linkedin_company.py::test_promote_row_promotes_all_available_fields PASSED [ 66%]
+tests/test_promote_linkedin_company.py::test_promote_row_does_not_overwrite_existing_values PASSED [ 66%]
+tests/test_promote_linkedin_company.py::test_promote_row_returns_empty_when_all_fields_empty PASSED [ 67%]
+tests/test_promote_linkedin_company.py::test_run_promotion_writes_csv_and_json PASSED [ 67%]
+tests/test_promote_linkedin_company.py::test_run_promotion_no_match_yields_empty_columns PASSED [ 68%]
+tests/test_promote_news.py::test_name_tokens_drops_stopwords_and_short_tokens PASSED [ 68%]
+tests/test_promote_news.py::test_name_tokens_falls_back_when_all_tokens_filtered PASSED [ 69%]
+tests/test_promote_news.py::test_title_matches_name_requires_all_tokens PASSED [ 70%]
+tests/test_promote_news.py::test_is_blocked_source_catches_directories PASSED [ 70%]
+tests/test_promote_news.py::test_select_signal_returns_most_recent_matching_row PASSED [ 71%]
+tests/test_promote_news.py::test_select_signal_filters_old_dates PASSED  [ 71%]
+tests/test_promote_news.py::test_select_signal_filters_blocked_sources PASSED [ 72%]
+tests/test_promote_news.py::test_select_signal_filters_non_matching_titles PASSED [ 72%]
+tests/test_promote_news.py::test_select_signal_filters_error_rows PASSED [ 73%]
+tests/test_promote_news.py::test_format_recent_activity_renders_url_when_present PASSED [ 73%]
+tests/test_promote_news.py::test_parse_recent_activity_text_extracts_metadata PASSED [ 74%]
+tests/test_promote_news.py::test_run_news_promotion_populates_and_clears_stale_note PASSED [ 75%]
+tests/test_promote_news.py::test_run_news_promotion_backfills_metadata_for_existing_activity PASSED [ 75%]
+tests/test_promote_news.py::test_run_news_promotion_marks_none_found PASSED [ 76%]
+tests/test_promote_principals.py::test_role_rank_orders_seniority PASSED [ 76%]
+tests/test_promote_principals.py::test_collapse_roster_groups_by_record_and_sorts_by_seniority PASSED [ 77%]
+tests/test_promote_principals.py::test_collapse_roster_skips_blank_names PASSED [ 77%]
+tests/test_promote_principals.py::test_build_updates_fills_up_to_three_slots PASSED [ 78%]
+tests/test_promote_principals.py::test_build_updates_preserves_existing_principal_slots PASSED [ 78%]
+tests/test_promote_principals.py::test_build_updates_returns_empty_when_no_people PASSED [ 79%]
+tests/test_promote_principals.py::test_cli_run_promotion_writes_csv PASSED [ 80%]
+tests/test_promote_sec_iapd.py::test_append_uncertainty_note_handles_empty_existing PASSED [ 80%]
+tests/test_promote_sec_iapd.py::test_append_uncertainty_note_skips_duplicate PASSED [ 81%]
+tests/test_promote_sec_iapd.py::test_append_uncertainty_note_joins_with_period PASSED [ 81%]
+tests/test_promote_sec_iapd.py::test_build_updates_returns_empty_when_evidence_missing PASSED [ 82%]
+tests/test_promote_sec_iapd.py::test_build_updates_promotes_registered_firm PASSED [ 82%]
+tests/test_promote_sec_iapd.py::test_build_updates_does_not_overwrite_existing_value_columns PASSED [ 83%]
+tests/test_promote_sec_iapd.py::test_build_updates_marks_unregistered_firm_and_adds_uncertainty PASSED [ 83%]
+tests/test_promote_sec_iapd.py::test_build_updates_preserves_existing_uncertainty_when_unregistered PASSED [ 84%]
+tests/test_promote_sec_iapd.py::test_run_promotion_writes_csv_and_json PASSED [ 85%]
+tests/test_promote_social_media.py::test_parse_url_list_handles_list_literal PASSED [ 85%]
+tests/test_promote_social_media.py::test_parse_url_list_handles_empty_and_nullish PASSED [ 86%]
+tests/test_promote_social_media.py::test_parse_url_list_recovers_bare_url_string PASSED [ 86%]
+tests/test_promote_social_media.py::test_first_url_on_platform_filters_by_host PASSED [ 87%]
+tests/test_promote_social_media.py::test_promote_row_skips_when_domain_mismatch PASSED [ 87%]
+tests/test_promote_social_media.py::test_promote_row_promotes_each_platform_only_when_host_matches PASSED [ 88%]
+tests/test_promote_social_media.py::test_promote_row_does_not_overwrite_existing_values PASSED [ 88%]
+tests/test_promote_social_media.py::test_promote_row_returns_empty_when_no_platforms_match PASSED [ 89%]
+tests/test_promote_social_media.py::test_load_contact_lookup_keys_by_domain PASSED [ 90%]
+tests/test_promote_social_media.py::test_run_promotion_writes_csv_and_json PASSED [ 90%]
+tests/test_refresh_xlsx.py::test_rebuild_xlsx_includes_data_dictionary_and_known_sheets PASSED [ 91%]
+tests/test_refresh_xlsx.py::test_rebuild_xlsx_skips_missing_optional_sheets PASSED [ 91%]
+tests/test_refresh_xlsx.py::test_rebuild_xlsx_errors_when_validated_csv_missing PASSED [ 92%]
+tests/test_score_completion.py::test_score_denominator_is_31 PASSED      [ 92%]
+tests/test_score_completion.py::test_is_filled_treats_blank_and_sentinels_as_empty PASSED [ 93%]
+tests/test_score_completion.py::test_render_visual_renders_block_count PASSED [ 93%]
+tests/test_score_completion.py::test_render_visual_clamps_out_of_range PASSED [ 94%]
+tests/test_score_completion.py::test_compute_row_score_full_row_returns_31 PASSED [ 95%]
+tests/test_score_completion.py::test_compute_row_score_empty_row_returns_2 PASSED [ 95%]
+tests/test_score_completion.py::test_compute_row_score_partial PASSED    [ 96%]
+tests/test_score_completion.py::test_add_completion_columns_populates_text_and_visual PASSED [ 96%]
+tests/test_score_completion.py::test_normalize_text_artifacts_strips_integer_float_strings PASSED [ 97%]
+tests/test_score_completion.py::test_cli_run_score_persists_to_csv PASSED [ 97%]
+tests/test_scoring.py::test_high_quality_record_scores_as_accepted PASSED [ 98%]
+tests/test_scoring.py::test_discovery_only_directory_source_blocks_acceptance PASSED [ 98%]
+tests/test_validators.py::test_normalize_entity_name_removes_common_suffixes PASSED [ 99%]
+tests/test_validators.py::test_find_name_overlaps_catches_sample_equivalents PASSED [100%]
+
+============================== warnings summary ===============================
+tests/test_dataset_contract.py: 2 warnings
+tests/test_io_reports_validators_cli.py: 4 warnings
+tests/test_refresh_xlsx.py: 6 warnings
+  C:\Users\Hassa\anaconda3\Lib\site-packages\openpyxl\packaging\core.py:99: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    now = datetime.datetime.utcnow()
+
+tests/test_dataset_contract.py::test_raw_seed_dataset_has_50_valid_original_records
+tests/test_io_reports_validators_cli.py::test_cli_validate_with_patched_validator
+  C:\Users\Hassa\anaconda3\Lib\site-packages\openpyxl\worksheet\_read_only.py:81: UserWarning: Unknown extension is not supported and will be removed
+    for idx, row in parser.parse():
+
+tests/test_dataset_contract.py::test_raw_seed_dataset_has_50_valid_original_records
+tests/test_io_reports_validators_cli.py::test_cli_validate_with_patched_validator
+  C:\Users\Hassa\anaconda3\Lib\site-packages\openpyxl\worksheet\_read_only.py:81: UserWarning: Conditional Formatting extension is not supported and will be removed
+    for idx, row in parser.parse():
+
+tests/test_io_reports_validators_cli.py::test_read_and_write_outputs
+tests/test_io_reports_validators_cli.py::test_cli_validate_with_patched_validator
+tests/test_refresh_xlsx.py::test_rebuild_xlsx_includes_data_dictionary_and_known_sheets
+tests/test_refresh_xlsx.py::test_rebuild_xlsx_skips_missing_optional_sheets
+  C:\Users\Hassa\anaconda3\Lib\site-packages\openpyxl\writer\excel.py:292: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+    workbook.properties.modified = datetime.datetime.utcnow()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.12.7-final-0 _______________
+
+Name                                                  Stmts   Miss  Cover   Missing
+-----------------------------------------------------------------------------------
+src\fo_dataset_pipeline\__init__.py                       2      0   100%
+src\fo_dataset_pipeline\apify_research.py               193    100    48%   97, 101-104, 108, 112-115, 119-120, 124-127, 131-134, 138-139, 143-144, 154-181, 245-247, 268, 277, 290, 292, 324-360, 372-383, 393-428, 440-475, 491-502, 512-516, 520
+src\fo_dataset_pipeline\apply_audit.py                   45      2    96%   126, 142
+src\fo_dataset_pipeline\audit_prescreen.py              108      5    95%   45, 48, 80, 187, 216
+src\fo_dataset_pipeline\augment_field_evidence.py       132     16    88%   144-146, 163, 167, 175, 181, 188, 192-193, 242, 284, 326, 371, 373, 391
+src\fo_dataset_pipeline\chain_snippets.py               179      6    97%   217, 254, 265, 279, 465, 480
+src\fo_dataset_pipeline\cli.py                           43      6    86%   57-58, 61, 70, 94, 98
+src\fo_dataset_pipeline\enrich_columns.py               114      5    96%   83, 95, 114, 210, 224
+src\fo_dataset_pipeline\extract_team_rosters.py         151     18    88%   108, 110, 120, 127, 146, 149, 175-176, 204, 209-211, 227, 251, 253, 275, 296, 332
+src\fo_dataset_pipeline\io.py                           115     15    87%   17, 38, 56, 58-68, 74-76, 251, 267
+src\fo_dataset_pipeline\models.py                        93      1    99%   105
+src\fo_dataset_pipeline\promote_addresses.py            103     12    88%   36, 39-40, 45, 49, 57, 64, 81, 123, 147-148, 164
+src\fo_dataset_pipeline\promote_contacts.py             141      5    96%   53, 103, 115, 193, 236
+src\fo_dataset_pipeline\promote_google_places.py        149     21    86%   59-60, 68, 70, 80, 83-84, 92, 95-96, 117, 136-139, 169, 203, 219, 228-229, 249
+src\fo_dataset_pipeline\promote_linkedin_company.py     136     12    91%   59-60, 85-86, 97, 100-101, 119, 126, 163, 188, 226
+src\fo_dataset_pipeline\promote_news.py                 125      9    93%   80, 99, 105, 133, 145, 152, 170, 172, 232
+src\fo_dataset_pipeline\promote_principals.py            90      4    96%   132, 134, 159, 176
+src\fo_dataset_pipeline\promote_sec_iapd.py             101      8    92%   68-69, 91-92, 108, 177, 191, 214
+src\fo_dataset_pipeline\promote_social_media.py         118     15    87%   54-55, 60, 63, 65, 83-85, 99, 111, 124, 130, 158, 172, 196
+src\fo_dataset_pipeline\refresh_xlsx.py                  62     30    52%   98-130, 165-166, 172
+src\fo_dataset_pipeline\reports.py                       53      2    96%   66, 68
+src\fo_dataset_pipeline\score_completion.py              67      4    94%   80-81, 138, 160
+src\fo_dataset_pipeline\validators.py                    88     15    83%   52, 103-104, 111, 116, 118, 154-179
+tests\test_apify_research.py                             33      0   100%
+tests\test_apply_audit.py                                60      0   100%
+tests\test_audit_prescreen.py                            73      0   100%
+tests\test_augment_field_evidence.py                     33      0   100%
+tests\test_chain_snippets.py                             62      0   100%
+tests\test_dataset_contract.py                           14      0   100%
+tests\test_enrich_columns.py                             80      0   100%
+tests\test_extract_team_rosters.py                       63      0   100%
+tests\test_io_reports_validators_cli.py                  69      0   100%
+tests\test_models.py                                     12      0   100%
+tests\test_promote_addresses.py                          53      0   100%
+tests\test_promote_contacts.py                           79      0   100%
+tests\test_promote_google_places.py                      79      0   100%
+tests\test_promote_linkedin_company.py                  107      0   100%
+tests\test_promote_news.py                               93      0   100%
+tests\test_promote_principals.py                         60      0   100%
+tests\test_promote_sec_iapd.py                           69      0   100%
+tests\test_promote_social_media.py                       69      0   100%
+tests\test_refresh_xlsx.py                               35      0   100%
+tests\test_score_completion.py                           61      0   100%
+tests\test_scoring.py                                    14      0   100%
+tests\test_validators.py                                  6      0   100%
+-----------------------------------------------------------------------------------
+TOTAL                                                  3632    311    91%
+Required test coverage of 80% reached. Total coverage: 91.44%
+====================== 180 passed, 20 warnings in 6.86s =======================

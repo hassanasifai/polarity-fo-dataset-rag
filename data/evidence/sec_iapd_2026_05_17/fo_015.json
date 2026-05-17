@@ -1,0 +1,34 @@
+{
+  "record_id": "fo_015",
+  "family_office_name": "Haven Private",
+  "queried_at_utc": "2026-05-17T09:55:55.144805+00:00",
+  "queries_tried": [
+    {
+      "query": "Haven Private",
+      "hit_count": 8
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.0,
+  "match_reason": "name_jaccard=1.00 (vs 'HAVEN PRIVATE')",
+  "sec_registered": true,
+  "sec_crd_number": "329012",
+  "sec_file_number": "801-129272",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "HAVEN PRIVATE",
+  "firm_other_names": [
+    "HAVEN PRIVATE",
+    "HAVEN PRIVATE, LLC"
+  ],
+  "firm_branches_count": 1,
+  "sec_address": {
+    "street1": "976 LAKE BALDWIN LANE",
+    "street2": "SUITE 201",
+    "city": "ORLANDO",
+    "state": "FL",
+    "country": "United States",
+    "postal_code": "32814"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/329012/PDF/329012.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/329012"
+}

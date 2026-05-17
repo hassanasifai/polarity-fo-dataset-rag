@@ -1,0 +1,20 @@
+{
+  "record_id": "fo_050",
+  "family_office_name": "Wren Investment Office",
+  "queried_at_utc": "2026-05-17T09:56:20.730305+00:00",
+  "queries_tried": [
+    {
+      "query": "Wren Investment Office",
+      "hit_count": 0
+    },
+    {
+      "query": "wren investment",
+      "hit_count": 1
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 0.0,
+  "match_reason": "",
+  "sec_registered": false,
+  "notes": "No IAPD match above threshold — typical for single-family offices managing only family wealth (no SEC registration requirement)."
+}

@@ -1,0 +1,35 @@
+{
+  "record_id": "fo_027",
+  "family_office_name": "Indie Asset Partners",
+  "queried_at_utc": "2026-05-17T09:56:05.631745+00:00",
+  "queries_tried": [
+    {
+      "query": "Indie Asset Partners",
+      "hit_count": 5
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 0.75,
+  "match_reason": "name_jaccard=0.75 (vs 'INDIE ASSET PARTNERS, LLC')",
+  "sec_registered": true,
+  "sec_crd_number": "154503",
+  "sec_file_number": "801-71728",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "INDIE ASSET PARTNERS, LLC",
+  "firm_other_names": [
+    "CRITERION CAPITAL MANAGEMENT, LLC",
+    "INDIE DIVERSIFIED PARTNERS, LLC",
+    "INDIE ASSET PARTNERS, LLC"
+  ],
+  "firm_branches_count": 3,
+  "sec_address": {
+    "street1": "10 EAST MAIN STREET",
+    "street2": "SUITE 220",
+    "city": "CARMEL",
+    "state": "IN",
+    "country": "United States",
+    "postal_code": "46032"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/154503/PDF/154503.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/154503"
+}

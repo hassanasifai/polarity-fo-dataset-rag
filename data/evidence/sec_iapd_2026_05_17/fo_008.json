@@ -1,0 +1,20 @@
+{
+  "record_id": "fo_008",
+  "family_office_name": "Lennertz & Co.",
+  "queried_at_utc": "2026-05-17T09:55:51.042977+00:00",
+  "queries_tried": [
+    {
+      "query": "Lennertz & Co.",
+      "hit_count": 0
+    },
+    {
+      "query": "lennertz",
+      "hit_count": 0
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 0.0,
+  "match_reason": "",
+  "sec_registered": false,
+  "notes": "No IAPD match above threshold — typical for single-family offices managing only family wealth (no SEC registration requirement)."
+}

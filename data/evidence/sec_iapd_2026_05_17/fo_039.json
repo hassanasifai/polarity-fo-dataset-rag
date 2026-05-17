@@ -1,0 +1,34 @@
+{
+  "record_id": "fo_039",
+  "family_office_name": "TwinFocus",
+  "queried_at_utc": "2026-05-17T09:56:13.864207+00:00",
+  "queries_tried": [
+    {
+      "query": "TwinFocus",
+      "hit_count": 1
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.25,
+  "match_reason": "name_jaccard=1.00 (vs 'TWINFOCUS'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "140522",
+  "sec_file_number": "801-66717",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "TWIN FOCUS CAPITAL PARTNERS, LLC",
+  "firm_other_names": [
+    "TWIN FOCUS CAPITAL PARTNERS, LLC",
+    "TWINFOCUS"
+  ],
+  "firm_branches_count": 4,
+  "sec_address": {
+    "street1": "75 PARK PLAZA",
+    "street2": null,
+    "city": "BOSTON",
+    "state": "MA",
+    "country": "United States",
+    "postal_code": "02116"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/140522/PDF/140522.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/140522"
+}

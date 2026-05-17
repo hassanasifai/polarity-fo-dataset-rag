@@ -1,0 +1,35 @@
+{
+  "record_id": "fo_038",
+  "family_office_name": "Ballentine Partners",
+  "queried_at_utc": "2026-05-17T09:56:13.393031+00:00",
+  "queries_tried": [
+    {
+      "query": "Ballentine Partners",
+      "hit_count": 2
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.25,
+  "match_reason": "name_jaccard=1.00 (vs 'BALLENTINE PARTNERS'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "152802",
+  "sec_file_number": "801-71062",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "BALLENTINE PARTNERS",
+  "firm_other_names": [
+    "BALLENTINE PARTNERS",
+    "MILL STREET INVESTMENT MANAGEMENT",
+    "BALLENTINE PARTNERS, LLC"
+  ],
+  "firm_branches_count": 82,
+  "sec_address": {
+    "street1": "230 3RD AVENUE",
+    "street2": "SUITE 6",
+    "city": "WALTHAM",
+    "state": "MA",
+    "country": "United States",
+    "postal_code": "02451"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/152802/PDF/152802.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/152802"
+}

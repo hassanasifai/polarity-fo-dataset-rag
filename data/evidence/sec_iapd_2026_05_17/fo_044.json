@@ -1,0 +1,16 @@
+{
+  "record_id": "fo_044",
+  "family_office_name": "Greycourt",
+  "queried_at_utc": "2026-05-17T09:56:16.603980+00:00",
+  "queries_tried": [
+    {
+      "query": "Greycourt",
+      "hit_count": 1
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 0.583,
+  "match_reason": "name_jaccard=0.33 (vs 'GREYCOURT & CO., INC.'); address_match=city+state",
+  "sec_registered": false,
+  "notes": "No IAPD match above threshold — typical for single-family offices managing only family wealth (no SEC registration requirement)."
+}

@@ -36,6 +36,7 @@ notes.append(f"File size: {size_mb:.2f} MB")
 EXPECTED_SHEETS = {
     "data_50", "data_dictionary", "sources", "field_evidence",
     "validation_results", "validation_chain_snippets",
+    "team_rosters_raw",
     "apify_evidence", "firecrawl_evidence", "contact_info_evidence",
     "email_validation_evidence", "google_news_signals",
     "google_places_evidence", "linkedin_company_evidence",
@@ -131,6 +132,8 @@ PARITY_COLUMNS = (
     "data_validation_period", "family_office_domain", "url_quality",
     "primary_email_validation_code", "primary_email_code_explanation",
     "primary_email_quality_assessment",
+    "contact_first_name", "contact_last_name", "contact_full_name",
+    "contact_location", "data_completion_score_text", "data_completion_score_visual",
 )
 for col in PARITY_COLUMNS:
     if col not in data.columns:
@@ -162,6 +165,9 @@ if "auto_prescreen_flag" in data.columns:
 # Recent activity
 ra_pop = (df_filled["recent_activity"] != "").sum()
 notes.append(f"recent_activity populated: {ra_pop}/50")
+if "recent_activity_type" in data.columns:
+    recent_type_counts = df_filled["recent_activity_type"].value_counts().to_dict()
+    notes.append(f"recent_activity_type: {recent_type_counts}")
 
 # Sources sheet
 sources = pd.read_excel(XLSX, sheet_name="sources")
@@ -174,6 +180,40 @@ check(under_two == 0, f"{under_two} records have <2 source rows in sources sheet
 # Field evidence
 fe = pd.read_excel(XLSX, sheet_name="field_evidence")
 notes.append(f"field_evidence sheet: {len(fe)} rows")
+if "field_name" in fe.columns:
+    fe_field_counts = fe["field_name"].astype(str).value_counts()
+    evidence_required_fields = [
+        "primary_email", "primary_phone", "corporate_linkedin_url",
+        "recent_activity", "recent_activity_date", "recent_activity_url",
+        "recent_activity_type", "linkedin_employee_count", "linkedin_follower_count",
+        "linkedin_specialties", "linkedin_company_size_band", "linkedin_industry",
+        "linkedin_founded_year", "linkedin_headquarters_full", "twitter_url",
+        "instagram_url", "facebook_url", "youtube_url", "google_places_phone",
+        "google_places_reviews_count", "google_places_rating", "google_places_category",
+        "google_maps_url", "primary_phone_corroborated_by_places", "street_address",
+        "sec_registered", "sec_crd_number", "sec_file_number",
+        "sec_registration_status", "sec_firm_name_iapd", "form_adv_brochure_url",
+        "sec_summary_url", "principal_1_name", "principal_1_role",
+        "principal_2_name", "principal_2_role", "principal_3_name",
+        "principal_3_role", "contact_first_name", "contact_last_name",
+        "contact_full_name", "contact_location", "data_completion_score_text",
+        "data_completion_score_visual",
+    ]
+    missing_field_evidence = []
+    for field in evidence_required_fields:
+        if field not in df_filled.columns:
+            continue
+        promoted = (df_filled[field] != "").sum()
+        if promoted == 0:
+            continue
+        evidence_rows = int(fe_field_counts.get(field, 0))
+        if evidence_rows < promoted:
+            missing_field_evidence.append(f"{field}: {evidence_rows}/{promoted}")
+    check(
+        not missing_field_evidence,
+        f"Promoted fields missing field_evidence rows: {missing_field_evidence}",
+        "Every checked promoted field has claim-level field_evidence coverage",
+    )
 
 # Validation chain snippets
 vcs = pd.read_excel(XLSX, sheet_name="validation_chain_snippets")
@@ -190,18 +230,10 @@ for rid, name in [("fo_001", "Cat Trail"), ("fo_007", "JFG"), ("fo_020", "Verlin
 dd = pd.read_excel(XLSX, sheet_name="data_dictionary")
 notes.append(f"data_dictionary: {len(dd)} rows")
 dd_cols = set(dd["column_name"])
-NEW_COLS_DEFINED = {
-    "human_audit_status", "auto_prescreen_flag", "auto_prescreen_reason",
-    "primary_email_evidence_url", "primary_email_confidence",
-    "recent_activity",
-    "data_validation_period", "family_office_domain", "url_quality",
-    "primary_email_validation_code", "primary_email_code_explanation",
-    "primary_email_quality_assessment",
-}
-missing_defs = NEW_COLS_DEFINED - dd_cols
+missing_defs = set(data.columns) - dd_cols
 check(not missing_defs,
-      f"data_dictionary missing definitions for: {sorted(missing_defs)}",
-      "data_dictionary defines all new audit/promotion columns")
+      f"data_dictionary missing definitions for dataset columns: {sorted(missing_defs)}",
+      "data_dictionary defines every data_50 column")
 
 # Type and country distribution
 type_dist = data["family_office_type"].value_counts().to_dict()

@@ -1,0 +1,47 @@
+{
+  "record_id": "fo_033",
+  "family_office_name": "Cresset",
+  "queried_at_utc": "2026-05-17T09:56:10.096304+00:00",
+  "queries_tried": [
+    {
+      "query": "Cresset",
+      "hit_count": 3
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.25,
+  "match_reason": "name_jaccard=1.00 (vs 'CRESSET'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "288566",
+  "sec_file_number": "801-110753",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "CRESSET ASSET MANAGEMENT, LLC",
+  "firm_other_names": [
+    "ALTON WEALTH ADVISERS LLC",
+    "TRUE CRESSET | SPORTS + ENTERTAINMENT",
+    "PAGNATOKARP",
+    "MERISTEM CRESSET",
+    "CRESSET WEALTH ADVISORS LLC",
+    "CRESSET WEALTH ADVISORS",
+    "CRESSET SPORTS + ENTERTAINMENT",
+    "CRESSET FAMILY OFFICE",
+    "CRESSET CYPRESS ADVISORS",
+    "CRESSET CAPITAL",
+    "CRESSET ASSET MANAGEMENT, LLC",
+    "CRESSET ASSET MANAGEMENT LLC",
+    "CRESSET",
+    "CH INVESTMENT PARTNERS",
+    "BERMAN CRESSET"
+  ],
+  "firm_branches_count": 179,
+  "sec_address": {
+    "street1": "444 W. LAKE STREET",
+    "street2": "SUITE 4700",
+    "city": "CHICAGO",
+    "state": "IL",
+    "country": "United States",
+    "postal_code": "60606"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/288566/PDF/288566.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/288566"
+}

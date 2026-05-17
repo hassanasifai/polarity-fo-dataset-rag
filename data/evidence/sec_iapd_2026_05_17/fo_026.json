@@ -1,0 +1,24 @@
+{
+  "record_id": "fo_026",
+  "family_office_name": "Yamauchi No. 10 Family Office",
+  "queried_at_utc": "2026-05-17T09:56:04.905798+00:00",
+  "queries_tried": [
+    {
+      "query": "Yamauchi No. 10 Family Office",
+      "hit_count": 10
+    },
+    {
+      "query": "yamauchi no 10",
+      "hit_count": 0
+    },
+    {
+      "query": "yamauchi no",
+      "hit_count": 0
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 0.333,
+  "match_reason": "name_jaccard=0.33 (vs 'SIGIL FAMILY OFFICE')",
+  "sec_registered": false,
+  "notes": "No IAPD match above threshold — typical for single-family offices managing only family wealth (no SEC registration requirement)."
+}

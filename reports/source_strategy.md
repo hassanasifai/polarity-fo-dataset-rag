@@ -31,6 +31,16 @@
 - SWFI-style discovery directory links are blocked from final acceptance.
 - Placeholder values such as `Hidden`, `TBD`, `dummy`, and `example.com` are rejected.
 - The raw seed is compared with the provided sample workbook to avoid copied records.
+- SEC IAPD/Form ADV values are promoted only from the SEC public API and are kept
+  separate from web-derived summaries.
+- Google Places is corroboration only. A Places row is accepted only when the returned
+  website domain matches the FO domain; mismatched results are rejected.
+- LinkedIn company enrichment is accepted only when the LinkedIn company-page `website`
+  field shares the FO website domain. Personal profiles are not used as company evidence.
+- Principal slots are promoted only from official team/about/leadership pages. Personal
+  LinkedIn, email, and direct-phone fields stay blank unless directly observed.
+- Every post-validation promoted value must have a paired evidence URL/confidence value
+  and an augmented row in `field_evidence.csv`.
 
 ## Replaced or Downgraded Rows
 
@@ -46,6 +56,11 @@
 - Some records are multi-family offices or family-office service providers rather than
   pure single-family offices. This is preserved in `family_office_type` and
   `uncertainty_notes`.
-- Claim-level evidence currently uses source notes as the evidence snippet. A final
-  human pass should replace the most important snippets with exact manually reviewed
-  excerpts from source pages or PDFs.
+- Claim-level evidence is now comprehensive for promoted fields, but many snippets are
+  concise provenance statements rather than manually selected verbatim source quotes.
+  The three featured validation chains retain exact quote-level support.
+- The LinkedIn People scrape was tested but not promoted because target-record runs
+  returned no usable employee records. This is documented as a stopped experiment rather
+  than forced into the dataset.
+- Form ADV brochure URLs are captured for SEC-registered firms; the PDF bodies are not
+  yet parsed for AUM, fees, or conflicts. Those fields remain intentionally conservative.

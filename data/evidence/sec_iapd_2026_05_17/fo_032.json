@@ -1,0 +1,36 @@
+{
+  "record_id": "fo_032",
+  "family_office_name": "Pathstone",
+  "queried_at_utc": "2026-05-17T09:56:09.614558+00:00",
+  "queries_tried": [
+    {
+      "query": "Pathstone",
+      "hit_count": 1
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.25,
+  "match_reason": "name_jaccard=1.00 (vs 'PATHSTONE'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "151736",
+  "sec_file_number": "801-70776",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "PATHSTONE",
+  "firm_other_names": [
+    "PATHSTONE",
+    "STONE TOWER FAMILY OFFICE, LLC",
+    "PATHSTONE FEDERAL STREET",
+    "PATHSTONE FAMILY OFFICE, LLC"
+  ],
+  "firm_branches_count": 162,
+  "sec_address": {
+    "street1": "10 STERLING BLVD",
+    "street2": "SUITE 402",
+    "city": "ENGLEWOOD",
+    "state": "NJ",
+    "country": "United States",
+    "postal_code": "07631"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/151736/PDF/151736.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/151736"
+}

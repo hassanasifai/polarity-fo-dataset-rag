@@ -1,0 +1,38 @@
+{
+  "record_id": "fo_011",
+  "family_office_name": "The O'Donnell Group",
+  "queried_at_utc": "2026-05-17T09:55:52.825868+00:00",
+  "queries_tried": [
+    {
+      "query": "The O'Donnell Group",
+      "hit_count": 2
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.25,
+  "match_reason": "name_jaccard=1.00 (vs 'THE O'DONNELL GROUP'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "162562",
+  "sec_file_number": "801-107763",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "THE O'DONNELL GROUP",
+  "firm_other_names": [
+    "CHICO WEALTH",
+    "THE O'DONNELL GROUP",
+    "CW DOES BUSINESS UNDER THE DBA THE O'DONNELL GROUP",
+    "CHICO WEALTH, LLC",
+    "CHICO WEALTH RIA, INC.",
+    "CHICO WEALTH PORTFOLIOS"
+  ],
+  "firm_branches_count": 1,
+  "sec_address": {
+    "street1": "555 MAIN STREET",
+    "street2": "SUITE 400",
+    "city": "CHICO",
+    "state": "CA",
+    "country": "United States",
+    "postal_code": "95928"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/162562/PDF/162562.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/162562"
+}

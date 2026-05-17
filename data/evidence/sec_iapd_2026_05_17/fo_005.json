@@ -1,0 +1,34 @@
+{
+  "record_id": "fo_005",
+  "family_office_name": "SJS Investment Services",
+  "queried_at_utc": "2026-05-17T09:55:48.658340+00:00",
+  "queries_tried": [
+    {
+      "query": "SJS Investment Services",
+      "hit_count": 1
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.25,
+  "match_reason": "name_jaccard=1.00 (vs 'SJS INVESTMENT SERVICES'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "107219",
+  "sec_file_number": "801-49585",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "SJS INVESTMENT SERVICES",
+  "firm_other_names": [
+    "SJS INVESTMENT CONSULTING INC",
+    "SJS INVESTMENT SERVICES"
+  ],
+  "firm_branches_count": 12,
+  "sec_address": {
+    "street1": "6711 MONROE ST.",
+    "street2": "BUILDING IV, SUITE A",
+    "city": "SYLVANIA",
+    "state": "OH",
+    "country": "United States",
+    "postal_code": "43560"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/107219/PDF/107219.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/107219"
+}

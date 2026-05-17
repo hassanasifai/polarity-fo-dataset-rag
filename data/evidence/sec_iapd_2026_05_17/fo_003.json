@@ -1,0 +1,35 @@
+{
+  "record_id": "fo_003",
+  "family_office_name": "Ohana Advisors",
+  "queried_at_utc": "2026-05-17T09:55:47.676949+00:00",
+  "queries_tried": [
+    {
+      "query": "Ohana Advisors",
+      "hit_count": 3
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.0,
+  "match_reason": "name_jaccard=1.00 (vs 'OHANA ADVISORS')",
+  "sec_registered": true,
+  "sec_crd_number": "158515",
+  "sec_file_number": "801-75431",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "OHANA ADVISORS",
+  "firm_other_names": [
+    "OHANA ADVISORS",
+    "OHANA ADVISORS, LLC",
+    "OHANA ADVISORS MANAGEMENT, LLC"
+  ],
+  "firm_branches_count": 1,
+  "sec_address": {
+    "street1": "101 LUCAS VALLEY",
+    "street2": "SUITE 202",
+    "city": "SAN RAFAEL",
+    "state": "CA",
+    "country": "United States",
+    "postal_code": "94903"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/158515/PDF/158515.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/158515"
+}

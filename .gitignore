@@ -39,5 +39,6 @@ desktop.ini
 # Local scratch
 _temp/
 *.tmp
+*.bak
 scratch/
 tmp_cli.csv

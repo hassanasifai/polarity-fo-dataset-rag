@@ -1,0 +1,37 @@
+{
+  "record_id": "fo_047",
+  "family_office_name": "Cerity Partners",
+  "queried_at_utc": "2026-05-17T09:56:18.065275+00:00",
+  "queries_tried": [
+    {
+      "query": "Cerity Partners",
+      "hit_count": 3
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.25,
+  "match_reason": "name_jaccard=1.00 (vs 'CERITY PARTNERS'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "151559",
+  "sec_file_number": "801-70719",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "CERITY PARTNERS LLC",
+  "firm_other_names": [
+    "CERITY PARTNERS",
+    "MILSTEIN ADVISORS LLC",
+    "HPM PARTNERS SFO ALLIANCE",
+    "HPM PARTNERS LLC",
+    "CERITY PARTNERS LLC"
+  ],
+  "firm_branches_count": 644,
+  "sec_address": {
+    "street1": "99 PARK AVENUE",
+    "street2": "16TH FLOOR",
+    "city": "NEW YORK",
+    "state": "NY",
+    "country": "United States",
+    "postal_code": "10016"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/151559/PDF/151559.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/151559"
+}

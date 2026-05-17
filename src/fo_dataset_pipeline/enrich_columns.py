@@ -36,6 +36,21 @@ NEW_COLUMNS = (
     "primary_email_validation_code",
     "primary_email_code_explanation",
     "primary_email_quality_assessment",
+    # Sample-parity derivations added in the workstream-F polish pass.
+    "contact_first_name",
+    "contact_last_name",
+    "contact_full_name",
+    "contact_location",
+    "contact_secondary_email",
+    "secondary_email_validation_code",
+    "email_code_explanation_secondary",
+    "email_quality_assessment_secondary",
+    "contact_secondary_phone",
+)
+
+SECONDARY_CONTACT_UNCERTAINTY_NOTE = (
+    "No secondary channel surfaced in the evidence layer; left null rather "
+    "than fabricated."
 )
 
 
@@ -86,6 +101,49 @@ def load_email_evidence_lookup(path: Path) -> dict[str, dict[str, str]]:
     return lookup
 
 
+def split_principal_name(full_name: str) -> tuple[str, str]:
+    """Return (first_name, last_name) from a freeform principal-name string.
+
+    Conservative: if the input is empty, a generic placeholder ("Dekker
+    family", "Founders", etc.) or only one token, both outputs are empty.
+    """
+    if not full_name:
+        return "", ""
+    cleaned = full_name.strip()
+    if not cleaned:
+        return "", ""
+    # Reject obvious placeholders / collective references.
+    lowered = cleaned.lower()
+    placeholders = {
+        "family", "founders", "principals", "principal family",
+        "founding family", "members",
+    }
+    if any(token == lowered or token in lowered.split() for token in placeholders):
+        if any(lowered.endswith(suffix) for suffix in (" family", " family.")):
+            return "", ""
+    tokens = cleaned.split()
+    if len(tokens) < 2:
+        return "", ""
+    # Drop trailing suffixes like "Jr.", "Sr.", "III" from the last token if present.
+    suffixes = {"jr.", "jr", "sr.", "sr", "ii", "iii", "iv"}
+    if tokens[-1].lower() in suffixes and len(tokens) >= 3:
+        last_name = tokens[-2]
+        first_name = " ".join(tokens[:-2])
+    else:
+        last_name = tokens[-1]
+        first_name = " ".join(tokens[:-1])
+    return first_name.strip(), last_name.strip()
+
+
+def derive_contact_location(city: object, state: object, country: object) -> str:
+    parts = [
+        str(value).strip()
+        for value in (city, state, country)
+        if value is not None and str(value).strip() and str(value).strip().lower() != "nan"
+    ]
+    return ", ".join(parts)
+
+
 def enrich_dataframe(
     df: pd.DataFrame,
     email_lookup: dict[str, dict[str, str]],
@@ -106,6 +164,33 @@ def enrich_dataframe(
         if email and email in email_lookup:
             for key, value in email_lookup[email].items():
                 df.at[index, key] = value
+
+        # Sample-parity derivations (do not overwrite existing values).
+        principal_name = str(row.get("principal_name", "")).strip()
+        first_name, last_name = split_principal_name(principal_name)
+        if first_name and not str(row.get("contact_first_name") or "").strip():
+            df.at[index, "contact_first_name"] = first_name
+        if last_name and not str(row.get("contact_last_name") or "").strip():
+            df.at[index, "contact_last_name"] = last_name
+        if principal_name and not str(row.get("contact_full_name") or "").strip():
+            df.at[index, "contact_full_name"] = principal_name
+
+        location = derive_contact_location(
+            row.get("city"), row.get("state_region"), row.get("country")
+        )
+        if location and not str(row.get("contact_location") or "").strip():
+            df.at[index, "contact_location"] = location
+
+        # Secondary contact channels — explicit "absent by design" sentinels in
+        # the validation columns; values are honest nulls.
+        if not str(row.get("secondary_email_validation_code") or "").strip():
+            df.at[index, "secondary_email_validation_code"] = "no_secondary_evidence"
+        if not str(row.get("email_code_explanation_secondary") or "").strip():
+            df.at[index, "email_code_explanation_secondary"] = (
+                SECONDARY_CONTACT_UNCERTAINTY_NOTE
+            )
+        if not str(row.get("email_quality_assessment_secondary") or "").strip():
+            df.at[index, "email_quality_assessment_secondary"] = "no_secondary_evidence"
 
     return df
 

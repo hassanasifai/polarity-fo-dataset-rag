@@ -1,0 +1,34 @@
+{
+  "record_id": "fo_013",
+  "family_office_name": "Scott Capital Partners",
+  "queried_at_utc": "2026-05-17T09:55:53.865670+00:00",
+  "queries_tried": [
+    {
+      "query": "Scott Capital Partners",
+      "hit_count": 10
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.0,
+  "match_reason": "name_jaccard=1.00 (vs 'SCOTT CAPITAL PARTNERS')",
+  "sec_registered": true,
+  "sec_crd_number": "332026",
+  "sec_file_number": "801-131114",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "SCOTT CAPITAL PARTNERS",
+  "firm_other_names": [
+    "SCOTT CAPITAL PARTNERS",
+    "SCOTT CAPITAL PARTNERS LLP"
+  ],
+  "firm_branches_count": 0,
+  "sec_address": {
+    "street1": "24 ST JAMES'S SQUARE",
+    "street2": null,
+    "city": "LONDON",
+    "state": null,
+    "country": "United Kingdom",
+    "postal_code": "SW1Y 4JH"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/332026/PDF/332026.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/332026"
+}

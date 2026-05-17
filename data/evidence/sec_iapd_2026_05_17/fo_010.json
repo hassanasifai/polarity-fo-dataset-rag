@@ -1,0 +1,33 @@
+{
+  "record_id": "fo_010",
+  "family_office_name": "Boston Multi Family Office",
+  "queried_at_utc": "2026-05-17T09:55:52.345928+00:00",
+  "queries_tried": [
+    {
+      "query": "Boston Multi Family Office",
+      "hit_count": 10
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 0.6,
+  "match_reason": "name_jaccard=0.60 (vs 'BOSTON FAMILY OFFICE LLC')",
+  "sec_registered": true,
+  "sec_crd_number": "107141",
+  "sec_file_number": "801-52883",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "BOSTON FAMILY OFFICE LLC",
+  "firm_other_names": [
+    "BOSTON FAMILY OFFICE LLC"
+  ],
+  "firm_branches_count": 5,
+  "sec_address": {
+    "street1": "20 CUSTOM HOUSE STREET",
+    "street2": "SUITE 700",
+    "city": "BOSTON",
+    "state": "MA",
+    "country": "United States",
+    "postal_code": "02110"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/107141/PDF/107141.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/107141"
+}

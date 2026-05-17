@@ -1,0 +1,36 @@
+{
+  "record_id": "fo_004",
+  "family_office_name": "Longwall Family Office",
+  "queried_at_utc": "2026-05-17T09:55:48.176124+00:00",
+  "queries_tried": [
+    {
+      "query": "Longwall Family Office",
+      "hit_count": 1
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.0,
+  "match_reason": "name_jaccard=1.00 (vs 'LONGWALL FAMILY OFFICE')",
+  "sec_registered": true,
+  "sec_crd_number": "324336",
+  "sec_file_number": "801-127421",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "LONGWALL FAMILY OFFICE",
+  "firm_other_names": [
+    "DKRA HOLDINGS, LLC",
+    "LONGWALL INVESTMENT PARTNERS, LLC",
+    "LONGWALL INVESTMENT PARTNERS",
+    "LONGWALL FAMILY OFFICE"
+  ],
+  "firm_branches_count": 1,
+  "sec_address": {
+    "street1": "8  WRIGHT ST",
+    "street2": "SUITE 107",
+    "city": "WESTPORT",
+    "state": "CT",
+    "country": "United States",
+    "postal_code": "06880"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/324336/PDF/324336.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/324336"
+}

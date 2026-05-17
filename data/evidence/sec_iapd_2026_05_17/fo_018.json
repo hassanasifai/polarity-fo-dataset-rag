@@ -1,0 +1,20 @@
+{
+  "record_id": "fo_018",
+  "family_office_name": "AT Capital Group",
+  "queried_at_utc": "2026-05-17T09:55:57.797210+00:00",
+  "queries_tried": [
+    {
+      "query": "AT Capital Group",
+      "hit_count": 10
+    },
+    {
+      "query": "at",
+      "hit_count": 10
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 0.5,
+  "match_reason": "name_jaccard=0.50 (vs 'FORTE CAPITAL GROUP')",
+  "sec_registered": false,
+  "notes": "No IAPD match above threshold — typical for single-family offices managing only family wealth (no SEC registration requirement)."
+}

@@ -1,0 +1,34 @@
+{
+  "record_id": "fo_019",
+  "family_office_name": "East Rock Capital",
+  "queried_at_utc": "2026-05-17T09:55:58.289881+00:00",
+  "queries_tried": [
+    {
+      "query": "East Rock Capital",
+      "hit_count": 2
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.0,
+  "match_reason": "name_jaccard=0.75 (vs 'EAST ROCK CAPITAL, LLC'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "157433",
+  "sec_file_number": "801-73320",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "EAST ROCK CAPITAL, LLC",
+  "firm_other_names": [
+    "EAST ROCK CAPITAL, LLC",
+    "EAST ROCK FOCUS FUND MANAGEMENT, LLC - RELYING ADVISER"
+  ],
+  "firm_branches_count": 1,
+  "sec_address": {
+    "street1": "65 EAST 55TH STREET",
+    "street2": "33RD FLOOR",
+    "city": "NEW YORK",
+    "state": "NY",
+    "country": "United States",
+    "postal_code": "10022"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/157433/PDF/157433.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/157433"
+}

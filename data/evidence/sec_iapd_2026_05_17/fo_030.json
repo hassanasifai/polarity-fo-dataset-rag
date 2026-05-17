@@ -1,0 +1,36 @@
+{
+  "record_id": "fo_030",
+  "family_office_name": "Private Wealth Asset Management",
+  "queried_at_utc": "2026-05-17T09:56:08.351627+00:00",
+  "queries_tried": [
+    {
+      "query": "Private Wealth Asset Management",
+      "hit_count": 10
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.0,
+  "match_reason": "name_jaccard=1.00 (vs 'PRIVATE WEALTH ASSET MANAGEMENT')",
+  "sec_registered": true,
+  "sec_crd_number": "315819",
+  "sec_file_number": "801-122065",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "PRIVATE WEALTH ASSET MANAGEMENT",
+  "firm_other_names": [
+    "PRIVATE WEALTH",
+    "PW ENERGY",
+    "PRIVATE WEALTH ASSET MANAGEMENT, LLC",
+    "PRIVATE WEALTH ASSET MANAGEMENT"
+  ],
+  "firm_branches_count": 19,
+  "sec_address": {
+    "street1": "1100 CAPITOL AVENUE",
+    "street2": "SUITE 200",
+    "city": "OMAHA",
+    "state": "NE",
+    "country": "United States",
+    "postal_code": "68102"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/315819/PDF/315819.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/315819"
+}

@@ -1,0 +1,34 @@
+{
+  "record_id": "fo_037",
+  "family_office_name": "Omnia Family Wealth",
+  "queried_at_utc": "2026-05-17T09:56:12.910531+00:00",
+  "queries_tried": [
+    {
+      "query": "Omnia Family Wealth",
+      "hit_count": 1
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.0,
+  "match_reason": "name_jaccard=0.75 (vs 'OMNIA FAMILY WEALTH, LLC'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "170909",
+  "sec_file_number": "801-79590",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "OMNIA FAMILY WEALTH, LLC",
+  "firm_other_names": [
+    "OMNIA FAMILY WEALTH, LLC",
+    "TERESE ADVISORS, LLC"
+  ],
+  "firm_branches_count": 1,
+  "sec_address": {
+    "street1": "18851 NE 29TH AVENUE",
+    "street2": "SUITE 400",
+    "city": "AVENTURA",
+    "state": "FL",
+    "country": "United States",
+    "postal_code": "33180"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/170909/PDF/170909.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/170909"
+}

@@ -1,0 +1,20 @@
+{
+  "record_id": "fo_002",
+  "family_office_name": "Ralph Family Office",
+  "queried_at_utc": "2026-05-17T09:55:47.173700+00:00",
+  "queries_tried": [
+    {
+      "query": "Ralph Family Office",
+      "hit_count": 0
+    },
+    {
+      "query": "ralph",
+      "hit_count": 10
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 0.25,
+  "match_reason": "name_jaccard=0.25 (vs 'WEIL, RALPH')",
+  "sec_registered": false,
+  "notes": "No IAPD match above threshold — typical for single-family offices managing only family wealth (no SEC registration requirement)."
+}

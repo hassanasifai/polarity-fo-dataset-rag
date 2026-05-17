@@ -1,0 +1,33 @@
+{
+  "record_id": "fo_049",
+  "family_office_name": "Silvercrest Asset Management",
+  "queried_at_utc": "2026-05-17T09:56:19.342857+00:00",
+  "queries_tried": [
+    {
+      "query": "Silvercrest Asset Management",
+      "hit_count": 1
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 0.85,
+  "match_reason": "name_jaccard=0.60 (vs 'SILVERCREST ASSET MANAGEMENT GROUP LLC'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "118333",
+  "sec_file_number": "801-61004",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "SILVERCREST ASSET MANAGEMENT GROUP LLC",
+  "firm_other_names": [
+    "SILVERCREST ASSET MANAGEMENT GROUP LLC"
+  ],
+  "firm_branches_count": 33,
+  "sec_address": {
+    "street1": "1330 AVENUE OF THE AMERICAS",
+    "street2": "38TH FLOOR",
+    "city": "NEW YORK",
+    "state": "NY",
+    "country": "United States",
+    "postal_code": "10019-5400"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/118333/PDF/118333.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/118333"
+}

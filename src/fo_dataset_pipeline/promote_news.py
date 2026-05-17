@@ -30,6 +30,13 @@ DATASET_PATH_DEFAULT = Path("data/processed/family_offices_validated.csv")
 JSON_PATH_DEFAULT = Path("data/processed/family_offices_validated.json")
 
 DATE_FLOOR = pd.Timestamp("2025-01-01", tz="UTC")
+RECENT_ACTIVITY_METADATA_COLUMNS = (
+    "recent_activity_date",
+    "recent_activity_outlet",
+    "recent_activity_url",
+    "recent_activity_type",
+    "recent_activity_confidence",
+)
 BLOCKED_SOURCE_DOMAINS = {
     "pitchbook.com",
     "crunchbase.com",
@@ -126,6 +133,32 @@ def format_recent_activity(signal: dict) -> str:
     return base
 
 
+def parse_recent_activity_text(activity: str) -> dict[str, str] | None:
+    """Parse the pipeline's compact recent-activity text format.
+
+    Expected format:
+    ``Title (Source, YYYY-MM-DD) — URL``. If the URL is absent we still keep the
+    date/outlet metadata.
+    """
+    text = str(activity or "").strip()
+    if not text:
+        return None
+    match = re.search(
+        r"\((?P<outlet>.*?),\s*(?P<date>\d{4}-\d{2}-\d{2})\)"
+        r"(?:\s+—\s+(?P<url>\S+))?",
+        text,
+    )
+    if not match:
+        return None
+    return {
+        "recent_activity_date": match.group("date"),
+        "recent_activity_outlet": match.group("outlet").strip(),
+        "recent_activity_url": (match.group("url") or "").strip(),
+        "recent_activity_type": "news",
+        "recent_activity_confidence": "previously_promoted_news_signal",
+    }
+
+
 @app.command("run")
 def run_news_promotion(
     dataset: Annotated[Path, typer.Option("--dataset")] = DATASET_PATH_DEFAULT,
@@ -140,18 +173,30 @@ def run_news_promotion(
 
     df = pd.read_csv(dataset).fillna("")
     news_df = pd.read_csv(news)
+    for column in RECENT_ACTIVITY_METADATA_COLUMNS:
+        if column not in df.columns:
+            df[column] = ""
 
     today = datetime.now(UTC).date().isoformat()
     promoted = 0
     no_signal = 0
+    metadata_backfilled = 0
 
     stale_note_re = re.compile(r"\s*;?\s*no recent public signal as of \d{4}-\d{2}-\d{2}")
     for index, row in df.iterrows():
         if row["recent_activity"]:
+            parsed = parse_recent_activity_text(str(row["recent_activity"]))
+            if parsed:
+                for column, value in parsed.items():
+                    if value and not str(row.get(column) or "").strip():
+                        df.at[index, column] = value
+                metadata_backfilled += 1
             continue
         signal = select_signal(news_df, row["family_office_name"])
         if signal is None:
             no_signal += 1
+            df.at[index, "recent_activity_type"] = "none_found"
+            df.at[index, "recent_activity_confidence"] = "no_qualifying_public_signal"
             uncertainty_note = f"no recent public signal as of {today}"
             current = str(row.get("uncertainty_notes") or "")
             if uncertainty_note not in current:
@@ -160,6 +205,11 @@ def run_news_promotion(
                 )
             continue
         df.at[index, "recent_activity"] = format_recent_activity(signal)
+        df.at[index, "recent_activity_date"] = signal["pub_date"]
+        df.at[index, "recent_activity_outlet"] = signal["source_name"]
+        df.at[index, "recent_activity_url"] = signal["url"]
+        df.at[index, "recent_activity_type"] = "news"
+        df.at[index, "recent_activity_confidence"] = "name_token_date_filtered"
         # Remove any stale "no recent public signal" note that an earlier run added.
         cleaned = stale_note_re.sub("", str(row.get("uncertainty_notes") or "")).strip(" ;")
         df.at[index, "uncertainty_notes"] = cleaned
@@ -173,8 +223,8 @@ def run_news_promotion(
         )
 
     typer.echo(
-        f"Recent activity: promoted={promoted}, no_signal={no_signal} "
-        f"(of {len(df)} records)"
+        f"Recent activity: promoted={promoted}, metadata_backfilled={metadata_backfilled}, "
+        f"no_signal={no_signal} (of {len(df)} records)"
     )
 
 

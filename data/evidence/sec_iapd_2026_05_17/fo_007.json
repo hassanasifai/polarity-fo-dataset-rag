@@ -1,0 +1,36 @@
+{
+  "record_id": "fo_007",
+  "family_office_name": "JFG Family Office",
+  "queried_at_utc": "2026-05-17T09:55:49.675340+00:00",
+  "queries_tried": [
+    {
+      "query": "JFG Family Office",
+      "hit_count": 2
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.25,
+  "match_reason": "name_jaccard=1.00 (vs 'JFG FAMILY OFFICE'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "125101",
+  "sec_file_number": "801-79223",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "JFG FAMILY OFFICE",
+  "firm_other_names": [
+    "JFG",
+    "JOHNSON FINANCIAL GROUP LLC",
+    "JOHNSON FAMILY OFFICE",
+    "JFG FAMILY OFFICE"
+  ],
+  "firm_branches_count": 7,
+  "sec_address": {
+    "street1": "1144 FIFTEENTH STREET",
+    "street2": "SUITE 3950",
+    "city": "DENVER",
+    "state": "CO",
+    "country": "United States",
+    "postal_code": "80202"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/125101/PDF/125101.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/125101"
+}

@@ -1,0 +1,34 @@
+{
+  "record_id": "fo_024",
+  "family_office_name": "Cypress Point Wealth Management",
+  "queried_at_utc": "2026-05-17T09:56:02.325251+00:00",
+  "queries_tried": [
+    {
+      "query": "Cypress Point Wealth Management",
+      "hit_count": 10
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 0.8,
+  "match_reason": "name_jaccard=0.80 (vs 'CYPRESS POINT WEALTH MANAGEMENT, LLC')",
+  "sec_registered": true,
+  "sec_crd_number": "143771",
+  "sec_file_number": "801-67840",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "CYPRESS POINT WEALTH MANAGEMENT, LLC",
+  "firm_other_names": [
+    "CYPRESS POINT WEALTH MANAGEMENT, LLC",
+    "CYPRESS WEALTH MANAGEMENT, LLC"
+  ],
+  "firm_branches_count": 2,
+  "sec_address": {
+    "street1": "3838 OAK LAWN AVE",
+    "street2": "SUITE 1150",
+    "city": "DALLAS",
+    "state": "TX",
+    "country": "United States",
+    "postal_code": "75219"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/143771/PDF/143771.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/143771"
+}

@@ -1,0 +1,33 @@
+{
+  "record_id": "fo_017",
+  "family_office_name": "Wildcat Capital Management",
+  "queried_at_utc": "2026-05-17T09:55:56.416310+00:00",
+  "queries_tried": [
+    {
+      "query": "Wildcat Capital Management",
+      "hit_count": 1
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.0,
+  "match_reason": "name_jaccard=0.75 (vs 'WILDCAT CAPITAL MANAGEMENT, LLC'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "162178",
+  "sec_file_number": "801-76510",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "WILDCAT CAPITAL MANAGEMENT, LLC",
+  "firm_other_names": [
+    "WILDCAT CAPITAL MANAGEMENT, LLC"
+  ],
+  "firm_branches_count": 1,
+  "sec_address": {
+    "street1": "888 7TH AVENUE",
+    "street2": "37TH FLOOR",
+    "city": "NEW YORK",
+    "state": "NY",
+    "country": "United States",
+    "postal_code": "10106"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/162178/PDF/162178.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/162178"
+}

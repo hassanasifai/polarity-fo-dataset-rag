@@ -7,11 +7,14 @@ from typer.testing import CliRunner
 
 from fo_dataset_pipeline.enrich_columns import (
     NEW_COLUMNS,
+    SECONDARY_CONTACT_UNCERTAINTY_NOTE,
     app,
+    derive_contact_location,
     derive_domain,
     derive_url_quality,
     enrich_dataframe,
     load_email_evidence_lookup,
+    split_principal_name,
 )
 
 
@@ -77,6 +80,65 @@ def test_enrich_dataframe_leaves_email_columns_blank_when_no_email() -> None:
     enriched = enrich_dataframe(df, {}, validation_period="2026-05")
     assert enriched.loc[0, "primary_email_validation_code"] == ""
     assert enriched.loc[0, "primary_email_quality_assessment"] == ""
+
+
+def test_split_principal_name_splits_first_and_last() -> None:
+    assert split_principal_name("David Dekker") == ("David", "Dekker")
+    assert split_principal_name("Russell W. Dekker") == ("Russell W.", "Dekker")
+    assert split_principal_name("Marc Angle Jr.") == ("Marc", "Angle")
+
+
+def test_split_principal_name_rejects_collective_references() -> None:
+    assert split_principal_name("Dekker family") == ("", "")
+    assert split_principal_name("Founders") == ("", "")
+    assert split_principal_name("Solo") == ("", "")
+    assert split_principal_name("") == ("", "")
+
+
+def test_derive_contact_location_joins_present_parts() -> None:
+    assert derive_contact_location("Bentonville", "AR", "United States") == \
+        "Bentonville, AR, United States"
+    assert derive_contact_location("London", "", "UK") == "London, UK"
+    assert derive_contact_location("", "", "") == ""
+
+
+def test_enrich_dataframe_adds_sample_parity_columns() -> None:
+    df = pd.DataFrame(
+        [
+            {
+                "website_url": "https://foo.com/", "website_ok": True,
+                "website_status_code": 200, "primary_email": "",
+                "principal_name": "Marc Angle", "city": "Boston",
+                "state_region": "MA", "country": "United States",
+            }
+        ]
+    ).fillna("")
+    enriched = enrich_dataframe(df, {}, validation_period="2026-05")
+    assert enriched.loc[0, "contact_first_name"] == "Marc"
+    assert enriched.loc[0, "contact_last_name"] == "Angle"
+    assert enriched.loc[0, "contact_full_name"] == "Marc Angle"
+    assert enriched.loc[0, "contact_location"] == "Boston, MA, United States"
+    assert enriched.loc[0, "secondary_email_validation_code"] == "no_secondary_evidence"
+    assert (
+        SECONDARY_CONTACT_UNCERTAINTY_NOTE
+        in enriched.loc[0, "email_code_explanation_secondary"]
+    )
+
+
+def test_enrich_dataframe_skips_split_when_principal_is_collective() -> None:
+    df = pd.DataFrame(
+        [{"website_url": "https://foo.com/", "website_ok": True,
+          "website_status_code": 200, "primary_email": "",
+          "principal_name": "Dekker family", "city": "NYC", "state_region": "NY",
+          "country": "United States"}]
+    ).fillna("")
+    enriched = enrich_dataframe(df, {}, validation_period="2026-05")
+    assert enriched.loc[0, "contact_first_name"] == ""
+    assert enriched.loc[0, "contact_last_name"] == ""
+    # Full name is still set to the raw principal_name value (which IS what the
+    # workbook stores, even when it's a collective).
+    assert enriched.loc[0, "contact_full_name"] == "Dekker family"
+    assert enriched.loc[0, "contact_location"] == "NYC, NY, United States"
 
 
 def test_cli_run_enrich_persists_changes(tmp_path: Path) -> None:

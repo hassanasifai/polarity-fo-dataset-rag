@@ -1,0 +1,33 @@
+{
+  "record_id": "fo_025",
+  "family_office_name": "Hamilton Gray Wealth Management",
+  "queried_at_utc": "2026-05-17T09:56:02.817977+00:00",
+  "queries_tried": [
+    {
+      "query": "Hamilton Gray Wealth Management",
+      "hit_count": 10
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 0.8,
+  "match_reason": "name_jaccard=0.80 (vs 'HAMILTON GRAY WEALTH MANAGEMENT LLC')",
+  "sec_registered": true,
+  "sec_crd_number": "283000",
+  "sec_file_number": "",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "HAMILTON GRAY WEALTH MANAGEMENT LLC",
+  "firm_other_names": [
+    "HAMILTON GRAY WEALTH MANAGEMENT LLC"
+  ],
+  "firm_branches_count": 1,
+  "sec_address": {
+    "street1": "2700 POST OAK BOULEVARD",
+    "street2": "TWENTY-FIRST FLOOR",
+    "city": "HOUSTON",
+    "state": "TX",
+    "country": "United States",
+    "postal_code": "77056"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/283000/PDF/283000.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/283000"
+}

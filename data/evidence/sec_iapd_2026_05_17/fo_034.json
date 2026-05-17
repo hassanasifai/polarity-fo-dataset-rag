@@ -1,0 +1,20 @@
+{
+  "record_id": "fo_034",
+  "family_office_name": "AlTi Tiedemann Global",
+  "queried_at_utc": "2026-05-17T09:56:11.450085+00:00",
+  "queries_tried": [
+    {
+      "query": "AlTi Tiedemann Global",
+      "hit_count": 0
+    },
+    {
+      "query": "alti tiedemann",
+      "hit_count": 2
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 0.5,
+  "match_reason": "name_jaccard=0.50 (vs 'ALVARIUM TIEDEMANN ALTI')",
+  "sec_registered": false,
+  "notes": "No IAPD match above threshold — typical for single-family offices managing only family wealth (no SEC registration requirement)."
+}

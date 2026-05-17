@@ -1,0 +1,20 @@
+{
+  "record_id": "fo_001",
+  "family_office_name": "Cat Trail Capital",
+  "queried_at_utc": "2026-05-17T09:55:45.823271+00:00",
+  "queries_tried": [
+    {
+      "query": "Cat Trail Capital",
+      "hit_count": 1
+    },
+    {
+      "query": "cat trail",
+      "hit_count": 1
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 0.2,
+  "match_reason": "name_jaccard=0.20 (vs 'WASATCH CAPITAL RESOURCES')",
+  "sec_registered": false,
+  "notes": "No IAPD match above threshold — typical for single-family offices managing only family wealth (no SEC registration requirement)."
+}

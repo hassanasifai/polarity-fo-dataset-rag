@@ -1,0 +1,43 @@
+{
+  "record_id": "fo_046",
+  "family_office_name": "Fiduciary Trust International",
+  "queried_at_utc": "2026-05-17T09:56:17.580986+00:00",
+  "queries_tried": [
+    {
+      "query": "Fiduciary Trust International",
+      "hit_count": 1
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 0.75,
+  "match_reason": "name_jaccard=0.75 (vs 'FIDUCIARY TRUST INTERNATIONAL, LLC')",
+  "sec_registered": true,
+  "sec_crd_number": "124062",
+  "sec_file_number": "801-62001",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "FIDUCIARY TRUST INTERNATIONAL, LLC",
+  "firm_other_names": [
+    "ATHENA ALPHA INVESTORS GP, LLC (RELYING ADVISER)",
+    "OLIVE TREE INVESTORS, LLC (RELYING ADVISER)",
+    "FIDUCIARY TRUST INTERNATIONAL, LLC",
+    "ATHENA STONEHORSE FUND GP LLC (RELYING ADVISER)",
+    "ATHENA STONEHORSE CAPITAL MANAGEMENT LLC (RELYING ADVISER)",
+    "ATHENA CAPITAL ADVISORS, INC.",
+    "ATHENA CAPITAL ADVISORS NY LLC",
+    "ATHENA CAPITAL ADVISORS LLC",
+    "ATHENA CAPITAL ADVISORS CA LLC",
+    "ATHENA ALPHA PARTNERS, LP",
+    "ATHENA ALPHA INVESTORS, LP"
+  ],
+  "firm_branches_count": 4,
+  "sec_address": {
+    "street1": "55 OLD BEDFORD RD",
+    "street2": "SUITE 302",
+    "city": "LINCOLN",
+    "state": "MA",
+    "country": "United States",
+    "postal_code": "01773"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/124062/PDF/124062.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/124062"
+}

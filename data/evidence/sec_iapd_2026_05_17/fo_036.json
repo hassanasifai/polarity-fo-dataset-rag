@@ -1,0 +1,34 @@
+{
+  "record_id": "fo_036",
+  "family_office_name": "Stonehage Fleming",
+  "queried_at_utc": "2026-05-17T09:56:12.438026+00:00",
+  "queries_tried": [
+    {
+      "query": "Stonehage Fleming",
+      "hit_count": 2
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.0,
+  "match_reason": "name_jaccard=1.00 (vs 'STONEHAGE FLEMING')",
+  "sec_registered": true,
+  "sec_crd_number": "313913",
+  "sec_file_number": "801-122831",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "STONEHAGE FLEMING",
+  "firm_other_names": [
+    "STONEHAGE FLEMING",
+    "STONEHAGE FLEMING INVESTMENT MANAGEMENT LIMITED"
+  ],
+  "firm_branches_count": 0,
+  "sec_address": {
+    "street1": "6 ST JAMES'S SQUARE",
+    "street2": null,
+    "city": "LONDON, GREATER LONDON",
+    "state": null,
+    "country": "United Kingdom",
+    "postal_code": "SW1Y 4JU"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/313913/PDF/313913.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/313913"
+}

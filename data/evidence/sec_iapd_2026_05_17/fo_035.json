@@ -1,0 +1,38 @@
+{
+  "record_id": "fo_035",
+  "family_office_name": "WE Family Offices",
+  "queried_at_utc": "2026-05-17T09:56:11.964651+00:00",
+  "queries_tried": [
+    {
+      "query": "WE Family Offices",
+      "hit_count": 8
+    }
+  ],
+  "match_threshold": 0.6,
+  "match_score": 1.25,
+  "match_reason": "name_jaccard=1.00 (vs 'WE FAMILY OFFICES'); address_match=city+state",
+  "sec_registered": true,
+  "sec_crd_number": "109869",
+  "sec_file_number": "801-60025",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "WE FAMILY OFFICES",
+  "firm_other_names": [
+    "GENSPRING FAMILY OFFICES",
+    "WE FAMILY OFFICES",
+    "W.E. FAMILY OFFICES, LLC",
+    "TBK INVESTMENTS, INC.",
+    "GENSPRING INTERNATIONAL LLC",
+    "GENSPRING FAMILY OFFICES INTERNATIONAL LLC"
+  ],
+  "firm_branches_count": 5,
+  "sec_address": {
+    "street1": "2811 PONCE DE LEON BLVD",
+    "street2": "SUITE 840",
+    "city": "CORAL GABLES",
+    "state": "FL",
+    "country": "United States",
+    "postal_code": "33134"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/109869/PDF/109869.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/109869"
+}
