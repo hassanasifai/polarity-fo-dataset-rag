@@ -23,6 +23,16 @@ pythonpath = ["src"]
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+exclude = [
+  ".pytest_cache",
+  ".ruff_cache",
+  "data",
+  "rag_demo/data",
+]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.per-file-ignores]
+"rag_demo/scripts/*.py" = ["E402"]
+"rag_demo/src/ui/app.py" = ["E402"]
