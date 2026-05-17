@@ -1,0 +1,2 @@
+run_label,job_id,started_at_utc,finished_at_utc,input_url_count,final_status,completed,total,credits_used,raw_json_path,summary_csv_path,error_count,robots_blocked_count
+firecrawl_exact_sources_full_2026_05_17,019e340b-89e1-734d-9f0a-aa16539ee1d9,2026-05-17T03:47:10Z,2026-05-17T03:50:02Z,103,completed,101,101,101,D:\PolarityIQ_Workspace\fo_dataset_pipeline\data\evidence\firecrawl_exports\2026-05-17\firecrawl_exact_sources_full_2026_05_17.json,D:\PolarityIQ_Workspace\fo_dataset_pipeline\data\processed\firecrawl_crawl_evidence.csv,2,0

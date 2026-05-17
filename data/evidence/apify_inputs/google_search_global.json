@@ -1,0 +1,14 @@
+{
+  "queries": "\"single family office\" \"official website\" \"investment office\"\n\"multi-family office\" \"official website\" \"family office services\"\n\"family office\" \"Companies House\"\n\"family office\" \"Singapore\" \"investment office\"\n\"family office\" \"Hong Kong\" \"multi-family office\"\n\"family office\" \"Switzerland\" \"investment office\"",
+  "countryCode": "gb",
+  "languageCode": "en",
+  "searchLanguage": "en",
+  "resultsPerPage": 20,
+  "maxPagesPerQuery": 1,
+  "mobileResults": false,
+  "includeUnfilteredResults": false,
+  "saveHtml": false,
+  "saveHtmlToKeyValueStore": false,
+  "maximumLeadsEnrichmentRecords": 0,
+  "focusOnPaidAds": false
+}

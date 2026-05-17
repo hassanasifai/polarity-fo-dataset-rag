@@ -1,0 +1,2 @@
+actor_id,run_label,status,item_count,limitation
+apify/cheerio-scraper,cheerio_homepage_fallback_2026_05_17,BLOCKED_403_PERMISSION_APPROVAL_REQUIRED,0,Apify account must approve full-permission actor before apify/cheerio-scraper can run.

@@ -1,0 +1,51 @@
+record_id,family_office_name,validation_status,confidence,validation_score,website_ok,website_status_code,sources_attached,sources_reachable,validation_notes,uncertainty_notes
+fo_001,Cat Trail Capital,accepted,high,94,True,200,3,3,passed configured validation checks,High-confidence SFO because classification comes from the entity website not a directory
+fo_002,Ralph Family Office,accepted,high,88,True,200,2,2,passed configured validation checks,Single-page official site is supported by UK company registry record
+fo_003,Ohana Advisors,accepted,high,82,True,200,2,2,passed configured validation checks,Regulatory details should be expanded with exact IAPD CRD after Form ADV extraction
+fo_004,Longwall Family Office,accepted,high,88,True,200,3,3,passed configured validation checks,Service-provider MFO not a single-family office
+fo_005,SJS Investment Services,accepted,high,82,True,200,2,2,passed configured validation checks,Accepted as MFO service provider based on explicit official page language
+fo_006,CM Wealth,accepted,high,88,True,200,3,3,passed configured validation checks,Strong MFO because the site discloses family count and AUM language
+fo_007,JFG Family Office,accepted,high,94,True,200,3,3,passed configured validation checks,Former jfgwealth.net redirects to current jfgfamilyoffice.com brand
+fo_008,Lennertz & Co.,accepted,high,82,True,200,2,2,passed configured validation checks,Regulated German platform should be supplemented with BaFin registry in a later pass
+fo_009,Venitage,accepted,high,82,True,200,2,2,passed configured validation checks,Small boutique profile with limited public investment detail
+fo_010,Boston Multi Family Office,accepted,high,82,True,200,2,2,passed configured validation checks,Jurisdiction and regulatory details should be enriched from Isle of Man records later
+fo_011,The O'Donnell Group,accepted,high,88,True,200,3,3,passed configured validation checks,Accepted as a family-office service provider rather than a traditional single-family office
+fo_012,SSA Swiss Advisors AG,accepted,high,88,True,200,2,2,passed configured validation checks,Affiliation with Santander should be preserved as context not treated as a standalone family office
+fo_013,Scott Capital Partners,accepted,high,88,True,200,2,2,passed configured validation checks,Very strong MFO evidence because ADV language is explicit and current
+fo_014,Third View Private Wealth,accepted,high,94,True,200,3,3,passed configured validation checks,Newer firm so AUM/client-assets language should be dated and sourced if included
+fo_015,Haven Private,accepted,high,88,True,200,2,2,passed configured validation checks,Replaced PEAKHOUSE because its site passed live HTTP but did not return Apify crawl evidence
+fo_016,PremjiInvest,accepted,high,94,True,200,3,3,passed configured validation checks,Public material supports investment office classification
+fo_017,Wildcat Capital Management,accepted,high,94,True,200,3,3,passed configured validation checks,Official site language supports SFO identity but current domain differs from older public references
+fo_018,AT Capital Group,accepted,high,94,True,200,3,3,passed configured validation checks,Some sector detail is inferred from public platform descriptions
+fo_019,East Rock Capital,accepted,high,82,True,200,2,2,passed configured validation checks,Decision-maker fields left blank until sourced directly
+fo_020,Verlinvest,accepted,high,94,True,200,3,3,passed configured validation checks,Family sponsor wording kept broad because ownership details vary across sources
+fo_021,Okabena Company,accepted,high,88,True,200,2,2,passed configured validation checks,Public site supports family office identity but is concise
+fo_022,Major Domus,accepted,high,82,True,200,2,2,passed configured validation checks,Second page redirects to member access but remains a live official URL
+fo_023,Persimmon Capital Management,accepted,high,88,True,200,2,2,passed configured validation checks,Replaced royal estate vehicle with explicit ADV-backed multi-family office
+fo_024,Cypress Point Wealth Management,accepted,high,82,True,200,2,2,passed configured validation checks,Replaced broad family-backed investment firm with ADV-backed family office service provider
+fo_025,Hamilton Gray Wealth Management,accepted,high,82,True,200,2,2,passed configured validation checks,Replaced Baltisse because its official pages passed live HTTP but did not return Apify crawl evidence
+fo_026,Yamauchi No. 10 Family Office,accepted,high,88,True,200,2,2,passed configured validation checks,Specific thesis summarized conservatively from public site positioning
+fo_027,Indie Asset Partners,accepted,high,82,True,200,2,2,passed configured validation checks,Replaced royal estate vehicle with ADV-backed multi-family office service record
+fo_028,Marinya Capital,accepted,high,94,True,200,3,3,passed configured validation checks,Public details are limited but official investment strategy is available
+fo_029,Reimann Investors,accepted,high,88,True,200,2,2,passed configured validation checks,Classified as family-backed investment firm because public materials emphasize entrepreneurial investing
+fo_030,Private Wealth Asset Management,accepted,high,88,True,200,3,3,passed configured validation checks,Public site supports MFO classification and avoids relying on third-party directories
+fo_031,Bessemer Trust,accepted,high,82,True,200,2,2,passed configured validation checks,Decision-maker fields left blank because public leadership does not equal a single principal
+fo_032,Pathstone,accepted,high,82,True,200,2,2,passed configured validation checks,Exact AUM should be validated from ADV or company disclosures before inclusion
+fo_033,Cresset,accepted,high,82,True,200,2,2,passed configured validation checks,Regulatory AUM not included until independently extracted
+fo_034,AlTi Tiedemann Global,accepted,high,82,True,200,2,2,passed configured validation checks,Public company disclosures may update AUM frequently
+fo_035,WE Family Offices,accepted,high,82,True,200,2,2,passed configured validation checks,Assets under advisement should be refreshed from latest ADV or firm page
+fo_036,Stonehage Fleming,accepted,high,82,True,200,2,2,passed configured validation checks,Global office footprint requires country-level interpretation
+fo_037,Omnia Family Wealth,accepted,high,82,True,200,2,2,passed configured validation checks,Replaced Northwood because its official site intermittently failed strict live website validation
+fo_038,Ballentine Partners,accepted,high,82,True,200,2,2,passed configured validation checks,Classified as MFO based on client focus and service model
+fo_039,TwinFocus,accepted,high,82,True,200,2,2,passed configured validation checks,Public materials support MFO classification
+fo_040,Laird Norton Wetherby,accepted,high,88,True,200,2,2,passed configured validation checks,Former brand URLs redirect to LNWA Advisors
+fo_041,Aspiriant,accepted,high,82,True,200,2,2,passed configured validation checks,Public service positioning supports MFO classification
+fo_042,Homrich Berg,accepted,high,82,True,200,2,2,passed configured validation checks,Brand has shifted toward HB Wealth so source URLs intentionally preserve the current and legacy domains
+fo_043,Tolleson Wealth Management,accepted,high,88,True,200,2,2,passed configured validation checks,Public details support MFO classification
+fo_044,Greycourt,accepted,high,82,True,200,2,2,passed configured validation checks,Official site presents family office co-sourcing rather than full outsourced MFO language
+fo_045,Matter Family Office,accepted,high,82,True,200,2,2,passed configured validation checks,Public site supports direct family office identity
+fo_046,Fiduciary Trust International,accepted,high,82,True,200,2,2,passed configured validation checks,Part of a larger financial group so classification is service-line based
+fo_047,Cerity Partners,accepted,high,82,True,200,2,2,passed configured validation checks,Large advisory platform rather than private single-family office
+fo_048,Whittier Trust,accepted,high,88,True,200,2,2,passed configured validation checks,Public site supports multi-family office and trust company classification
+fo_049,Silvercrest Asset Management,accepted,high,82,True,200,2,2,passed configured validation checks,Classified as MFO style wealth manager based on official client focus
+fo_050,Wren Investment Office,accepted,high,82,True,200,2,2,passed configured validation checks,Public site supports investment office classification
