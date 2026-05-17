@@ -11,13 +11,17 @@
 
 This repository optimizes for evidence visibility rather than generative polish. ChromaDB is used for local dense retrieval, BM25 is kept separate for exact lexical matching, and deterministic extraction is the default answer mode. The optional local LLM path is deliberately downstream of evidence selection and is rejected if it introduces new sensitive-looking tokens.
 
-## Falsifiable Choices
+## Falsification Conditions
 
-- Dataset contract: exactly 50 rows and 116 columns.
-- Chunk counts: one profile, contact-policy, and regulatory chunk per accepted record; recent-activity chunks only when evidence exists.
-- Sensitive-field behavior: missing phone, principal LinkedIn, AUM, SEC, and recent activity must abstain or caveat rather than invent.
-- Citation behavior: non-abstained answers must include retrieved record citations where source URLs are available.
-- Eval behavior: the 20-question golden set measures hit@3, MRR, record recall@5, citation accuracy, unsupported claims, abstention accuracy, and missing-data honesty.
+| Claim | What would falsify it |
+|---|---|
+| Dataset contract is locked | Anything other than exactly 50 rows and 133 columns in `family_offices_validated.json` / XLSX `data_50`. |
+| These rows are evidence-backed family-office records | Three or more rows fail official-site/source review or turn out to be generic RIAs with no family-office/UHNW-family framing. |
+| RAG safely abstains on sensitive missing fields | Any golden or manual query for principal personal email/phone, missing AUM, or missing recent activity returns an inferred value. |
+| Citations are trustworthy | A non-abstained answer lacks a citation when the supporting record has source URLs. |
+| BGE-small + BM25 is sufficient for this corpus | Hit@3 drops below 0.85 on alias/spelling/entity categories in the adversarial eval. |
+| Recent-activity answers are snapshot-bound | The UI or answer text implies live/current news beyond the 2026-05-17 validation snapshot. |
+| Form ADV parsing is conservative | `sec_aum_usd` is populated from anything other than a reliable regulatory-AUM pattern in the SEC PDF text. |
 
 ## Limitations
 

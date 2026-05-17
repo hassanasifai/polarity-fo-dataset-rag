@@ -1,5 +1,19 @@
 # Methodology Summary
 
+## How I Worked This (HVL trace)
+
+[OBSERVE] The reference workbook rewards entity, principal, contact, signal, and validation coverage, but the public family-office web is uneven: official sites often name the family or firm while hiding personal contact channels.
+
+[ASSUME] [ASSUMPTION: a blank field is better than an inferred field when the evidence does not directly support the value.] I treated "Hidden" in the sample workbook as a masking convention, not permission to invent private data.
+
+[QUESTION] The biggest judgment call was principal coverage. After the automated passes, only a few official team pages gave clean person-role pairs. I could have raised the completion score by pulling LinkedIn profiles from broad web search, but that would have mixed official evidence with name-matched guesses.
+
+[HYPOTHESIS] The best submission signal is not maximum fill rate. It is a dataset where every filled value can survive a source click, and every blank value tells the evaluator what was searched and why it stayed blank.
+
+[VALIDATE] I kept promotion gates deterministic: exact domain matches for LinkedIn company and Google Places, SEC/IAPD thresholded matches, date/name filters for recent activity, and quote-level validation chains. The workbook audit now checks row count, source count, evidence pairing, data dictionary coverage, and validation-chain quote extraction.
+
+[CAVEATS] Two areas remain genuinely uncertain: Google Places phone conflicts, where the official/contact-source phone is retained as canonical; and personal principal profiles, where only official-profile LinkedIn URLs are promoted.
+
 ## How I Found Them
 
 - Started with broad public discovery, then replaced directory-dependent rows with candidates supported by official websites, official family-office service pages, SEC/IAPD-style disclosures, company registry pages, or official PDFs.
@@ -54,6 +68,14 @@ Each flagged row was reviewed against the on-disk source notes, Firecrawl markdo
 - The live validator requests the official website and every source URL and stores URL status metadata in the processed CSV, XLSX, and JSON outputs.
 - Final delivery gate used `--required-count 50`, so the run fails unless exactly 50 records are accepted.
 
+### Things that did not work
+
+- The Apify email-verifier actor was blocked by actor permissions, so I did not claim SMTP-level email verification. The new `primary_email_smtp_verified` field is `False` for every promoted corporate email.
+- The LinkedIn People scraper experiment did not produce usable target-record employees. I promoted only official-site person-role evidence and official-profile LinkedIn links.
+- Firecrawl skipped the JFG Form CRS PDF. I downloaded the public PDF and extracted the exact quote with `pypdf` rather than leaving a TODO or fabricating a snippet.
+- The Verlinvest team page is a profile-card grid, not a narrative page. I used exact card text for names and roles and documented that judgment in the validation chain.
+- Relaxing the recent-news filter would have increased coverage, but it pulled in weak round-ups and incidental mentions. I stopped at 21 sourced signals.
+
 ### Recent-Activity Promotion (Pass 4)
 
 Recent activity was populated from `google_news_recent_signals.csv` (203 raw rows) using these filters in order: drop scraper-error rows, require `pubDate >= 2025-01-01`, require all informative tokens of the FO name to appear in the title, reject items from directory/aggregator sources (pitchbook, crunchbase, zoominfo, swfinstitute, wikipedia), then take the most recent surviving row.
@@ -98,9 +120,11 @@ The public IAPD search API (`https://api.adviserinfo.sec.gov/search/firm?query=.
 
 For the FOs whose Firecrawl-captured team/leadership/about pages contained named-person + role patterns, a deterministic markdown extractor surfaced 20 individuals across 3 firms (Verlinvest, Haven Private, Okabena Company). These are written into three principal slots per row (`principal_1_*` through `principal_3_*`), ordered by role seniority (Founder/Chair/President → CEO/CIO/CFO/COO → Managing Partner/Director → Partner → Principal → Director → Other), with every cell paired with the source page URL.
 
+After the strict review, I added a narrow manual-review pass for the 3 featured validation-chain records. It fills official-site principal slots for Cat Trail, JFG, and Verlinvest. Only Verlinvest receives principal LinkedIn URLs because its official profile pages link to those personal profiles; Cat Trail and JFG keep LinkedIn slots blank.
+
 - **Confidence label:** `corporate_team_page` — name and role observed on the FO's own team/about page.
-- **What we refused to fabricate:** principal LinkedIn URLs, work emails, and personal phones. Cross-referenced personal contact channels were not available for these 20 individuals from the public team-page evidence we have. Adding inferred data would be guessing.
-- **Coverage limitation:** only 3 of 50 FOs have multi-principal data populated. Expanding coverage to the remaining 47 would require either Apify LinkedIn People scraping (cookieless variant, Apify-credit-bound) or a fresh Firecrawl pass with team-page URL discovery — both are next-iteration work.
+- **What we refused to fabricate:** principal work emails and personal phones. Principal LinkedIn URLs are populated only when the entity's official profile/team page exposes the link.
+- **Coverage limitation:** 5 of 50 FOs now have at least one multi-principal slot populated, and 1 of 50 has official personal LinkedIn profile URLs. Expanding coverage to ≥20 records would require a higher-yield LinkedIn People workflow or manual official-profile review across every firm; broad Google-to-LinkedIn name matching was rejected as too inferential for this submission.
 - **Existing `principal_name` / `principal_title` columns** (populated for 19 of 50 from the original validator pass) are preserved unchanged; the new multi-principal columns are additive.
 
 ### Sample Workbook Parity + Data Completion Score (Pass 10)
@@ -114,10 +138,10 @@ The PolarityIQ-supplied sample workbook (`FO-MAX-data-sample-2.0.xlsx`) carries 
 
 ### Final Evidence Augmentation + Workbook Audit (Pass 11)
 
-After all promoters ran, the workbook was rebuilt with 116 columns and 16 sheets. A deterministic augmentation pass appended claim-level evidence for post-validation fields that were not present in the original validator's `field_evidence.csv`: LinkedIn company enrichment, social handles, Google Places corroboration, street addresses, SEC IAPD identifiers, principal slots, sample-parity derivations, completion scores, and recent-activity metadata.
+After all promoters ran, the workbook was rebuilt with 133 columns and 16 sheets. A deterministic augmentation pass appended claim-level evidence for post-validation fields that were not present in the original validator's `field_evidence.csv`: LinkedIn company enrichment, social handles, Google Places corroboration, street addresses, SEC IAPD identifiers, Form ADV parsed fields, principal slots, sample-parity derivations, completion scores, and recent-activity metadata.
 
-- **Field evidence:** 476 seed evidence rows → 1,848 total evidence rows after augmentation.
-- **Data dictionary:** 116 definitions, one for every `data_50` column.
+- **Field evidence:** 476 seed evidence rows → 2,135 total evidence rows after augmentation.
+- **Data dictionary:** 133 definitions, one for every `data_50` column.
 - **Recent activity metadata:** 21 rows retain sourced news signals; the remaining 29 are explicitly marked `recent_activity_type = none_found`.
 - **LinkedIn People scrape decision:** a cookieless Apify actor was probed. The only successful probe was outside the final 50-row dataset, while target-record runs returned no usable employees. No principal LinkedIn URLs were promoted from that experiment.
 
@@ -126,23 +150,23 @@ After all promoters ran, the workbook was rebuilt with 116 columns and 16 sheets
 The dataset is internally consistent, evidence-backed, and tested. It still has gaps a reader should know about before relying on it:
 
 - **Email deliverability is not verified.** Promoted emails pass syntax + MX checks only; SMTP-level verification was blocked by Apify actor permissions. Treat them as best-effort corporate addresses, not confirmed inboxes.
-- **Principal-specific LinkedIn / work email / direct phone are populated for 0 / 0 / 0 of 50 rows.** Corporate-level email/phone coverage is stronger (26 corporate emails and 20 corporate phones), but those are not represented as personal channels. Workstream 9 added multi-principal coverage (`principal_1_*` through `principal_3_*`) for 3 firms with rich team pages (Verlinvest, Haven Private, Okabena — 20 named individuals in total). Expanding to the remaining 47 FOs requires better team-page discovery or a higher-yield LinkedIn People workflow.
-- **Form ADV / Form CRS PDF content is not yet extracted.** The IAPD pass (Workstream 8) recovered the AUTHORITATIVE Form ADV Part 2A brochure URL for 33 of 50 firms but did not parse the PDF body. AUM, fee structure, conflict disclosures, and listed officers therefore are not yet promoted into the dataset; they are reachable one click away via `form_adv_brochure_url`.
+- **Principal-specific work email / direct phone are populated for 0 / 0 of 50 rows.** Corporate-level email/phone coverage is stronger (26 corporate emails and 20 corporate phones), but those are not represented as personal channels. Official-site principal slots are populated for the 3 featured validation records, and official personal LinkedIn URLs are populated only for Verlinvest's linked profile pages.
+- **Form ADV PDF parsing is best-effort, not a legal-data parser.** The SEC PDFs were parsed for 33 registered firms and `sec_aum_usd` was populated where the Item 5.F regulatory-AUM pattern was reliable. Fee labels are keyword-derived. Listed officers remain blank because the Schedule A table text was not reliable enough to promote without manual review.
 - **Recent activity coverage is 21/50.** Small or private offices without 2025+ press coverage are honestly tagged with `recent_activity_type = none_found` rather than padded with weak matches.
 - **Data Completion Score median is 20 of 31 against the sample's 31-column denominator.** The sample's median is in the 25–28 range, but the sample masks principal contact channels as "Hidden" while still counting them; we leave them honestly null. Apples-to-apples comparison would close most of the gap.
-- **Three featured validation chains include 2 known unavailable snippets** — Firecrawl skipped the JFG Form CRS PDF (it does not crawl PDFs by default) and the Verlinvest team page is a team grid with no narrative sentence. Both are disclosed in the chains document with a manual-snippet TODO rather than fabricated.
+- **The three featured validation chains now have 18 extracted quote rows.** Two rows are manual-review extractions: the JFG PDF quote is extracted from downloaded PDF text, and the Verlinvest team quote is exact profile-card text from the Firecrawl markdown grid.
 - **Google Places sometimes returns the wrong business.** 17 of 50 Places results were rejected because the returned `website` domain did not match the FO. The 6 surfaced phone conflicts (Places phone disagreeing with our scraped phone) are honestly flagged in `primary_phone_corroborated_by_places = False` so a reviewer can investigate.
-- **The manual `human_audit_status` column** is reviewer-owned and starts at `pending`. The automated pre-screen flagged 9 of 50 rows for closer inspection; the remaining 41 passed the heuristics but have not been individually re-clicked. A row-by-row click-through is still recommended before submission.
+- **The final `human_audit_status` distribution is `pass=50/50`.** Nine flagged rows received explicit checked-in review decisions. The remaining 41 were accepted through deterministic evidence gates rather than a fresh live click-through on submission day.
 - **Some MFO classifications are service-provider relationships, not private SFOs.** Where this is the case the `family_office_type` is set to `multi_family_office` and the `uncertainty_notes` field calls out the service-provider framing explicitly. A reader who applies a stricter "family office" definition will discount these rows.
-- **AUM is missing for most records** because public AUM disclosures are inconsistent. Where present, AUM is quoted from the source language in `aum_text`; it is never inferred.
+- **Self-described AUM is still conservative.** SEC regulatory AUM is parsed for registered firms where the Form ADV text supports it, but marketing-site AUM remains blank unless the source says it directly.
 - **Brand-abbreviated domains** (5 rows: O'Donnell→ogwealth, Major Domus→mdmfo, Yamauchi N.10→y-n10, Laird Norton Wetherby→lnwadvisors, Homrich Berg→hbwealth) are flagged by the pre-screen so a reviewer can confirm domain → entity mapping without surprise.
 - **Live URL validation depends on network conditions.** Reruns may surface intermittent failures even on URLs that were green at capture time; the validation snapshot date is 2026-05-17.
 
 ## What I Would Improve
 
-- **Parse Form ADV PDF bodies.** Workstream 8 captured the SEC-authoritative Form ADV Part 2A brochure URLs but did not extract their content. Parsing each PDF would yield regulatory AUM, fee structure, conflict-of-interest disclosures, and listed officers from a source the SEC itself certifies. Estimated work: ~1 day with `pdfplumber` + a deterministic field extractor.
-- **Expand multi-principal coverage from 3 FOs to ≥30.** The team-roster extractor currently surfaces named officers only from FOs whose team page was already in the Firecrawl snapshot (12 of 50). A fresh Firecrawl pass on team-page URL candidates (plus a cookieless LinkedIn People scrape for the SEC-registered firms) would lift the coverage to most rows.
+- **Improve Form ADV officer extraction.** Regulatory AUM now parses for the 33 SEC-registered records, but Schedule A officer tables still need a page-aware extractor plus manual validation before promotion.
+- **Expand multi-principal coverage from 5 FOs to ≥30.** The team-roster extractor currently surfaces named officers only from FOs whose team page was already in the Firecrawl snapshot or manually reviewed for the featured chains. A fresh Firecrawl pass on team-page URL candidates would lift the coverage without relying on inferred LinkedIn matches.
 - **Add ProPublica Form 990 enrichment for foundation-style FOs.** The ProPublica Nonprofit Explorer API (`https://projects.propublica.org/nonprofits/api/v2/organizations/{EIN}.json`) returns trustee names and officer compensation from Form 990-PF for free — ideal for the Walton-style family foundations in the dataset.
 - **Add archived copies or hashes of source artifacts** so link rot does not weaken the audit trail. The Apify + Firecrawl raw exports under `data/evidence/` already serve as a partial snapshot, but no checksum is recorded.
 - **Add a human review column for contradiction checks** across official pages, regulatory filings, and third-party rankings. The 6 phone-corroboration conflicts surfaced by Pass 7 are a real example of where this would add value.
-- **Use the finalized dataset to build RAG chunks** with record IDs, evidence IDs, source URLs, confidence scores, and validation status as metadata. This is the next workstream after the dataset is locked.
+- **Keep the RAG demo and dataset in lockstep.** The submitted RAG demo in `rag_demo/` rebuilds from the locked JSON and now checks the 133-column dataset contract before indexing.

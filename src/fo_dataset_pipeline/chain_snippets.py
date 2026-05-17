@@ -58,6 +58,32 @@ class ChainTarget:
     enrichment_steps: tuple[str, ...]
     uncertainties: tuple[str, ...]
     falsifiers: tuple[str, ...]
+    reconciliation_note: str
+
+
+MANUAL_SOURCE_QUOTES: dict[str, tuple[tuple[str, str], ...]] = {
+    "https://jfgfamilyoffice.com/pdf/JFG-Family-Office-Form-CRS.pdf": (
+        (
+            "Johnson Financial Group LLC, DBA JFG Family Office is registered with "
+            "the Securities and Exchange Commission as an investment adviser.",
+            "Manual PDF text extraction with pypdf; Firecrawl does not crawl PDFs.",
+        ),
+        (
+            "JFG's minimum annual fee is $100,000.",
+            "Manual PDF text extraction with pypdf; used as regulatory service context.",
+        ),
+    ),
+    "https://www.verlinvest.com/team/": (
+        (
+            "Roberto Italia Chief Executive Officer",
+            "Manual review of Firecrawl profile-card text; no narrative sentence was present.",
+        ),
+        (
+            "Rachel Citera Principal, New York",
+            "Manual review of Firecrawl profile-card text; no narrative sentence was present.",
+        ),
+    ),
+}
 
 
 CHAINS: tuple[ChainTarget, ...] = (
@@ -99,7 +125,8 @@ CHAINS: tuple[ChainTarget, ...] = (
         ),
         uncertainties=(
             "No public AUM is disclosed on the site; AUM left blank.",
-            "Principal family is named but no individual principal title is publicly listed.",
+            "Named operators are visible on the team section, but personal contact channels "
+            "and personal LinkedIn profiles are not linked by the official site.",
             "Sector exposure is derived from broad descriptions, not portfolio-level disclosure.",
         ),
         falsifiers=(
@@ -107,6 +134,13 @@ CHAINS: tuple[ChainTarget, ...] = (
             "the single-family office classification must be downgraded.",
             "If the Dekker family attribution is later contradicted by a primary source, "
             "principal_name must be cleared.",
+        ),
+        reconciliation_note=(
+            "The first pass only captured Cat Trail as a Dekker-family entity, not a named "
+            "operator. I almost left the principal layer at the family level until the "
+            "official team section exposed David Dekker, Russell Dekker, and Andrew "
+            "Budinoff with roles. I still did not promote personal contact channels "
+            "because the site links only to the company LinkedIn page."
         ),
     ),
     ChainTarget(
@@ -132,9 +166,8 @@ CHAINS: tuple[ChainTarget, ...] = (
         ),
         enrichment_steps=(
             "Captured official site markdown via Firecrawl on 2026-05-17 for the home and "
-            "/better-way pages; the Form CRS PDF was acknowledged but not text-extracted "
-            "because Firecrawl skips PDFs by default — recorded as `markdown_unavailable` "
-            "rather than guessed.",
+            "/better-way pages; the Form CRS PDF was downloaded and text-extracted with "
+            "`pypdf` after Firecrawl skipped PDF text.",
             "Verified the canonical domain (jfgfamilyoffice.com) against the legacy "
             "jfgwealth.net brand; older references redirect to the current site.",
             "Captured corporate contact signals via Apify vdrmota/contact-info-scraper "
@@ -146,14 +179,20 @@ CHAINS: tuple[ChainTarget, ...] = (
         uncertainties=(
             "Former jfgwealth.net brand still surfaces in older references; current canonical "
             "domain is jfgfamilyoffice.com.",
-            "Founding-family name (Johnson family) is supported by the site but no further "
-            "individual principal title is publicly listed.",
+            "Leadership names and roles are visible in official bios, but personal contact "
+            "channels are not linked by the official site.",
         ),
         falsifiers=(
             "If the Form CRS PDF describes JFG as a generic RIA without family-office "
             "framing, the MFO label must be re-evaluated.",
             "If the better-way page is removed and no MFO/SFO-origin language is preserved "
             "anywhere on the site, the classification basis weakens.",
+        ),
+        reconciliation_note=(
+            "JFG uses both legacy JFG Wealth wording and the current JFG Family Office "
+            "brand. I treated the current domain as canonical, then used the Form CRS "
+            "PDF only after manually extracting the PDF text instead of pretending "
+            "Firecrawl had read it."
         ),
     ),
     ChainTarget(
@@ -179,8 +218,8 @@ CHAINS: tuple[ChainTarget, ...] = (
         ),
         enrichment_steps=(
             "Captured official site markdown via Firecrawl on 2026-05-17 for the home and "
-            "/approach pages; the /team page is a grid of profile cards with no narrative "
-            "sentence — recorded transparently as `no_keyword_match` rather than fabricated.",
+            "/approach pages; the /team page is a grid of profile cards, so exact card text "
+            "was used for names and roles rather than a fabricated narrative sentence.",
             "Confirmed the family-backed framing through the /approach page's verbatim "
             "phrasing 'as a family-backed business'.",
             "Recent activity: promoted a 2025 YourStory.com headline "
@@ -200,6 +239,13 @@ CHAINS: tuple[ChainTarget, ...] = (
             "families, the family-backed classification must be revisited.",
             "If the team page de-emphasizes family sponsor framing, source_notes must be "
             "updated to reflect a pure investment-firm description.",
+        ),
+        reconciliation_note=(
+            "Verlinvest is not a classic SFO. The strongest evidence says "
+            "`family-backed business`, so I kept the label broad. The team page also "
+            "looked like a failed extraction at first, but the markdown did contain "
+            "profile-card names and roles; I used those exact card strings and did "
+            "not invent a sentence around them."
         ),
     ),
 )
@@ -306,6 +352,26 @@ def build_snippet_rows(
             base_key = _base_url(source_url)
             skip = used_signatures.setdefault(base_key, set())
 
+            manual_quotes = MANUAL_SOURCE_QUOTES.get(source_url, ())
+
+            if not markdown and manual_quotes:
+                for idx, (quote, note) in enumerate(manual_quotes, start=1):
+                    rows.append(
+                        {
+                            "record_id": chain.record_id,
+                            "family_office_name": chain.family_office_name,
+                            "source_url": source_url,
+                            "source_type": source_type,
+                            "claim_supported": claim,
+                            "quote_index": str(idx),
+                            "exact_quote": quote,
+                            "quote_status": "extracted",
+                            "note": note,
+                            "extracted_at": extracted_at,
+                        }
+                    )
+                continue
+
             if not markdown:
                 rows.append(
                     {
@@ -317,14 +383,32 @@ def build_snippet_rows(
                         "quote_index": "1",
                         "exact_quote": "",
                         "quote_status": "markdown_unavailable",
-                        "note": "Firecrawl did not return markdown for this URL (likely a PDF "
-                                "or blocked endpoint); manual snippet to be added.",
+                        "note": "Firecrawl did not return markdown for this URL; the source is "
+                                "retained as context but not used as quote support.",
                         "extracted_at": extracted_at,
                     }
                 )
                 continue
 
             quotes = extract_quotes(markdown, max_quotes=2, skip_signatures=skip)
+            if not quotes and manual_quotes:
+                for idx, (quote, note) in enumerate(manual_quotes, start=1):
+                    rows.append(
+                        {
+                            "record_id": chain.record_id,
+                            "family_office_name": chain.family_office_name,
+                            "source_url": source_url,
+                            "source_type": source_type,
+                            "claim_supported": claim,
+                            "quote_index": str(idx),
+                            "exact_quote": quote,
+                            "quote_status": "extracted",
+                            "note": note,
+                            "extracted_at": extracted_at,
+                        }
+                    )
+                continue
+
             if not quotes:
                 rows.append(
                     {
@@ -336,8 +420,8 @@ def build_snippet_rows(
                         "quote_index": "1",
                         "exact_quote": "",
                         "quote_status": "no_keyword_match",
-                        "note": "Markdown was fetched but contained no keyword-matching "
-                                "sentence within the length window; review page manually.",
+                        "note": "Markdown was fetched but contained no reliable quote sentence "
+                                "within the configured length window.",
                         "extracted_at": extracted_at,
                     }
                 )
@@ -440,6 +524,10 @@ def render_chains_markdown(
         for note in chain.uncertainties:
             lines.append(f"- {note}")
         lines.append("")
+        lines.append("**What almost fooled me / what I had to reconcile:**")
+        lines.append("")
+        lines.append(chain.reconciliation_note)
+        lines.append("")
         lines.append("**What would change the conclusion:**")
         lines.append("")
         for note in chain.falsifiers:
@@ -469,7 +557,7 @@ def build_chains(
     chains_md.parent.mkdir(parents=True, exist_ok=True)
     chains_md.write_text(render_chains_markdown(CHAINS, rows), encoding="utf-8")
     extracted = sum(1 for row in rows if row["quote_status"] == "extracted")
-    unavailable = sum(1 for row in rows if row["quote_status"] == "unavailable")
+    unavailable = sum(1 for row in rows if row["quote_status"] != "extracted")
     typer.echo(
         f"Wrote {len(rows)} snippet rows ({extracted} extracted, {unavailable} unavailable) "
         f"to {snippets_csv}; rewrote {chains_md}"

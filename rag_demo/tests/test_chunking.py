@@ -16,7 +16,7 @@ from src.loaders.family_offices import (
 def test_dataset_contract_matches_locked_shape() -> None:
     rows = load_family_offices(RAW_DATA_PATH)
     assert len(rows) == 50
-    assert len(rows[0]) == 116
+    assert len(rows[0]) == 133
 
     by_id = {row["record_id"]: row for row in rows}
     assert by_id["fo_001"]["family_office_name"] == "Cat Trail Capital"
@@ -24,6 +24,8 @@ def test_dataset_contract_matches_locked_shape() -> None:
     assert by_id["fo_001"]["primary_phone"] == ""
     assert by_id["fo_001"]["aum_text"] == ""
     assert to_bool(by_id["fo_001"]["sec_registered"]) is False
+    assert by_id["fo_001"]["principal_1_name"] == "David Dekker"
+    assert by_id["fo_001"]["primary_email_smtp_verified"] == "False"
 
     assert by_id["fo_002"]["primary_email"] == ""
     assert by_id["fo_002"]["primary_phone"] == ""
@@ -34,6 +36,7 @@ def test_dataset_contract_matches_locked_shape() -> None:
     assert by_id["fo_003"]["primary_phone"] == "415-226-4170"
     assert to_bool(by_id["fo_003"]["sec_registered"]) is True
     assert by_id["fo_003"]["sec_crd_number"] == "158515"
+    assert by_id["fo_003"]["sec_aum_usd"] != ""
 
     assert to_bool(by_id["fo_032"]["sec_registered"]) is True
     assert by_id["fo_032"]["sec_crd_number"] == "151736"

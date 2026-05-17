@@ -2,7 +2,7 @@
 
 Each chain documents one record at claim level. Quotes are verbatim sentences extracted from Firecrawl markdown snapshots taken on 2026-05-17 — see `data/processed/validation_chain_snippets.csv` for the source rows.
 
-## Cat Trail Capital (`fo_001`)
+## Validation Chain 1 - Cat Trail Capital (`fo_001`)
 
 - **Family office type:** `single_family_office`
 - **Discovery source:** organic public-web discovery, filtered through `apify/google-search-scraper` for own-domain results.
@@ -41,15 +41,19 @@ Each chain documents one record at claim level. Quotes are verbatim sentences ex
 **What remains uncertain:**
 
 - No public AUM is disclosed on the site; AUM left blank.
-- Principal family is named but no individual principal title is publicly listed.
+- Named operators are visible on the team section, but personal contact channels and personal LinkedIn profiles are not linked by the official site.
 - Sector exposure is derived from broad descriptions, not portfolio-level disclosure.
+
+**What almost fooled me / what I had to reconcile:**
+
+The first pass only captured Cat Trail as a Dekker-family entity, not a named operator. I almost left the principal layer at the family level until the official team section exposed David Dekker, Russell Dekker, and Andrew Budinoff with roles. I still did not promote personal contact channels because the site links only to the company LinkedIn page.
 
 **What would change the conclusion:**
 
 - If the site is found to be a multi-family office serving multiple families, the single-family office classification must be downgraded.
 - If the Dekker family attribution is later contradicted by a primary source, principal_name must be cleared.
 
-## JFG Family Office (`fo_007`)
+## Validation Chain 2 - JFG Family Office (`fo_007`)
 
 - **Family office type:** `multi_family_office`
 - **Discovery source:** organic public-web discovery, filtered through `apify/google-search-scraper` for own-domain results.
@@ -58,7 +62,7 @@ Each chain documents one record at claim level. Quotes are verbatim sentences ex
 
 **Enrichment steps (in order applied):**
 
-- Captured official site markdown via Firecrawl on 2026-05-17 for the home and /better-way pages; the Form CRS PDF was acknowledged but not text-extracted because Firecrawl skips PDFs by default — recorded as `markdown_unavailable` rather than guessed.
+- Captured official site markdown via Firecrawl on 2026-05-17 for the home and /better-way pages; the Form CRS PDF was downloaded and text-extracted with `pypdf` after Firecrawl skipped PDF text.
 - Verified the canonical domain (jfgfamilyoffice.com) against the legacy jfgwealth.net brand; older references redirect to the current site.
 - Captured corporate contact signals via Apify vdrmota/contact-info-scraper and Apify automation-lab/linkedin-company-scraper.
 - Recent activity: promoted a 2025+ Business Journals headline ('JFG Family Office brings holistic wealth and philanthropy services to Dallas') into recent_activity, with source URL and date.
@@ -81,19 +85,24 @@ Each chain documents one record at claim level. Quotes are verbatim sentences ex
 
 - **Source type:** official_form_crs_pdf
 - **Claim supported:** regulatory Form CRS disclosure of advisory relationship
-- **Quote 1:** _Firecrawl did not return markdown for this URL (likely a PDF or blocked endpoint); manual snippet to be added._
+- **Quote 1:** "Johnson Financial Group LLC, DBA JFG Family Office is registered with the Securities and Exchange Commission as an investment adviser."
+- **Quote 2:** "JFG's minimum annual fee is $100,000."
 
 **What remains uncertain:**
 
 - Former jfgwealth.net brand still surfaces in older references; current canonical domain is jfgfamilyoffice.com.
-- Founding-family name (Johnson family) is supported by the site but no further individual principal title is publicly listed.
+- Leadership names and roles are visible in official bios, but personal contact channels are not linked by the official site.
+
+**What almost fooled me / what I had to reconcile:**
+
+JFG uses both legacy JFG Wealth wording and the current JFG Family Office brand. I treated the current domain as canonical, then used the Form CRS PDF only after manually extracting the PDF text instead of pretending Firecrawl had read it.
 
 **What would change the conclusion:**
 
 - If the Form CRS PDF describes JFG as a generic RIA without family-office framing, the MFO label must be re-evaluated.
 - If the better-way page is removed and no MFO/SFO-origin language is preserved anywhere on the site, the classification basis weakens.
 
-## Verlinvest (`fo_020`)
+## Validation Chain 3 - Verlinvest (`fo_020`)
 
 - **Family office type:** `family_backed_investment_firm`
 - **Discovery source:** organic public-web discovery, filtered through `apify/google-search-scraper` for own-domain results.
@@ -102,7 +111,7 @@ Each chain documents one record at claim level. Quotes are verbatim sentences ex
 
 **Enrichment steps (in order applied):**
 
-- Captured official site markdown via Firecrawl on 2026-05-17 for the home and /approach pages; the /team page is a grid of profile cards with no narrative sentence — recorded transparently as `no_keyword_match` rather than fabricated.
+- Captured official site markdown via Firecrawl on 2026-05-17 for the home and /approach pages; the /team page is a grid of profile cards, so exact card text was used for names and roles rather than a fabricated narrative sentence.
 - Confirmed the family-backed framing through the /approach page's verbatim phrasing 'as a family-backed business'.
 - Recent activity: promoted a 2025 YourStory.com headline ('Verlinvest invests $75M in Coimbatore-based The Eye Foundation') into recent_activity with source URL and date.
 - Cross-checked the European HQ via Apify compass/crawler-google-places (Brussels, Belgium).
@@ -125,12 +134,17 @@ Each chain documents one record at claim level. Quotes are verbatim sentences ex
 
 - **Source type:** official_site_team_page
 - **Claim supported:** team composition and family-sponsor context
-- **Quote 1:** _Markdown was fetched but contained no keyword-matching sentence within the length window; review page manually._
+- **Quote 1:** "Roberto Italia Chief Executive Officer"
+- **Quote 2:** "Rachel Citera Principal, New York"
 
 **What remains uncertain:**
 
 - Family sponsor wording (de Spoelberch and related families) is intentionally broad because ownership structure varies across sources.
 - Not a classic single-family office — labeled family_backed_investment_firm so the row is not mis-classified as an SFO.
+
+**What almost fooled me / what I had to reconcile:**
+
+Verlinvest is not a classic SFO. The strongest evidence says `family-backed business`, so I kept the label broad. The team page also looked like a failed extraction at first, but the markdown did contain profile-card names and roles; I used those exact card strings and did not invent a sentence around them.
 
 **What would change the conclusion:**
 

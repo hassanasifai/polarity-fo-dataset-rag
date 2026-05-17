@@ -15,11 +15,12 @@ REPORTS_DIR = ROOT_DIR / "reports"
 
 RAW_DATA_PATH = RAW_DIR / "family_offices_validated.json"
 UPSTREAM_JSON_PATH = (
-    ROOT_DIR / "fo_dataset_pipeline" / "data" / "processed" / "family_offices_validated.json"
+    ROOT_DIR.parent / "data" / "processed" / "family_offices_validated.json"
 )
 UPSTREAM_XLSX_PATH = (
-    ROOT_DIR / "fo_dataset_pipeline" / "data" / "processed" / "family_offices_validated.xlsx"
+    ROOT_DIR.parent / "data" / "processed" / "family_offices_validated.xlsx"
 )
+EXPECTED_COLUMN_COUNT = 133
 
 CHUNKS_PATH = PROCESSED_DIR / "chunks.jsonl"
 GOLDEN_EVAL_PATH = PROCESSED_DIR / "golden_eval.jsonl"
@@ -38,6 +39,7 @@ SENSITIVE_FIELDS = {
     "primary_phone",
     "principal_linkedin_url",
     "aum_text",
+    "sec_aum_usd",
     "sec_registered",
     "sec_crd_number",
     "recent_activity",

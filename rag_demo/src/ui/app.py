@@ -326,6 +326,7 @@ def _contact_fact_rows(record: dict[str, Any]) -> tuple[list[tuple[str, str]], l
         ("Primary phone", "primary_phone"),
         ("Principal LinkedIn", "principal_linkedin_url"),
         ("AUM", "aum_text"),
+        ("SEC AUM", "sec_aum_usd"),
     ]
     rows: list[tuple[str, str]] = []
     missing: list[str] = []
@@ -425,6 +426,7 @@ def _comparison_rows(record_ids: list[str], records: dict[str, dict[str, Any]]) 
         ("Primary email", "primary_email"),
         ("Primary phone", "primary_phone"),
         ("AUM", "aum_text"),
+        ("SEC AUM", "sec_aum_usd"),
     ]
     selected_records = [(record_id, records[record_id]) for record_id in record_ids if record_id in records]
     rows: list[dict[str, str]] = []
@@ -462,6 +464,7 @@ def _render_comparison_panels(record_ids: list[str], records: dict[str, dict[str
                 ("Primary email", _field_or_missing(record, "primary_email")),
                 ("Primary phone", _field_or_missing(record, "primary_phone")),
                 ("AUM", _field_or_missing(record, "aum_text")),
+                ("SEC AUM", _field_or_missing(record, "sec_aum_usd")),
             ]
             title = f"{_short_text(record.get('family_office_name'), record_id)} ({record_id})"
             _render_fact_pairs(title, rows)

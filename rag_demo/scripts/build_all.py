@@ -15,6 +15,7 @@ if str(ROOT) not in sys.path:
 from src.chunking.build_chunks import build_chunks_file, metadata_key_coverage
 from src.config import (
     CHUNKS_PATH,
+    EXPECTED_COLUMN_COUNT,
     GOLDEN_EVAL_PATH,
     MANIFEST_PATH,
     RAW_DATA_PATH,
@@ -108,8 +109,8 @@ def main() -> None:
     records = load_family_offices(RAW_DATA_PATH)
     if len(records) != 50:
         raise ValueError(f"Expected 50 validated records, found {len(records)}.")
-    if len(records[0]) != 116:
-        raise ValueError(f"Expected 116 columns, found {len(records[0])}.")
+    if len(records[0]) != EXPECTED_COLUMN_COUNT:
+        raise ValueError(f"Expected {EXPECTED_COLUMN_COUNT} columns, found {len(records[0])}.")
 
     chunks = build_chunks_file(records, CHUNKS_PATH)
     bm25_info = build_bm25_index(chunks)

@@ -43,3 +43,4 @@ _temp/
 *.bak
 scratch/
 tmp_cli.csv
+.streamlit_*.log

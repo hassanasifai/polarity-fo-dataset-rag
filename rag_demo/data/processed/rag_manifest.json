@@ -1,14 +1,14 @@
 {
-  "dataset_path": "D:\\PolarityIQ_Workspace\\data\\raw\\family_offices_validated.json",
-  "dataset_sha256": "6f6df353caf50c7363cfcfbb5d146c0f11ca12e6134c4ac140ef757d44602922",
+  "dataset_path": "D:\\PolarityIQ_Workspace\\fo_dataset_pipeline\\rag_demo\\data\\raw\\family_offices_validated.json",
+  "dataset_sha256": "665f69f3a77167a41b2750d8fa7ab3f97c84fb6b20114a7140f3347aa0cb84cf",
   "upstream_json_path": "D:\\PolarityIQ_Workspace\\fo_dataset_pipeline\\data\\processed\\family_offices_validated.json",
-  "upstream_json_sha256": "6f6df353caf50c7363cfcfbb5d146c0f11ca12e6134c4ac140ef757d44602922",
+  "upstream_json_sha256": "665f69f3a77167a41b2750d8fa7ab3f97c84fb6b20114a7140f3347aa0cb84cf",
   "row_count": 50,
-  "column_count": 116,
-  "chunk_count": 439,
+  "column_count": 133,
+  "chunk_count": 520,
   "chunk_type_counts": {
     "contact_policy": 50,
-    "field_evidence": 268,
+    "field_evidence": 349,
     "recent_activity": 21,
     "record_profile": 50,
     "regulatory": 50
@@ -47,14 +47,14 @@
   },
   "dense_index": {
     "collection": "polarityiq_family_offices",
-    "path": "D:\\PolarityIQ_Workspace\\data\\index\\chroma",
-    "chunk_count": 439,
+    "path": "D:\\PolarityIQ_Workspace\\fo_dataset_pipeline\\rag_demo\\data\\index\\chroma",
+    "chunk_count": 520,
     "embedding_model": "BAAI/bge-small-en-v1.5",
     "embedding_dimension": 384
   },
   "bm25_index": {
-    "path": "D:\\PolarityIQ_Workspace\\data\\index\\bm25\\bm25_index.pkl",
-    "chunk_count": 439
+    "path": "D:\\PolarityIQ_Workspace\\fo_dataset_pipeline\\rag_demo\\data\\index\\bm25\\bm25_index.pkl",
+    "chunk_count": 520
   },
   "golden_question_count": 45,
   "local_only": true,
@@ -64,6 +64,6 @@
   "xlsx_checked": true,
   "xlsx_sheet": "data_50",
   "xlsx_rows": 50,
-  "xlsx_columns": 116,
-  "xlsx_sha256": "24a3c9c9f106d021e699a1f51fc566709bc8ad9d157a91d32b460471df3b4640"
+  "xlsx_columns": 133,
+  "xlsx_sha256": "f73ab3a41df652da707e5a1609cfe8e340550f44a48bae8a4309991633a3f16f"
 }

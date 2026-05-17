@@ -56,4 +56,4 @@ Apify and Firecrawl without treating raw scraper output as final truth.
 - `pytest tests/ -v --cov=. --cov-report=term-missing --cov-fail-under=80`
   passed with 23 tests and 81.09% coverage.
 - `ruff check .` passed.
-- `python -m pip_audit .` reported no known vulnerabilities for the local project.
+- `pip-audit -r rag_demo\requirements.txt` reported no known vulnerabilities for the local RAG demo dependencies.

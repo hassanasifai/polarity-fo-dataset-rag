@@ -9,8 +9,8 @@ A validated, evidence-backed dataset of 50 real Family Office records, built wit
 
 ## TL;DR
 
-- **What this produces:** 50 validated Family Office records (`data/processed/family_offices_validated.xlsx`) with a 16-sheet audit trail (sources, field evidence, validation results, Apify/Firecrawl evidence, SEC IAPD outputs, contact info, news signals, LinkedIn enrichment, Google Places, team rosters, validation chain snippets, data dictionary).
-- **Headline metrics:** 50 / 50 records accepted, all `confidence=high`, 112 source URLs (≥2 per record), 116 dataset columns, 1,848 field-evidence rows, 180 tests passing at 91.44 % coverage, ruff clean, `pip_audit` clean.
+- **What this produces:** 50 validated Family Office records (`data/processed/family_offices_validated.xlsx`) with a 16-sheet audit trail (sources, field evidence, validation results, Apify/Firecrawl evidence, SEC IAPD outputs, contact info, news signals, LinkedIn enrichment, Google Places, Form ADV parsed fields, team rosters, validation chain snippets, data dictionary).
+- **Headline metrics:** 50 / 50 records accepted, all `confidence=high`, 112 source URLs (≥2 per record), 133 dataset columns, 2,135 field-evidence rows, 180 tests passing at 90.53 % coverage, ruff clean, `pip-audit` clean.
 - **RAG audit:** `rag_demo/reports/eval_report.md` now uses a 45-question adversarial set with realistic misses and known limitations rather than a polished all-1.000 report.
 - **HVL discipline:** every field follows the Observe → Question → Hypothesize → Build → Validate loop. The methodology file documents what was observed, what was assumed, what could be wrong, and what would change the conclusion. Unverified output is treated as worse than no output.
 
@@ -21,11 +21,13 @@ A validated, evidence-backed dataset of 50 real Family Office records, built wit
 Open these first:
 
 - `SUBMISSION_COVER.md` - evaluator index, demo map, and known limitations.
+- `00_family_office_records.csv` - evaluator-friendly 50-row dataset CSV at repo root.
 - `EFFORT_AND_AI_DISCLOSURE.md` - hours breakdown and AI-vs-human disclosure.
 - `reports/methodology_summary.md` - dataset methodology and honest limitations.
 - `reports/validation_chains.md` - source-to-field validation chains.
 - `rag_demo/reports/eval_report.md` - honest 45-question RAG evaluation.
 - `rag_demo/src/ui/app.py` - Streamlit evidence review console.
+- `demo/task1_rag_walkthrough.mp4` - local screen-recording fallback covering the six required demo scenarios.
 - `DEPLOYMENT_OR_RECORDING_NOTES.md` - live URL or recording checklist.
 
 ---
@@ -58,7 +60,7 @@ flowchart TD
     O --> P
 
     P --> Q[Workbook rebuild<br/>refresh_xlsx.py]
-    Q --> R[Final XLSX<br/>16 sheets · 50 records · 116 cols]
+    Q --> R[Final XLSX<br/>16 sheets · 50 records · 133 cols]
     Q --> S[Final CSV + JSON]
 
     style H fill:#d4f1d4
@@ -85,7 +87,7 @@ python -m fo_dataset_pipeline.cli `
 # 3. Run the test + lint + audit gates
 python -m pytest tests/ --cov=. --cov-report=term-missing --cov-fail-under=80
 python -m ruff check .
-python -m pip_audit .
+pip-audit -r rag_demo\requirements.txt
 ```
 
 Expected output of step 2: `Processed 50 records; accepted 50; reports written to reports`.
@@ -116,7 +118,9 @@ All modules live in `src/fo_dataset_pipeline/`. Each is a self-contained Typer C
 | `promote_sec_iapd.py` | Promotes SEC CRD/file/status/Form ADV links and marks non-registered FOs explicitly. | `python -m fo_dataset_pipeline.promote_sec_iapd` |
 | `promote_addresses.py` | Promotes street address from domain-matched Places first, LinkedIn company fallback second. | `python -m fo_dataset_pipeline.promote_addresses` |
 | `promote_principals.py` | Promotes up to three principal slots from official team roster evidence; does not infer personal contact channels. | `python -m fo_dataset_pipeline.promote_principals` |
+| `promote_showcase_principals.py` | Manual-review pass for the 3 featured validation records; fills official-site principal slots and only official-profile LinkedIn URLs. | `python -m fo_dataset_pipeline.promote_showcase_principals` |
 | `promote_news.py` | Filters Google News evidence and backfills structured activity metadata; rows with no signal are marked `none_found`. | `python -m fo_dataset_pipeline.promote_news` |
+| `parse_form_adv.py` | Downloads SEC Form ADV PDFs and promotes conservative `sec_aum_usd`, fee labels, and business-address fields when the text pattern is reliable. | `python -m fo_dataset_pipeline.parse_form_adv` |
 | `enrich_columns.py` | Adds sample-workbook-parity columns, contact splits/location, URL quality, and email-validation joins. | `python -m fo_dataset_pipeline.enrich_columns` |
 | `score_completion.py` | Computes Data Completion Score against the sample workbook denominator. | `python -m fo_dataset_pipeline.score_completion` |
 | `augment_field_evidence.py` | Appends claim-level field evidence rows for all post-validation promoted fields. | `python -m fo_dataset_pipeline.augment_field_evidence` |
@@ -153,8 +157,10 @@ python -m fo_dataset_pipeline.sec_iapd_research run
 python -m fo_dataset_pipeline.promote_sec_iapd
 python -m fo_dataset_pipeline.promote_addresses
 python -m fo_dataset_pipeline.promote_principals
+python -m fo_dataset_pipeline.promote_showcase_principals
 python -m fo_dataset_pipeline.chain_snippets
 python -m fo_dataset_pipeline.promote_news
+python -m fo_dataset_pipeline.parse_form_adv
 
 # Stage 5: enrichment columns (sample-workbook parity)
 python -m fo_dataset_pipeline.enrich_columns
@@ -180,13 +186,13 @@ python scripts/audit_xlsx.py
 
 | File | What it proves |
 |---|---|
-| `family_offices_validated.xlsx` | The deliverable. 16 sheets, 50 records, 116 columns. |
+| `family_offices_validated.xlsx` | The deliverable. 16 sheets, 50 records, 133 columns. |
 | `family_offices_validated.csv` | Same dataset as a flat CSV. |
 | `family_offices_validated.json` | Same dataset as JSON (RAG-friendly). |
 | `source_registry.csv` | 112 sources × 14 cols. Every source URL, type, rank, owner, live-check status, capture date. |
-| `field_evidence.csv` | 1,848 rows. Seed claims plus augmented claim-level evidence for every promoted field group. |
+| `field_evidence.csv` | 2,135 rows. Seed claims plus augmented claim-level evidence for every promoted field group. |
 | `validation_results.csv` | 50 rows. Per-record acceptance verdict, score, website reachability, source reachability. |
-| `validation_chain_snippets.csv` | 16 rows. Verbatim ≤25-word quotes for the 3 featured chains, each with source URL + status. |
+| `validation_chain_snippets.csv` | 18 rows. Verbatim ≤25-word quotes for the 3 featured chains, each with source URL + status. |
 | `apify_crawl_evidence.csv` | Apify website-content-crawler output joined to source URLs. |
 | `firecrawl_crawl_evidence.csv` | Firecrawl markdown-snapshot index. |
 | `contact_info_evidence.csv` | Apify contact-info-scraper output per FO domain. |
@@ -202,6 +208,7 @@ python scripts/audit_xlsx.py
 |---|---|
 | `methodology_summary.md` | How discovery → enrichment → validation → audit happened. Includes Contact Promotion Ethics, Audit Pre-Screen, Recent-Activity Promotion, and **Honest Limitations** sections. |
 | `validation_chains.md` | 3 audit-grade validation chains (Cat Trail Capital, JFG Family Office, Verlinvest) with discovery source, extraction method, **enrichment steps**, validation logic, exact quotes, what's uncertain, what would change the conclusion. |
+| `assessment_notes.md` | Falsification conditions and remaining risk register for the dataset/RAG submission. |
 | `manual_audit_worksheet.md` | The pre-screen worksheet a reviewer can use to re-walk any of the 9 flagged rows. |
 | `validation_report.md` | Compact run summary (counts, score distribution). |
 | `apify_methodology.md` | The Apify actor stack, how each output feeds the pipeline. |
@@ -240,7 +247,7 @@ The Stage 1 brief asks for three records with full validation chains. Ours:
 | Record | Type | Why it was chosen |
 |---|---|---|
 | **Cat Trail Capital** (`fo_001`) | single-family office | Strongest SFO chain — official site explicitly calls itself "a single family office (SFO)" with named family attribution. |
-| **JFG Family Office** (`fo_007`) | multi-family office | Documents the SFO-origin → MFO-evolution narrative with quoted source language; Form CRS PDF noted but honestly disclosed as not text-extracted. |
+| **JFG Family Office** (`fo_007`) | multi-family office | Documents the SFO-origin → MFO-evolution narrative with quoted source language; Form CRS PDF handled through manual PDF text extraction. |
 | **Verlinvest** (`fo_020`) | family-backed investment firm | Tests the third type. Site explicitly says "as a family-backed business"; the team page is a profile grid with no narrative sentence, also honestly disclosed. |
 
 Each chain documents: discovery source · extraction method · enrichment steps · validation logic · 3+ verbatim ≤25-word quotes with source URLs · what remains uncertain · what would change the conclusion.
@@ -254,22 +261,24 @@ Full chains: [`reports/validation_chains.md`](reports/validation_chains.md).
 Pulled verbatim from the methodology document:
 
 - **Email deliverability is not verified.** Promoted emails pass syntax + MX checks only; SMTP-level verification was blocked by Apify actor permissions.
-- **Principal-specific LinkedIn/email/phone remains conservative.** Multi-principal slots are populated only for 3 firms where official team pages supported named-person + role extraction. Personal LinkedIn, email, and direct phone are not inferred.
+- **Principal-specific LinkedIn/email/phone remains conservative.** Multi-principal slots are populated only where official team/profile pages supported named-person + role extraction. Official personal LinkedIn URLs are promoted only for Verlinvest profile pages; personal email and direct phone are not inferred.
 - **Recent activity coverage is 21 of 50.** All remaining rows are explicitly marked `recent_activity_type=none_found` rather than padded with weak matches.
-- **Two validation-chain snippets are unavailable** (JFG Form CRS PDF — Firecrawl skips PDFs; Verlinvest team grid — no narrative sentence). Both are disclosed in the chains document with a manual-snippet TODO rather than fabricated.
+- **Validation-chain PDF/grid handling is explicit.** JFG's PDF quote is extracted from downloaded PDF text, and Verlinvest's team-page quote is exact profile-card text from Firecrawl markdown.
 - **Some MFO classifications are service-provider relationships.** Flagged transparently in `uncertainty_notes`.
-- **AUM is missing for most records** because public AUM disclosures are inconsistent. Quoted from source language where present, never inferred.
+- **Self-described AUM is still conservative.** SEC regulatory AUM is parsed for registered firms where Form ADV text supports it, but marketing-site AUM remains blank unless the source says it directly.
 - **Live URL validation depends on network conditions.** Reruns may surface intermittent failures even on URLs that were green at capture time. Validation snapshot date: 2026-05-17.
 
 ---
 
-## What's Coming Next
+## RAG Demo Included
 
-- **RAG layer** — vector store (ChromaDB or Qdrant), embeddings (OpenAI `text-embedding-3-large` or local `sentence-transformers`), hybrid retrieval with optional reranker, citation-anchored answers. Each FO record becomes one structured chunk; field evidence becomes a secondary chunk layer.
-- **Demo** — Streamlit UI for natural-language queries returning cited answers from the dataset.
-- **Task 2** — separate SaaS free-to-paid conversion analysis for a Family Office Intelligence platform.
+The submitted RAG system lives under `rag_demo/`. It uses the locked dataset JSON, local ChromaDB + BM25 retrieval, deterministic answering, a 45-question adversarial eval, and a Streamlit evidence-review console. Run it with:
 
-Each will land as a clearly-labeled commit on `main`.
+```powershell
+cd rag_demo
+python scripts\build_all.py
+streamlit run src\ui\app.py
+```
 
 ---
 
@@ -278,19 +287,19 @@ Each will land as a clearly-labeled commit on `main`.
 ```powershell
 python -m pytest tests/ --cov=. --cov-report=term-missing --cov-fail-under=80
 python -m ruff check .
-python -m pip_audit .
+pip-audit -r rag_demo\requirements.txt
 python scripts/audit_xlsx.py
 ```
 
-Latest verified results (2026-05-17):
+Latest verified results (2026-05-18):
 
 | Gate | Result |
 |---|---|
 | pytest | 180 passed |
-| coverage | 91.44 % |
+| coverage | 90.53 % |
 | ruff | clean |
-| pip_audit | no known vulnerabilities |
-| xlsx audit | 0 issues; 16 sheets; 116 columns; 1,848 field-evidence rows |
+| pip-audit | no known vulnerabilities |
+| xlsx audit | 0 issues; 16 sheets; 133 columns; 2,135 field-evidence rows |
 
 ---
 

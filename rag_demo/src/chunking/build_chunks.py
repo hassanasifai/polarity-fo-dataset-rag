@@ -55,12 +55,17 @@ FIELD_EVIDENCE_FIELDS = [
     "contact_secondary_email",
     "contact_secondary_phone",
     "aum_text",
+    "sec_aum_usd",
+    "sec_fee_structure",
     "principal_1_name",
     "principal_1_role",
+    "principal_1_linkedin_url",
     "principal_2_name",
     "principal_2_role",
+    "principal_2_linkedin_url",
     "principal_3_name",
     "principal_3_role",
+    "principal_3_linkedin_url",
 ]
 
 FIELD_URL_MAP = {
@@ -75,6 +80,11 @@ FIELD_URL_MAP = {
     "principal_2_role": "principal_2_source_url",
     "principal_3_name": "principal_3_source_url",
     "principal_3_role": "principal_3_source_url",
+    "principal_1_linkedin_url": "principal_1_linkedin_url",
+    "principal_2_linkedin_url": "principal_2_linkedin_url",
+    "principal_3_linkedin_url": "principal_3_linkedin_url",
+    "sec_aum_usd": "sec_form_adv_evidence_path",
+    "sec_fee_structure": "sec_form_adv_evidence_path",
 }
 
 FIELD_CONFIDENCE_MAP = {
@@ -89,6 +99,11 @@ FIELD_CONFIDENCE_MAP = {
     "principal_2_role": "principal_2_confidence",
     "principal_3_name": "principal_3_confidence",
     "principal_3_role": "principal_3_confidence",
+    "principal_1_linkedin_url": "principal_1_linkedin_confidence",
+    "principal_2_linkedin_url": "principal_2_linkedin_confidence",
+    "principal_3_linkedin_url": "principal_3_linkedin_confidence",
+    "sec_aum_usd": "sec_confidence",
+    "sec_fee_structure": "sec_confidence",
 }
 
 
@@ -227,6 +242,8 @@ def _contact_policy_chunk(record: dict[str, Any]) -> Chunk:
             f"Principal title: {_not_evidenced(record.get('principal_title'))}.",
             f"Principal LinkedIn: {_not_evidenced(record.get('principal_linkedin_url'))}.",
             f"AUM: {_not_evidenced(record.get('aum_text'))}.",
+            f"SEC regulatory AUM: {_not_evidenced(record.get('sec_aum_usd'))}.",
+            f"SEC fee structure labels: {_not_evidenced(record.get('sec_fee_structure'))}.",
             f"Secondary contact email: {_not_evidenced(record.get('contact_secondary_email'))}.",
             f"Secondary contact phone: {_not_evidenced(record.get('contact_secondary_phone'))}.",
             f"Uncertainty notes: {_not_evidenced(record.get('uncertainty_notes'))}.",
@@ -267,6 +284,9 @@ def _regulatory_chunk(record: dict[str, Any]) -> Chunk:
             f"SEC summary URL: {_not_evidenced(record.get('sec_summary_url'))}.",
             f"SEC evidence URL: {_not_evidenced(record.get('sec_evidence_url'))}.",
             f"Form ADV brochure URL: {_not_evidenced(record.get('form_adv_brochure_url'))}.",
+            f"SEC regulatory AUM: {_not_evidenced(record.get('sec_aum_usd'))}.",
+            f"SEC fee structure labels: {_not_evidenced(record.get('sec_fee_structure'))}.",
+            f"SEC business address: {_not_evidenced(record.get('sec_business_address'))}.",
             f"SEC address: {_not_evidenced(record.get('sec_address_city'))}, "
             f"{_not_evidenced(record.get('sec_address_state'))}, "
             f"{_not_evidenced(record.get('sec_address_country'))}.",
