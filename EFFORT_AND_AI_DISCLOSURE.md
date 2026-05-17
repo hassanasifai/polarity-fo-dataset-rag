@@ -4,17 +4,17 @@
 
 Approximate focused effort for this Stage 1 submission:
 
-| Workstream | Hours | Notes |
-|---|---:|---|
-| Dataset research and enrichment | 12.0 | Source discovery, crawl/export review, confidence scoring, workbook rebuild. |
-| Human validation review | 4.0 | Manual audit notes, validation chains, uncertainty checks, source-quality decisions. |
-| RAG build | 5.0 | Chunking, BM25, dense index, intent classification, deterministic answer paths. |
-| UI and demo workflow | 3.0 | Streamlit evidence review console and scenario checks. |
-| Testing and evaluation | 4.0 | Unit tests, coverage, 45-question adversarial eval, pip audit. |
-| Documentation and submission packaging | 3.0 | Methodology, cover, effort disclosure, README links. |
-| Final review | 2.0 | Re-run gates, inspect known limits, prepare branch/submission. |
+| Workstream | Total | AI hrs | Human hrs | What AI helped with | What I owned / verified |
+|---|---:|---:|---:|---|---|
+| Dataset research and enrichment | 12.0 | 1.5 | 10.5 | Drafted scraper input shapes and repeatable promoter scaffolding. | Reviewed source acceptability, ran enrichment passes, checked URL/source evidence, chose blank-over-inferred fields. |
+| Human validation review | 4.5 | 0.5 | 4.0 | Suggested validation-chain structure and failure prompts. | Read the chains, resolved the JFG PDF and Verlinvest grid manually, decided what remained uncertain. |
+| RAG build | 5.0 | 2.0 | 3.0 | Drafted chunk/index/eval boilerplate. | Designed intent routing, safe-answer policy, sensitive-field abstention, and retrieval/eval acceptance thresholds. |
+| UI and demo workflow | 3.0 | 1.0 | 2.0 | Assisted Streamlit layout rewrite. | Chose assessor workflow, verified evidence-first rendering and abstention scenarios. |
+| Testing and evaluation | 4.5 | 1.0 | 3.5 | Generated adversarial eval categories and candidate tests. | Preserved known misses, ran coverage/audit gates, fixed regressions instead of hiding failures. |
+| Documentation and submission packaging | 3.5 | 1.0 | 2.5 | Drafted first-pass packet sections. | Rewrote HVL trace, corrected stale paths, added falsification conditions, kept limitations explicit. |
+| Final review | 2.5 | 0.5 | 2.0 | Helped cross-check path and metric consistency. | Rebuilt CSV/JSON/XLSX/RAG artifacts, reviewed git diff, pushed branch. |
 
-Estimated total: 33.0 hours.
+Estimated total: 35.0 hours.
 
 ## AI-Assisted Work
 
@@ -26,6 +26,8 @@ AI was used as an implementation and review assistant for:
 - Expanding the RAG golden set and report format.
 - Drafting submission-package documents.
 
+AI was not treated as a factual source. A value entered the dataset only when a cited source, local evidence artifact, or deterministic parser supported it.
+
 ## Human-Owned Work
 
 Human judgment was required for:
@@ -35,6 +37,8 @@ Human judgment was required for:
 - Reviewing source conflicts, especially contact and Google Places phone conflicts.
 - Setting the safe-answer policy for principal contact fields, AUM, SEC status, and recent activity.
 - Selecting which eval failures to preserve as honest limitations rather than patching around them.
+- Rejecting broad principal LinkedIn name matches when the official page did not link the profile.
+- Choosing the official/contact-source phone as canonical for the 6 Google Places conflicts while flagging the disagreement.
 
 ## Disclosure Boundary
 

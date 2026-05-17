@@ -89,6 +89,22 @@ BASE_DEFINITIONS = {
         "Count of populated sample-facing fields using the sample denominator."
     ),
     "data_completion_score_visual": "Bar visualization of the sample-facing completion score.",
+    "recent_activity_age_days": (
+        "Days between recent_activity_date and the 2026-05-18 submission review date."
+    ),
+    "recent_activity_recency_label": "Derived recency bucket: fresh, moderate, or stale.",
+    "primary_email_smtp_verified": (
+        "False for promoted corporate emails; SMTP inbox verification was not performed."
+    ),
+    "primary_phone_conflict_with_places": (
+        "True when the promoted primary phone disagrees with domain-matched Google Places."
+    ),
+    "primary_phone_canonical_source": (
+        "Human-readable source preference used when phone evidence conflicts."
+    ),
+    "sec_form_adv_evidence_path": (
+        "Public SEC PDF URL used as evidence for the parsed Form ADV fields."
+    ),
 }
 
 
@@ -110,6 +126,10 @@ def _definition_for_column(column_name: str) -> str:
         )
     if column_name.startswith("sec_") or column_name.startswith("form_adv_"):
         return "SEC IAPD / Form ADV regulatory identifier or disclosure link."
+    if column_name.endswith("_linkedin_url"):
+        return "Principal LinkedIn URL only when linked from an official profile page."
+    if column_name.endswith("_linkedin_confidence"):
+        return "Confidence label for the paired principal LinkedIn URL."
     if column_name.startswith("principal_") and "_" in column_name:
         return "Multi-principal slot promoted from official team/about-page evidence."
     if column_name.startswith("contact_"):

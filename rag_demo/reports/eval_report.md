@@ -9,23 +9,23 @@ sensitive-field probes, entity aliases, broad filters, multi-hop questions, and 
 ## Summary Metrics
 
 - Questions: 45
-- hit_at_3: 0.956
-- MRR: 0.935
-- record_recall_at_5: 0.973
+- hit_at_3: 0.978
+- MRR: 0.943
+- record_recall_at_5: 0.996
 - citation_accuracy: 1.000
 - unsupported_claim_count: 0
-- abstention_accuracy: 0.956
-- missing_data_honesty: 1.000
-- answer_text_accuracy: 0.889
+- abstention_accuracy: 0.933
+- missing_data_honesty: 0.978
+- answer_text_accuracy: 0.867
 - intent_accuracy: 0.978
 
 ## Per-Category Metrics
 
 | Category | Questions | Hit@3 | Recall@5 | Answer Text | Abstain OK | Intent OK |
 |---|---:|---:|---:|---:|---:|---:|
-| adversarial_spelling | 1 | 0.000 | 0.000 | 0.000 | 1.000 | 1.000 |
+| adversarial_spelling | 1 | 1.000 | 1.000 | 0.000 | 1.000 | 1.000 |
 | comparison | 2 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 |
-| contact_presence_absence | 5 | 1.000 | 1.000 | 0.800 | 1.000 | 1.000 |
+| contact_presence_absence | 5 | 1.000 | 1.000 | 0.600 | 0.800 | 1.000 |
 | contact_principal_personal | 3 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 |
 | entity_disambiguation | 3 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 |
 | entity_lookup_alias | 4 | 1.000 | 1.000 | 0.750 | 0.500 | 0.750 |
@@ -44,39 +44,39 @@ sensitive-field probes, entity aliases, broad filters, multi-hop questions, and 
 | ID | Category | Intent | Expected | Top Records | Hit@3 | MRR | Recall@5 | Abstain OK | Citation OK | Text OK | Intent OK |
 |---|---|---|---|---|---:|---:|---:|---:|---:|---:|---:|
 | q001 | entity_lookup_canonical | entity_lookup | answer | ['fo_001', 'fo_004', 'fo_046', 'fo_002', 'fo_018'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q002 | entity_lookup_canonical | entity_lookup | answer | ['fo_003', 'fo_018', 'fo_001', 'fo_012', 'fo_026'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q003 | entity_lookup_canonical | entity_lookup | answer | ['fo_032', 'fo_004', 'fo_027', 'fo_013', 'fo_005'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q002 | entity_lookup_canonical | entity_lookup | answer | ['fo_003', 'fo_018', 'fo_001', 'fo_026', 'fo_016'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q003 | entity_lookup_canonical | entity_lookup | answer | ['fo_032', 'fo_004', 'fo_027', 'fo_013', 'fo_015'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q004 | entity_lookup_canonical | entity_lookup | answer | ['fo_020', 'fo_004', 'fo_038', 'fo_046', 'fo_013'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q005 | entity_lookup_canonical | entity_lookup | answer | ['fo_016', 'fo_004', 'fo_046', 'fo_035', 'fo_021'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q006 | entity_lookup_alias | entity_lookup | answer | ['fo_007', 'fo_013', 'fo_030', 'fo_040', 'fo_033'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q007 | entity_lookup_alias | regulatory | answer | ['fo_011', 'fo_042', 'fo_036', 'fo_006', 'fo_029'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q005 | entity_lookup_canonical | entity_lookup | answer | ['fo_016', 'fo_004', 'fo_046', 'fo_035', 'fo_042'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q006 | entity_lookup_alias | entity_lookup | answer | ['fo_007', 'fo_013', 'fo_030', 'fo_032', 'fo_040'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q007 | entity_lookup_alias | regulatory | answer | ['fo_011', 'fo_042', 'fo_029', 'fo_022', 'fo_036'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q008 | entity_lookup_alias | contact_lookup | answer | ['fo_048', 'fo_002', 'fo_022', 'fo_046', 'fo_005'] | 1 | 1.000 | 1.000 | 0 | 1 | 1 | 0 |
-| q009 | entity_lookup_alias | entity_lookup | answer | ['fo_011', 'fo_024', 'fo_041', 'fo_048', 'fo_003'] | 1 | 1.000 | 1.000 | 0 | 1 | 0 | 1 |
-| q010 | entity_lookup_negative | entity_lookup | abstain | ['fo_004', 'fo_046', 'fo_035', 'fo_021', 'fo_026'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q011 | entity_lookup_negative | entity_lookup | abstain | ['fo_011', 'fo_013', 'fo_041', 'fo_046', 'fo_039'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q012 | entity_lookup_negative | entity_lookup | abstain | ['fo_026', 'fo_046', 'fo_018', 'fo_013', 'fo_028'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q009 | entity_lookup_alias | entity_lookup | answer | ['fo_011', 'fo_024', 'fo_048', 'fo_041', 'fo_003'] | 1 | 1.000 | 1.000 | 0 | 1 | 0 | 1 |
+| q010 | entity_lookup_negative | entity_lookup | abstain | ['fo_004', 'fo_046', 'fo_021', 'fo_042', 'fo_035'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q011 | entity_lookup_negative | entity_lookup | abstain | ['fo_011', 'fo_013', 'fo_046', 'fo_032', 'fo_039'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q012 | entity_lookup_negative | entity_lookup | abstain | ['fo_026', 'fo_018', 'fo_046', 'fo_013', 'fo_028'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q013 | entity_disambiguation | filtered_listing | answer | ['fo_017', 'fo_019', 'fo_046', 'fo_047', 'fo_049'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q014 | entity_disambiguation | filtered_listing | answer | ['fo_001', 'fo_002', 'fo_016', 'fo_017', 'fo_018'] | 1 | 0.500 | 1.000 | 1 | 1 | 1 | 1 |
 | q015 | entity_disambiguation | entity_lookup | abstain | ['fo_022', 'fo_028', 'fo_018', 'fo_025', 'fo_007'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q016 | contact_presence_absence | contact_lookup | answer | ['fo_001', 'fo_003', 'fo_006', 'fo_008', 'fo_042'] | 1 | 1.000 | 1.000 | 1 | 1 | 0 | 1 |
-| q017 | contact_presence_absence | contact_lookup | abstain | ['fo_001', 'fo_017', 'fo_023', 'fo_018', 'fo_013'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q016 | contact_presence_absence | contact_lookup | answer | ['fo_001', 'fo_003', 'fo_006', 'fo_042', 'fo_027'] | 1 | 1.000 | 1.000 | 1 | 1 | 0 | 1 |
+| q017 | contact_presence_absence | contact_lookup | abstain | ['fo_001', 'fo_017', 'fo_023', 'fo_013', 'fo_018'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q018 | contact_presence_absence | contact_lookup | abstain | ['fo_002', 'fo_035', 'fo_037', 'fo_045', 'fo_004'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q019 | contact_presence_absence | contact_lookup | answer | ['fo_003', 'fo_012', 'fo_028', 'fo_013', 'fo_030'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q020 | contact_presence_absence | contact_lookup | abstain | ['fo_032', 'fo_013', 'fo_021', 'fo_014', 'fo_006'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q021 | contact_principal_personal | contact_lookup | abstain | ['fo_001', 'fo_013', 'fo_017', 'fo_018', 'fo_020'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q022 | contact_principal_personal | contact_lookup | abstain | ['fo_001', 'fo_045', 'fo_043', 'fo_007', 'fo_028'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q020 | contact_presence_absence | contact_lookup | abstain | ['fo_032', 'fo_013', 'fo_021', 'fo_040', 'fo_046'] | 1 | 1.000 | 1.000 | 0 | 1 | 0 | 1 |
+| q021 | contact_principal_personal | contact_lookup | abstain | ['fo_001', 'fo_013', 'fo_017', 'fo_018', 'fo_023'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q022 | contact_principal_personal | contact_lookup | abstain | ['fo_001', 'fo_045', 'fo_043', 'fo_011', 'fo_007'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q023 | contact_principal_personal | contact_lookup | abstain | ['fo_001', 'fo_013', 'fo_018', 'fo_017', 'fo_023'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q024 | regulatory_sec_positive | regulatory | answer | ['fo_003', 'fo_012', 'fo_046', 'fo_006', 'fo_033'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q025 | regulatory_sec_positive | regulatory | answer | ['fo_032', 'fo_013', 'fo_021', 'fo_018', 'fo_028'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q026 | regulatory_sec_positive | regulatory | answer | ['fo_017', 'fo_023', 'fo_046', 'fo_013', 'fo_019'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q026 | regulatory_sec_positive | regulatory | answer | ['fo_017', 'fo_023', 'fo_046', 'fo_013', 'fo_033'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q027 | regulatory_sec_negative | regulatory | answer | ['fo_001', 'fo_013', 'fo_046', 'fo_023', 'fo_017'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q028 | regulatory_sec_negative | regulatory | answer | ['fo_002', 'fo_045', 'fo_010', 'fo_021', 'fo_032'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q028 | regulatory_sec_negative | regulatory | answer | ['fo_002', 'fo_032', 'fo_045', 'fo_010', 'fo_021'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q029 | regulatory_sec_negative | regulatory | answer | ['fo_020', 'fo_021', 'fo_018', 'fo_028', 'fo_002'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q030 | recent_activity_present | recent_activity | answer | ['fo_032', 'fo_035', 'fo_013', 'fo_045', 'fo_034'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q031 | recent_activity_present | recent_activity | answer | ['fo_041', 'fo_035', 'fo_013', 'fo_045', 'fo_034'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q032 | recent_activity_present | recent_activity | answer | ['fo_020', 'fo_035', 'fo_013', 'fo_045', 'fo_034'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q030 | recent_activity_present | recent_activity | answer | ['fo_032', 'fo_035', 'fo_013', 'fo_042', 'fo_045'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q031 | recent_activity_present | recent_activity | answer | ['fo_041', 'fo_035', 'fo_013', 'fo_032', 'fo_042'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q032 | recent_activity_present | recent_activity | answer | ['fo_020', 'fo_035', 'fo_013', 'fo_032', 'fo_042'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q033 | recent_activity_absent | recent_activity | abstain | ['fo_001', 'fo_035', 'fo_013', 'fo_039', 'fo_032'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q034 | recent_activity_absent | recent_activity | abstain | ['fo_003', 'fo_035', 'fo_014', 'fo_013', 'fo_045'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q034 | recent_activity_absent | recent_activity | abstain | ['fo_003', 'fo_035', 'fo_014', 'fo_013', 'fo_032'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q035 | recent_activity_absent | recent_activity | abstain | ['fo_002', 'fo_035', 'fo_045', 'fo_036', 'fo_039'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q036 | filtered_listing_geo | filtered_listing | answer | ['fo_003', 'fo_011', 'fo_024', 'fo_041'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q037 | filtered_listing_geo | filtered_listing | answer | ['fo_025', 'fo_030', 'fo_043'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
@@ -84,20 +84,21 @@ sensitive-field probes, entity aliases, broad filters, multi-hop questions, and 
 | q039 | filtered_listing_attr | filtered_listing | answer | ['fo_001', 'fo_016', 'fo_026'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q040 | filtered_listing_attr | filtered_listing | answer | ['fo_019', 'fo_046', 'fo_047', 'fo_049'] | 1 | 1.000 | 0.800 | 1 | 1 | 0 | 1 |
 | q041 | comparison | comparison | answer | ['fo_001', 'fo_003', 'fo_006', 'fo_046', 'fo_013'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
-| q042 | comparison | comparison | answer | ['fo_032', 'fo_033', 'fo_038', 'fo_030', 'fo_010'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
+| q042 | comparison | comparison | answer | ['fo_032', 'fo_033', 'fo_038', 'fo_030'] | 1 | 1.000 | 1.000 | 1 | 1 | 1 | 1 |
 | q043 | multi_hop | filtered_listing | answer | ['fo_003', 'fo_011', 'fo_024', 'fo_041'] | 0 | 0.250 | 1.000 | 1 | 1 | 1 | 1 |
 | q044 | multi_hop | filtered_listing | answer | ['fo_025', 'fo_030', 'fo_043'] | 1 | 0.333 | 1.000 | 1 | 1 | 0 | 1 |
-| q045 | adversarial_spelling | recent_activity | answer | ['fo_035', 'fo_013', 'fo_045', 'fo_034', 'fo_039'] | 0 | 0.000 | 0.000 | 1 | 1 | 0 | 1 |
+| q045 | adversarial_spelling | recent_activity | answer | ['fo_035', 'fo_013', 'fo_032', 'fo_042', 'fo_045'] | 1 | 0.333 | 1.000 | 1 | 1 | 0 | 1 |
 
 ## Known Limits Surfaced By This Eval
 
-- `q009` (entity_lookup_alias): alias_not_in_dataset. Observed intent `entity_lookup`, top records `['fo_011', 'fo_024', 'fo_041', 'fo_048', 'fo_003']`. OG Wealth is a human shorthand, not an indexed alias; current system may abstain.
+- `q009` (entity_lookup_alias): alias_not_in_dataset. Observed intent `entity_lookup`, top records `['fo_011', 'fo_024', 'fo_048', 'fo_041', 'fo_003']`. OG Wealth is a human shorthand, not an indexed alias; current system may abstain.
 - `q014` (entity_disambiguation): city_filter_not_parsed. Observed intent `filtered_listing`, top records `['fo_001', 'fo_002', 'fo_016', 'fo_017', 'fo_018']`. No extra notes.
-- `q016` (contact_presence_absence): metric_miss. Observed intent `contact_lookup`, top records `['fo_001', 'fo_003', 'fo_006', 'fo_008', 'fo_042']`. No extra notes.
+- `q016` (contact_presence_absence): metric_miss. Observed intent `contact_lookup`, top records `['fo_001', 'fo_003', 'fo_006', 'fo_042', 'fo_027']`. No extra notes.
+- `q020` (contact_presence_absence): metric_miss. Observed intent `contact_lookup`, top records `['fo_032', 'fo_013', 'fo_021', 'fo_040', 'fo_046']`. No extra notes.
 - `q040` (filtered_listing_attr): metric_miss. Observed intent `filtered_listing`, top records `['fo_019', 'fo_046', 'fo_047', 'fo_049']`. No extra notes.
 - `q043` (multi_hop): no_aggregation_operator. Observed intent `filtered_listing`, top records `['fo_003', 'fo_011', 'fo_024', 'fo_041']`. This tests a multi-hop aggregate the deterministic answerer does not fully compute.
 - `q044` (multi_hop): compound_missingness_filter_not_supported. Observed intent `filtered_listing`, top records `['fo_025', 'fo_030', 'fo_043']`. No extra notes.
-- `q045` (adversarial_spelling): typo_entity_match. Observed intent `recent_activity`, top records `['fo_035', 'fo_013', 'fo_045', 'fo_034', 'fo_039']`. No extra notes.
+- `q045` (adversarial_spelling): typo_entity_match. Observed intent `recent_activity`, top records `['fo_035', 'fo_013', 'fo_032', 'fo_042', 'fo_045']`. No extra notes.
 
 ## Interpretation
 
@@ -106,6 +107,6 @@ contact-missingness, and citation paths are expected to remain strong. The weake
 a human evaluator should know about before trusting the demo: undocumented aliases, city-level filters,
 compound missingness filters, typo recovery, and true aggregate reasoning.
 
-What this eval does not measure: live web freshness, SMTP deliverability, Form ADV PDF parsing,
+What this eval does not measure: live web freshness, SMTP deliverability, Form ADV Schedule A officer parsing,
 principal-level personal contact discovery, or legal correctness of SEC status beyond the locked
 validation snapshot. The intended behavior for those gaps is abstention or explicit caveat, not inference.

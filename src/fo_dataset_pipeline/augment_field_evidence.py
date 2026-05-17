@@ -27,7 +27,7 @@ AUGMENTED_MARKER = "_augmented_"
 
 GROUPS: tuple[dict, ...] = (
     {
-        "fields": ("primary_email",),
+        "fields": ("primary_email", "primary_email_smtp_verified"),
         "evidence": "primary_email_evidence_url",
         "confidence": "primary_email_confidence",
         "claim_type": "promoted_contact",
@@ -83,6 +83,8 @@ GROUPS: tuple[dict, ...] = (
             "google_places_category",
             "google_maps_url",
             "primary_phone_corroborated_by_places",
+            "primary_phone_conflict_with_places",
+            "primary_phone_canonical_source",
         ),
         "evidence": "google_places_evidence_url",
         "confidence": "google_places_confidence",
@@ -121,6 +123,22 @@ GROUPS: tuple[dict, ...] = (
             "summary URL."
         ),
     },
+    {
+        "fields": (
+            "sec_aum_usd",
+            "sec_fee_structure",
+            "sec_listed_officers",
+            "sec_business_address",
+            "sec_form_adv_parse_status",
+        ),
+        "evidence": "sec_form_adv_evidence_path",
+        "confidence": "sec_confidence",
+        "claim_type": "form_adv_pdf_parse",
+        "logic": (
+            "Parsed from the SEC Form ADV PDF with deterministic regexes; blank "
+            "fields mean the PDF text did not expose a reliable pattern."
+        ),
+    },
 )
 
 DERIVED_FIELDS = {
@@ -130,6 +148,8 @@ DERIVED_FIELDS = {
     "contact_location": "Derived from validated city, state/region, and country.",
     "data_completion_score_text": "Computed against the sample-workbook denominator.",
     "data_completion_score_visual": "Rendered from data_completion_score_text.",
+    "recent_activity_age_days": "Derived from recent_activity_date as of 2026-05-18.",
+    "recent_activity_recency_label": "Derived recency bucket from recent_activity_age_days.",
     "secondary_email_validation_code": "Explicit no-secondary-evidence marker.",
     "email_code_explanation_secondary": "Human-readable explanation for absent secondary email.",
     "email_quality_assessment_secondary": "Explicit no-secondary-evidence marker.",
@@ -291,6 +311,24 @@ def build_augmented_rows(
                             "Principal slot promoted only from official team/about-page evidence.",
                         )
                     )
+            linkedin_url = str(record.get(f"principal_{slot}_linkedin_url") or "").strip()
+            linkedin_confidence = str(
+                record.get(f"principal_{slot}_linkedin_confidence") or ""
+            ).strip()
+            if linkedin_url and linkedin_confidence:
+                rows.append(
+                    _build_row(
+                        record,
+                        f"principal_{slot}_linkedin_url",
+                        linkedin_url,
+                        linkedin_confidence,
+                        "official_principal_linkedin",
+                        (
+                            "Principal LinkedIn promoted only when linked from an "
+                            "official profile page or official team page."
+                        ),
+                    )
+                )
 
         if _nonempty(record.get("recent_activity")):
             source_url = (
@@ -307,6 +345,8 @@ def build_augmented_rows(
                 "recent_activity_outlet",
                 "recent_activity_url",
                 "recent_activity_type",
+                "recent_activity_age_days",
+                "recent_activity_recency_label",
             ):
                 if _nonempty(record.get(field_name)):
                     rows.append(

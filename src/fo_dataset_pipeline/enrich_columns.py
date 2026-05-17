@@ -15,6 +15,7 @@ that record.
 """
 from __future__ import annotations
 
+from datetime import date
 from pathlib import Path
 from typing import Annotated
 from urllib.parse import urlparse
@@ -28,6 +29,7 @@ DATASET_DEFAULT = Path("data/processed/family_offices_validated.csv")
 EMAIL_EVIDENCE_DEFAULT = Path("data/processed/email_validation_evidence.csv")
 
 DEFAULT_VALIDATION_PERIOD = "2026-05"
+RECENCY_AS_OF_DATE = date(2026, 5, 18)
 
 NEW_COLUMNS = (
     "data_validation_period",
@@ -46,6 +48,11 @@ NEW_COLUMNS = (
     "email_code_explanation_secondary",
     "email_quality_assessment_secondary",
     "contact_secondary_phone",
+    "recent_activity_age_days",
+    "recent_activity_recency_label",
+    "primary_email_smtp_verified",
+    "primary_phone_conflict_with_places",
+    "primary_phone_canonical_source",
 )
 
 SECONDARY_CONTACT_UNCERTAINTY_NOTE = (
@@ -144,6 +151,44 @@ def derive_contact_location(city: object, state: object, country: object) -> str
     return ", ".join(parts)
 
 
+def derive_recent_activity_age_days(activity_date: object) -> str:
+    text = str(activity_date or "").strip()
+    if not text or text.lower() == "nan":
+        return ""
+    try:
+        parsed = date.fromisoformat(text[:10])
+    except ValueError:
+        return ""
+    return str(max((RECENCY_AS_OF_DATE - parsed).days, 0))
+
+
+def derive_recent_activity_recency_label(age_days: str) -> str:
+    if not age_days:
+        return ""
+    age = int(age_days)
+    if age <= 90:
+        return "fresh"
+    if age <= 365:
+        return "moderate"
+    return "stale"
+
+
+def _append_note(existing: object, note: str) -> str:
+    text = str(existing or "").strip()
+    if note in text:
+        return text
+    if not text:
+        return note
+    return f"{text} {note}"
+
+
+def _cell_text(value: object) -> str:
+    if value is None:
+        return ""
+    text = str(value).strip()
+    return "" if text.lower() == "nan" else text
+
+
 def enrich_dataframe(
     df: pd.DataFrame,
     email_lookup: dict[str, dict[str, str]],
@@ -191,6 +236,41 @@ def enrich_dataframe(
             )
         if not str(row.get("email_quality_assessment_secondary") or "").strip():
             df.at[index, "email_quality_assessment_secondary"] = "no_secondary_evidence"
+
+        age_days = derive_recent_activity_age_days(row.get("recent_activity_date"))
+        if age_days:
+            df.at[index, "recent_activity_age_days"] = age_days
+            recency_label = derive_recent_activity_recency_label(age_days)
+            df.at[index, "recent_activity_recency_label"] = recency_label
+            if recency_label == "stale":
+                df.at[index, "uncertainty_notes"] = _append_note(
+                    row.get("uncertainty_notes"),
+                    "Recent-activity signal is older than 365 days as of 2026-05-18.",
+                )
+
+        if email:
+            df.at[index, "primary_email_smtp_verified"] = "False"
+
+        places_status = _cell_text(row.get("primary_phone_corroborated_by_places"))
+        if places_status == "False":
+            df.at[index, "primary_phone_conflict_with_places"] = "True"
+            df.at[index, "primary_phone_canonical_source"] = (
+                "official_or_scraped_contact_source_preferred_over_places"
+            )
+            df.at[index, "uncertainty_notes"] = _append_note(
+                df.at[index, "uncertainty_notes"],
+                "Primary phone conflicts with domain-matched Google Places; "
+                "website/contact-source value retained as canonical.",
+            )
+        elif places_status == "True":
+            df.at[index, "primary_phone_conflict_with_places"] = "False"
+            df.at[index, "primary_phone_canonical_source"] = (
+                "official_or_scraped_contact_source_corroborated_by_places"
+            )
+        elif str(row.get("primary_phone") or "").strip():
+            df.at[index, "primary_phone_canonical_source"] = (
+                "official_or_scraped_contact_source"
+            )
 
     return df
 

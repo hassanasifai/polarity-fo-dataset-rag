@@ -287,7 +287,7 @@ def _markdown_report(metrics: dict[str, Any]) -> str:
             "a human evaluator should know about before trusting the demo: undocumented aliases, city-level filters,",
             "compound missingness filters, typo recovery, and true aggregate reasoning.",
             "",
-            "What this eval does not measure: live web freshness, SMTP deliverability, Form ADV PDF parsing,",
+            "What this eval does not measure: live web freshness, SMTP deliverability, Form ADV Schedule A officer parsing,",
             "principal-level personal contact discovery, or legal correctness of SEC status beyond the locked",
             "validation snapshot. The intended behavior for those gaps is abstention or explicit caveat, not inference.",
         ]

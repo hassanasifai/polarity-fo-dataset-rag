@@ -75,6 +75,7 @@ def _contact_field_label(field_name: str) -> str:
         "primary_phone": "primary phone",
         "principal_linkedin_url": "principal LinkedIn",
         "aum_text": "AUM",
+        "sec_aum_usd": "SEC regulatory AUM",
     }.get(field_name, field_name)
 
 
@@ -175,6 +176,9 @@ def _contact_answer(result: RetrievalResult, records: dict[str, dict[str, Any]])
             continue
         value = _field_value(record, field_name)
         label = _contact_field_label(field_name)
+        if field_name == "aum_text" and not value:
+            value = _field_value(record, "sec_aum_usd")
+            label = _contact_field_label("sec_aum_usd")
         if value:
             facts.append(f"{label}: {value}")
         else:
@@ -192,6 +196,7 @@ def _contact_answer(result: RetrievalResult, records: dict[str, dict[str, Any]])
     answer = f"For {name}, the locked dataset lists " + "; ".join(facts) + "."
     caveats = [
         "Sensitive contact and AUM fields are copied only when directly present in the validated dataset.",
+        "SEC regulatory AUM is shown separately from self-described AUM when parsed from Form ADV.",
         "Blank sensitive fields are not inferred from websites, names, or model knowledge.",
     ]
     return AnswerResult(
