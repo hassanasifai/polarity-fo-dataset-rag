@@ -1,0 +1,44 @@
+[project]
+name = "polarityiq-stage1-rag"
+version = "0.1.0"
+description = "Local-first evidence-bound RAG system for the PolarityIQ Stage 1 Differentiator."
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+exclude = [
+    ".agents",
+    ".claude",
+    ".vscode",
+    "assements_details",
+    "data",
+    "fo_dataset_pipeline",
+]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "C4", "SIM", "RUF"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"scripts/*.py" = ["E402"]
+"src/ui/app.py" = ["E402"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.coverage.run]
+branch = true
+omit = [
+    "scripts/*",
+    "src/ui/*",
+    "src/eval/*",
+    "src/answering/local_llm.py",
+    "src/indexing/build_dense_index.py",
+    "src/retrieval/rerank.py",
+]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false

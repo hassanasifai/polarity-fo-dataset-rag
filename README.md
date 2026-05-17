@@ -1,9 +1,9 @@
 # PolarityIQ — Family Office Dataset & RAG Pipeline
 
-> **Status:** Dataset ✅ Locked · RAG 🚧 Pending · Task 2 🚧 Pending
+> **Status:** Dataset ✅ Locked · RAG ✅ Added · HVL submission packet ✅ Added
 > **Submission for:** PolarityIQ Stage 1 Differentiator Assessment
 
-A validated, evidence-backed dataset of 50 real Family Office records, built with visible reasoning at every step. Every promoted field is paired with a source URL and a confidence label; every gap is honestly disclosed. The repository name `polarity-fo-dataset-rag` reflects the two-phase intent: dataset first, RAG layer added in a follow-up commit.
+A validated, evidence-backed dataset of 50 real Family Office records, built with visible reasoning at every step. Every promoted field is paired with a source URL and a confidence label; every gap is honestly disclosed. The repository now includes the local RAG demo in `rag_demo/` plus a submission packet for the Stage 1 Human Validation Layer review.
 
 ---
 
@@ -11,7 +11,22 @@ A validated, evidence-backed dataset of 50 real Family Office records, built wit
 
 - **What this produces:** 50 validated Family Office records (`data/processed/family_offices_validated.xlsx`) with a 16-sheet audit trail (sources, field evidence, validation results, Apify/Firecrawl evidence, SEC IAPD outputs, contact info, news signals, LinkedIn enrichment, Google Places, team rosters, validation chain snippets, data dictionary).
 - **Headline metrics:** 50 / 50 records accepted, all `confidence=high`, 112 source URLs (≥2 per record), 116 dataset columns, 1,848 field-evidence rows, 180 tests passing at 91.44 % coverage, ruff clean, `pip_audit` clean.
+- **RAG audit:** `rag_demo/reports/eval_report.md` now uses a 45-question adversarial set with realistic misses and known limitations rather than a polished all-1.000 report.
 - **HVL discipline:** every field follows the Observe → Question → Hypothesize → Build → Validate loop. The methodology file documents what was observed, what was assumed, what could be wrong, and what would change the conclusion. Unverified output is treated as worse than no output.
+
+---
+
+## Submission Map
+
+Open these first:
+
+- `SUBMISSION_COVER.md` - evaluator index, demo map, and known limitations.
+- `EFFORT_AND_AI_DISCLOSURE.md` - hours breakdown and AI-vs-human disclosure.
+- `reports/methodology_summary.md` - dataset methodology and honest limitations.
+- `reports/validation_chains.md` - source-to-field validation chains.
+- `rag_demo/reports/eval_report.md` - honest 45-question RAG evaluation.
+- `rag_demo/src/ui/app.py` - Streamlit evidence review console.
+- `DEPLOYMENT_OR_RECORDING_NOTES.md` - live URL or recording checklist.
 
 ---
 
