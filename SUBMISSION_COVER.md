@@ -34,7 +34,7 @@ Submission target: `optimize@falconscaling.com`
 - RAG app: `rag_demo/src/`, `rag_demo/scripts/`, `rag_demo/data/processed/`, `rag_demo/reports/eval_report.md`
 - Demo UI: `cd rag_demo; streamlit run src/ui/app.py`
 - Screen recording: `demo/task1_rag_walkthrough.mp4`
-- GitHub branch: `https://github.com/hassanasifai/polarity-fo-dataset-rag/tree/hvl-submission-packet-20260517`
+- GitHub branch: `https://github.com/hassanasifai/polarity-fo-dataset-rag/tree/hvl-final-task1-20260518`
 
 ## Human Validation Layer Summary
 
