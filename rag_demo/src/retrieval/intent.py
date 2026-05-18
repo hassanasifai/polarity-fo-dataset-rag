@@ -117,10 +117,22 @@ def _domain(value: str) -> str:
     return parsed.netloc.removeprefix("www.")
 
 
+def _identifier_variants(value: Any) -> list[str]:
+    text = clean_text(value)
+    if not text:
+        return []
+    variants = [text]
+    if re.fullmatch(r"\d+\.0", text):
+        variants.append(text[:-2])
+    return list(dict.fromkeys(variants))
+
+
 def _preferred_chunk_types(intent: str, requested_fields: list[str]) -> list[ChunkType]:
     if intent == "regulatory":
         return ["regulatory", "field_evidence", "record_profile"]
     if intent == "contact_lookup":
+        if "corporate_linkedin_url" in requested_fields:
+            return ["field_evidence", "record_profile", "contact_policy"]
         return ["contact_policy", "field_evidence", "record_profile"]
     if intent == "recent_activity":
         return ["recent_activity", "record_profile"]
@@ -128,9 +140,19 @@ def _preferred_chunk_types(intent: str, requested_fields: list[str]) -> list[Chu
         return ["record_profile", "regulatory", "recent_activity", "contact_policy"]
     if intent == "comparison":
         return ["record_profile", "regulatory", "contact_policy", "recent_activity"]
+    if "corporate_linkedin_url" in requested_fields:
+        return ["field_evidence", "record_profile", "contact_policy"]
     if any(field in requested_fields for field in ["aum_text", "principal_linkedin_url"]):
         return ["contact_policy", "field_evidence", "record_profile"]
     return ["record_profile", "field_evidence", "regulatory", "recent_activity", "contact_policy"]
+
+
+def _linkedin_requested_field(text: str) -> str:
+    principal_terms = ["principal", "personal", "private", "individual", "founder", "owner"]
+    corporate_terms = ["corporate", "company", "company page", "public", "firm", "business"]
+    if _contains_any(text, principal_terms) and not _contains_any(text, corporate_terms):
+        return "principal_linkedin_url"
+    return "corporate_linkedin_url"
 
 
 def _requested_fields(text: str) -> list[str]:
@@ -143,7 +165,7 @@ def _requested_fields(text: str) -> list[str]:
     if _contains_any(text, ["phone", "telephone", "number", "contact"]):
         fields.append("primary_phone")
     if "linkedin" in text:
-        fields.append("principal_linkedin_url")
+        fields.append(_linkedin_requested_field(text))
     if _contains_any(text, ["aum", "assets under management"]):
         fields.append("aum_text")
     if _contains_any(text, ["sec", "crd", "iad", "registered", "registration"]):
@@ -167,10 +189,10 @@ def _match_records(text: str, records: list[dict[str, Any]]) -> tuple[list[str],
             clean_text(record.get("primary_email")),
             clean_text(record.get("primary_phone")),
             clean_text(record.get("google_places_phone")),
-            clean_text(record.get("sec_crd_number")),
             clean_text(record.get("website_url")),
             clean_text(record.get("corporate_linkedin_url")),
         ]
+        exact_fields.extend(_identifier_variants(record.get("sec_crd_number")))
         exact_fields.extend(_domain(value) for value in list(exact_fields) if value and "." in value)
         if any(value and value.lower() in text for value in exact_fields):
             matched.append((80, clean_text(record.get("record_id")), name))
@@ -179,9 +201,9 @@ def _match_records(text: str, records: list[dict[str, Any]]) -> tuple[list[str],
         if len(name_tokens) >= 2 and all(token in text for token in name_tokens[: min(3, len(name_tokens))]):
             matched.append((sum(len(token) for token in name_tokens), clean_text(record.get("record_id")), name))
             continue
-        crd = clean_text(record.get("sec_crd_number"))
-        if crd and crd in text:
-            matched.append((len(crd) + 50, clean_text(record.get("record_id")), name))
+        crd_variants = _identifier_variants(record.get("sec_crd_number"))
+        if any(crd and crd in text for crd in crd_variants):
+            matched.append((max(len(crd) for crd in crd_variants) + 50, clean_text(record.get("record_id")), name))
     matched.sort(reverse=True)
     ids = [record_id for _, record_id, _ in matched]
     names = [name for _, _, name in matched]
@@ -301,6 +323,11 @@ def classify_intent(query: str, records: list[dict[str, Any]] | None = None) -> 
     text = query.lower()
     requested_fields = _requested_fields(text)
     filters = parse_filters(text)
+    asks_record_resolution = _contains_any(
+        text,
+        ["which record", "which firm", "which family office", "which office"],
+    )
+    asks_corporate_linkedin_value = "corporate_linkedin_url" in requested_fields and not asks_record_resolution
     is_listing_question = _contains_any(text, ["which", "list", "show me all", "find all"]) and (
         "family offices" in text or bool(filters)
     )
@@ -309,7 +336,9 @@ def classify_intent(query: str, records: list[dict[str, Any]] | None = None) -> 
         intent = "comparison"
     elif is_listing_question:
         intent = "filtered_listing"
-    elif any(field in requested_fields for field in ["primary_email", "primary_phone", "principal_linkedin_url", "aum_text"]):
+    elif asks_corporate_linkedin_value or any(
+        field in requested_fields for field in ["primary_email", "primary_phone", "principal_linkedin_url", "aum_text"]
+    ):
         intent = "contact_lookup"
     elif any(field in requested_fields for field in ["sec_registered", "sec_crd_number"]):
         intent = "regulatory"

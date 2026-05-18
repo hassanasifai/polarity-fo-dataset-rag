@@ -15,9 +15,12 @@ writes the following columns onto each dataset row:
 - ``sec_address_city`` / ``sec_address_state`` / ``sec_address_country`` — the
   firm's principal office on file with the SEC (corroboration signal).
 - ``sec_evidence_url`` + ``sec_confidence`` — pairing for every promoted value.
+- ``sec_near_match_review_status`` + ``sec_near_match_notes`` — manual review
+  notes for threshold-edge IAPD matches.
 
 Records without an IAPD match get ``sec_registered = "False"`` and an
-``uncertainty_notes`` addendum explaining why (typical for true SFOs).
+``uncertainty_notes`` addendum explaining that no registration was accepted in
+the locked snapshot. This is intentionally not phrased as a legal conclusion.
 """
 from __future__ import annotations
 
@@ -35,8 +38,11 @@ DEFAULT_DATASET_PATH = Path("data/processed/family_offices_validated.csv")
 DEFAULT_JSON_OUTPUT = Path("data/processed/family_offices_validated.json")
 
 CONFIDENCE_VALUE = "sec_authoritative"
+MANUAL_REVIEW_CONFIDENCE_VALUE = "sec_authoritative_manual_review"
 EVIDENCE_COLUMN = "sec_evidence_url"
 CONFIDENCE_COLUMN = "sec_confidence"
+NEAR_MATCH_STATUS_COLUMN = "sec_near_match_review_status"
+NEAR_MATCH_NOTES_COLUMN = "sec_near_match_notes"
 
 PROMOTED_VALUE_COLUMNS = (
     "sec_registered",
@@ -52,11 +58,16 @@ PROMOTED_VALUE_COLUMNS = (
     "sec_address_state",
     "sec_address_country",
 )
-PROMOTED_COLUMNS = PROMOTED_VALUE_COLUMNS + (EVIDENCE_COLUMN, CONFIDENCE_COLUMN)
+PROMOTED_COLUMNS = PROMOTED_VALUE_COLUMNS + (
+    EVIDENCE_COLUMN,
+    CONFIDENCE_COLUMN,
+    NEAR_MATCH_STATUS_COLUMN,
+    NEAR_MATCH_NOTES_COLUMN,
+)
 
 UNCERTAINTY_SENTINEL = (
-    "Not registered with the SEC (per IAPD search 2026-05-17) — typical for "
-    "single-family offices managing only family wealth."
+    "No SEC/IAPD registration was accepted in the 2026-05-17 validation "
+    "snapshot; this is not a live legal determination."
 )
 
 
@@ -101,6 +112,14 @@ def build_updates(record: dict, evidence: dict | None) -> dict[str, str]:
         return {}
     updates: dict[str, str] = {}
     is_registered = bool(evidence.get("sec_registered"))
+    manual_status = _existing(evidence.get("manual_review_status"))
+    manual_notes = _existing(
+        evidence.get("manual_review_notes") or evidence.get("manual_review_reason")
+    )
+    if manual_status:
+        updates[NEAR_MATCH_STATUS_COLUMN] = manual_status
+    if manual_notes:
+        updates[NEAR_MATCH_NOTES_COLUMN] = manual_notes
 
     if is_registered:
         crd = str(evidence.get("sec_crd_number") or "").strip()
@@ -151,7 +170,11 @@ def build_updates(record: dict, evidence: dict | None) -> dict[str, str]:
             updates[column] = new_value
         if updates:
             updates[EVIDENCE_COLUMN] = evidence_url
-            updates[CONFIDENCE_COLUMN] = CONFIDENCE_VALUE
+            updates[CONFIDENCE_COLUMN] = (
+                MANUAL_REVIEW_CONFIDENCE_VALUE
+                if manual_status == "accepted"
+                else CONFIDENCE_VALUE
+            )
         return updates
 
     # Not registered — write the explicit False marker + note (only if empty).

@@ -15,7 +15,7 @@ Each chain documents one record at claim level. Quotes are verbatim sentences ex
 - Captured candidate corporate-contact signals via Apify vdrmota/contact-info-scraper; promoted admin@cattrail.com as primary_email with `corporate_public_listed` confidence.
 - Matched the corporate LinkedIn URL via Apify automation-lab/linkedin-company-scraper (linkedin.com/company/cattrail-capital-llc) with `linkedin_scraped_match` confidence.
 - Cross-checked the address via Apify compass/crawler-google-places (New York, NY).
-- Recent activity: no qualifying 2025+ public news signal — recorded transparently in uncertainty_notes rather than padded with weak matches.
+- Recent activity: no qualifying 2025+ public news signal — recorded transparently in uncertainty_notes rather than padded with low-signal matches.
 
 ### Source: `https://www.cattrail.com/`
 
@@ -100,7 +100,7 @@ JFG uses both legacy JFG Wealth wording and the current JFG Family Office brand.
 **What would change the conclusion:**
 
 - If the Form CRS PDF describes JFG as a generic RIA without family-office framing, the MFO label must be re-evaluated.
-- If the better-way page is removed and no MFO/SFO-origin language is preserved anywhere on the site, the classification basis weakens.
+- If the better-way page is removed and no MFO/SFO-origin language is preserved anywhere on the site, the classification basis should be revisited.
 
 ## Validation Chain 3 - Verlinvest (`fo_020`)
 

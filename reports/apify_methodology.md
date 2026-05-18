@@ -32,8 +32,6 @@ larger replacement/enrichment pass, use the expanded actor stack in
 - Optional secondary firmographics:
   `vivid_astronaut/company-enrichment`
 - Fallback custom extraction: `apify/web-scraper`
-- Fast single-URL evidence fetch only, not RAG storage:
-  `apify/rag-web-browser`
 - Authoritative US regulatory validation:
   private custom actor or direct Python module for SEC IAPD, Form ADV, EDGAR,
   and 13F checks.
@@ -105,7 +103,7 @@ dynamic extraction evidence.
 ## Validation Result
 
 - Full exact-source crawl returned 98 crawled pages.
-- `apify_crawl_evidence.csv` contains 112 source rows.
+- `apify_crawl_evidence.csv` contains the original 112 row-level source crawls. The broader `source_registry.csv` now contains 338 source-reference rows after evidence backfill.
 - 101 rows matched crawled markdown by canonical URL.
 - 8 unmatched rows were PDFs intentionally excluded from website crawling.
 - 3 unmatched rows were Baltisse pages that passed live HTTP checks but did not return

@@ -74,6 +74,12 @@ def _name_jaccard(left: str, right: str) -> float:
     return len(a & b) / len(a | b)
 
 
+def _simplified_name_match(left: str, right: str) -> bool:
+    left_simple = _simplify_name(left)
+    right_simple = _simplify_name(right)
+    return bool(left_simple and right_simple and left_simple == right_simple)
+
+
 def _candidate_queries(record: dict) -> list[str]:
     name = str(record.get("family_office_name") or "").strip()
     if not name:
@@ -135,10 +141,14 @@ def _score_hit(hit: dict, record: dict) -> tuple[float, str]:
 
     best_jaccard = 0.0
     best_match_name = ""
+    simplified_exact = False
     for candidate in names:
         score = _name_jaccard(fo_name, candidate)
         if score > best_jaccard:
             best_jaccard = score
+            best_match_name = candidate
+        if _simplified_name_match(fo_name, candidate):
+            simplified_exact = True
             best_match_name = candidate
 
     # Address corroboration adds confidence.
@@ -160,12 +170,14 @@ def _score_hit(hit: dict, record: dict) -> tuple[float, str]:
         if fo_state and hit_state and fo_state in {hit_state, hit_state[:2]}:
             address_match = True
 
-    score = best_jaccard
+    score = 0.75 if simplified_exact else best_jaccard
     if address_match:
         score += 0.25
 
     reasons: list[str] = []
     reasons.append(f"name_jaccard={best_jaccard:.2f} (vs '{best_match_name}')")
+    if simplified_exact:
+        reasons.append("simplified_name_exact_match")
     if address_match:
         reasons.append("address_match=city+state")
     return score, "; ".join(reasons)
@@ -217,10 +229,15 @@ def _match_record(
 
     if best_hit is None or best_score < threshold:
         evidence["sec_registered"] = False
+        if best_hit is not None and best_score >= 0.45:
+            evidence["manual_review_status"] = "needs_review"
+            evidence["manual_review_reason"] = (
+                "IAPD returned a threshold-edge firm match; do not treat as a legal "
+                "non-registration claim until a human reviews the CRD and aliases."
+            )
         evidence["notes"] = (
-            "No IAPD match above threshold — typical for single-family "
-            "offices managing only family wealth (no SEC registration "
-            "requirement)."
+            "No IAPD match above threshold in the automated pass. This is a "
+            "dataset-snapshot finding, not a legal conclusion."
         )
         return evidence
 

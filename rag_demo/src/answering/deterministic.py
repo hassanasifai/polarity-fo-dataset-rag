@@ -73,17 +73,33 @@ def _contact_field_label(field_name: str) -> str:
     return {
         "primary_email": "primary email",
         "primary_phone": "primary phone",
+        "corporate_linkedin_url": "corporate LinkedIn",
         "principal_linkedin_url": "principal LinkedIn",
         "aum_text": "AUM",
         "sec_aum_usd": "SEC regulatory AUM",
     }.get(field_name, field_name)
 
 
+def _query_asks_regulatory_aum(query_text: str) -> bool:
+    asks_aum = "aum" in query_text or "assets under management" in query_text
+    asks_regulatory_source = any(
+        marker in query_text
+        for marker in ["sec", "regulatory", "form adv", "form-ad-v", "adv brochure"]
+    )
+    return asks_aum and asks_regulatory_source
+
+
 def _sensitive_requested_fields(result: RetrievalResult) -> list[str]:
     fields = [
         field
         for field in result.intent.requested_fields
-        if field in {"primary_email", "primary_phone", "principal_linkedin_url", "aum_text"}
+        if field in {
+            "primary_email",
+            "primary_phone",
+            "corporate_linkedin_url",
+            "principal_linkedin_url",
+            "aum_text",
+        }
     ]
     query_text = result.query.lower()
     if "principal" in query_text or "personal" in query_text or "direct" in query_text:
@@ -133,7 +149,13 @@ def _contact_answer(result: RetrievalResult, records: dict[str, dict[str, Any]])
             )
         if any(
             field in result.intent.requested_fields
-            for field in ["primary_email", "primary_phone", "principal_linkedin_url", "aum_text"]
+            for field in [
+                "primary_email",
+                "primary_phone",
+                "corporate_linkedin_url",
+                "principal_linkedin_url",
+                "aum_text",
+            ]
         ):
             return _missing_answer(
                 "No matching family-office record was found for the requested sensitive field, so the system abstained.",
@@ -176,7 +198,7 @@ def _contact_answer(result: RetrievalResult, records: dict[str, dict[str, Any]])
             continue
         value = _field_value(record, field_name)
         label = _contact_field_label(field_name)
-        if field_name == "aum_text" and not value:
+        if field_name == "aum_text" and not value and _query_asks_regulatory_aum(query_text):
             value = _field_value(record, "sec_aum_usd")
             label = _contact_field_label("sec_aum_usd")
         if value:

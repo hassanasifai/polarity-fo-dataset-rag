@@ -16,5 +16,8 @@
   "match_score": 0.5,
   "match_reason": "name_jaccard=0.50 (vs 'FORTE CAPITAL GROUP')",
   "sec_registered": false,
-  "notes": "No IAPD match above threshold — typical for single-family offices managing only family wealth (no SEC registration requirement)."
+  "notes": "No SEC/IAPD registration accepted after 2026-05-18 manual review; threshold-edge ATCAP/Forte hit rejected as a different entity.",
+  "manual_review_status": "reviewed_no_match",
+  "manual_review_notes": "Reviewed on 2026-05-18: IAPD near hit FORTE CAPITAL GROUP/ATCAP PARTNERS is not AT Capital Group Singapore; retained as no accepted SEC registration in the locked snapshot.",
+  "review_status": "reviewed_no_match"
 }

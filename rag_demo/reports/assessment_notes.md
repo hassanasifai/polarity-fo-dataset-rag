@@ -15,7 +15,7 @@ This repository optimizes for evidence visibility rather than generative polish.
 
 | Claim | What would falsify it |
 |---|---|
-| Dataset contract is locked | Anything other than exactly 50 rows and 133 columns in `family_offices_validated.json` / XLSX `data_50`. |
+| Dataset contract is locked | Anything other than exactly 50 rows and 137 columns in `family_offices_validated.json` / XLSX `data_50`. |
 | These rows are evidence-backed family-office records | Three or more rows fail official-site/source review or turn out to be generic RIAs with no family-office/UHNW-family framing. |
 | RAG safely abstains on sensitive missing fields | Any golden or manual query for principal personal email/phone, missing AUM, or missing recent activity returns an inferred value. |
 | Citations are trustworthy | A non-abstained answer lacks a citation when the supporting record has source URLs. |

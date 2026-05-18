@@ -42,6 +42,25 @@ def test_filtered_listing_uses_metadata_filters() -> None:
     assert result.intent.filters["sec_registered"] is True
 
 
+def test_corporate_linkedin_page_is_not_principal_contact_intent() -> None:
+    _ensure_lexical_index()
+    result = retrieve("Which record is for the Whittier Trust Company LinkedIn page?", top_k=5)
+    answer = answer_from_retrieval(result)
+
+    assert result.intent.intent == "entity_lookup"
+    assert result.intent.requested_fields == ["corporate_linkedin_url"]
+    assert result.intent.matched_record_ids == ["fo_048"]
+    assert answer.abstain is False
+    assert "Whittier Trust" in answer.answer
+
+    direct = retrieve("What is Whittier Trust's corporate LinkedIn page?", top_k=5)
+    direct_answer = answer_from_retrieval(direct)
+    assert direct.intent.intent == "contact_lookup"
+    assert direct.intent.requested_fields == ["corporate_linkedin_url"]
+    assert direct_answer.abstain is False
+    assert "corporate LinkedIn" in direct_answer.answer
+
+
 def test_answer_paths_cover_entity_regulatory_recent_listing_and_comparison() -> None:
     _ensure_lexical_index()
 

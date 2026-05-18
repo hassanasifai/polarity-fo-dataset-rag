@@ -44,3 +44,4 @@ _temp/
 scratch/
 tmp_cli.csv
 .streamlit_*.log
+data/evidence/form_adv_pdfs_*/

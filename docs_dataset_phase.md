@@ -8,7 +8,7 @@
 - Sample workbook overlap is checked and currently returns no overlaps.
 - Final source URLs contain zero SWFI links.
 - Final workbook includes source registry and field-evidence tabs.
-- RAG implementation is intentionally deferred until this dataset phase remains stable.
+- Official Task 1 screen recording is committed at `demo/task1_rag_walkthrough.mp4`.
 
 ## ASCII Flow
 
@@ -38,16 +38,16 @@ Candidate discovery
 - `expect_table_row_count_to_be_between`: exactly 50 for final delivery.
 - `expect_column_values_to_be_between`: validation score 0-100.
 
-## Failure Handling
+## Error Handling
 
-- Schema parse failure: stop the run and report row-level errors.
-- Weak evidence: keep row, mark `needs_review`, lower confidence.
+- Schema parse error: stop the run and report row-level errors.
+- Low evidence support: keep row, mark `needs_review`, lower confidence.
 - Sample-workbook overlap: stop the run before live validation.
 - Discovery-only directory evidence in final `source_urls`: mark row `needs_review`.
 - Fewer than two reachable source URLs: mark row `needs_review`.
 - Unreachable official website: mark row `needs_review`.
 - Final count mismatch: write artifacts for inspection, then exit non-zero.
-- URL failure: do not auto-delete; preserve for manual follow-up because some official sites block bots.
+- URL check issue: do not auto-delete; preserve for manual follow-up because some official sites block bots.
 - Fewer than 50 accepted records: dataset is not submission-ready.
 
 ## Verification Commands
@@ -59,7 +59,8 @@ ruff check .
 python -m fo_dataset_pipeline.cli --input data/raw/family_offices_seed.csv --required-count 50
 ```
 
-## RAG Compatibility
+## Structured Export Compatibility
 
-Each final row can become a single document with structured metadata. Later chunking should preserve
-the table row as one unit and attach source URLs, confidence, and validation status as metadata.
+Each final row is exportable as structured JSON with attached source URLs, confidence labels,
+validation status, and uncertainty notes. Downstream consumers should preserve the row-level
+evidence metadata rather than splitting claims away from their sources.

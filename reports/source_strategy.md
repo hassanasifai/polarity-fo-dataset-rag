@@ -60,7 +60,8 @@
   concise provenance statements rather than manually selected verbatim source quotes.
   The three featured validation chains retain exact quote-level support.
 - The LinkedIn People scrape was tested but not promoted because target-record runs
-  returned no usable employee records. This is documented as a stopped experiment rather
-  than forced into the dataset.
-- Form ADV brochure URLs are captured for SEC-registered firms; the PDF bodies are not
-  yet parsed for AUM, fees, or conflicts. Those fields remain intentionally conservative.
+  returned no usable employee records. Principal fields stay sourced from official
+  team/about/profile pages.
+- Form ADV brochure URLs are captured for SEC-registered firms. PDF text is parsed
+  conservatively for regulatory AUM and fee labels when the pattern is reliable; officer
+  table extraction remains manual-review only.

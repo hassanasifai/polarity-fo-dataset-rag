@@ -125,8 +125,7 @@ def _fuse_hits(
 def _apply_filters(hits: list[RetrievalHit], filters: dict[str, Any]) -> list[RetrievalHit]:
     if not filters:
         return hits
-    filtered = [hit for hit in hits if metadata_matches_filters(hit.metadata, filters)]
-    return filtered if filtered else hits
+    return [hit for hit in hits if metadata_matches_filters(hit.metadata, filters)]
 
 
 def _cap_per_record(hits: list[RetrievalHit], max_chunks_per_record: int) -> list[RetrievalHit]:
@@ -209,6 +208,8 @@ def retrieve(
     dense_top_k: int = 80,
     bm25_top_k: int = 120,
     use_reranker: bool = False,
+    include_exact_seeds: bool = True,
+    include_filter_seeds: bool = True,
 ) -> RetrievalResult:
     records = load_family_offices()
     chunks = load_chunks(CHUNKS_PATH)
@@ -238,16 +239,21 @@ def retrieve(
         preferred_chunk_types=list(intent.preferred_chunk_types),
         requested_fields=intent.requested_fields,
     )
-    matched_seeded = _seed_matched_record_hits(
-        chunks,
-        intent.matched_record_ids,
-        list(intent.preferred_chunk_types),
+    should_seed_exact = include_exact_seeds and intent.intent != "filtered_listing"
+    matched_seeded = (
+        _seed_matched_record_hits(
+            chunks,
+            intent.matched_record_ids,
+            list(intent.preferred_chunk_types),
+        )
+        if should_seed_exact
+        else []
     )
     if matched_seeded:
         matched_seeded_ids = {hit.chunk_id for hit in matched_seeded}
         fused = matched_seeded + [hit for hit in fused if hit.chunk_id not in matched_seeded_ids]
 
-    if intent.intent == "filtered_listing":
+    if include_filter_seeds and intent.intent == "filtered_listing":
         seeded = _seed_filter_listing_hits(chunks, intent.filters)
         seeded_ids = {hit.chunk_id for hit in seeded}
         fused = seeded + [hit for hit in fused if hit.chunk_id not in seeded_ids]

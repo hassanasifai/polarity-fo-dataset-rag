@@ -41,4 +41,4 @@
 - Add OpenCorporates or jurisdiction registry checks for legal names.
 - Add source snapshots for reproducibility.
 - Add Great Expectations after the 50-row dataset is complete.
-- Add RAG ingestion once the accepted dataset is stable.
+- Add a cited review/export layer once the accepted dataset is stable.

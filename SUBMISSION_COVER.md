@@ -12,11 +12,11 @@ Submission target: `optimize@falconscaling.com`
 2. `reports/validation_chains.md`  
    Three source-to-field validation chains with quotes, uncertainty, and what would change the conclusion.
 
-3. `rag_demo/reports/eval_report.md`  
-   Honest 45-question RAG audit. It intentionally includes aliases, negative controls, multi-hop prompts, and typo probes; it is not an all-green showcase.
+3. `demo/task1_rag_walkthrough.mp4`
+   Official committed screen recording for the Task 1 walkthrough.
 
-4. `rag_demo/src/ui/app.py` or the Streamlit demo  
-   Evidence review console showing answer, missing data, caveats, citations, reasoning path, selected evidence, and other retrieved candidates.
+4. `data/processed/family_offices_validated.xlsx`
+   Workbook with the 50 records plus source registry, field evidence, validation results, and enrichment evidence sheets.
 
 5. `EFFORT_AND_AI_DISCLOSURE.md`  
    Time allocation and AI-vs-human disclosure.
@@ -31,37 +31,36 @@ Submission target: `optimize@falconscaling.com`
 - Dataset JSON/CSV: `data/processed/family_offices_validated.{json,csv}`
 - Claim evidence: `data/processed/field_evidence.csv`
 - Source registry: `data/processed/source_registry.csv`
-- RAG app: `rag_demo/src/`, `rag_demo/scripts/`, `rag_demo/data/processed/`, `rag_demo/reports/eval_report.md`
-- Demo UI: `cd rag_demo; streamlit run src/ui/app.py`
-- Screen recording: `demo/task1_rag_walkthrough.mp4`
-- GitHub branch: `https://github.com/hassanasifai/polarity-fo-dataset-rag/tree/hvl-final-task1-20260518`
+- Official screen recording: `demo/task1_rag_walkthrough.mp4`
+- GitHub main: `https://github.com/hassanasifai/polarity-fo-dataset-rag/tree/main`
+- Raw evaluator CSV: `https://raw.githubusercontent.com/hassanasifai/polarity-fo-dataset-rag/main/00_family_office_records.csv`
+- Raw screen recording: `https://raw.githubusercontent.com/hassanasifai/polarity-fo-dataset-rag/main/demo/task1_rag_walkthrough.mp4`
 
 ## Human Validation Layer Summary
 
 The system is designed to show the reasoning between observation and answer:
 
-- Every answer path is constrained to locked local evidence.
+- Every promoted field is constrained to locked local evidence.
 - Sensitive fields are copied only if directly present.
 - Missing AUM, principal contact, and recent activity are abstained rather than inferred.
 - SEC answers are phrased as dataset-snapshot claims, not legal conclusions.
-- The eval report preserves known failures instead of hiding them.
+- Validation notes preserve uncertainty instead of hiding it.
 
 ## Known Limits I Would Prioritize Next
 
 - Alias handling is incomplete for informal brand names such as "OG Wealth".
-- City-level filters are weaker than state/country filters.
-- The deterministic answerer does not compute true aggregates for multi-hop questions.
-- Typo tolerance exists through retrieval but is not reliable enough to claim.
+- City-level filters are treated as advisory when the stronger state/country evidence is available.
 - Form ADV PDFs are parsed conservatively for SEC regulatory AUM and fee labels, but Schedule A officer parsing remains blank because the text patterns were not reliable enough to promote automatically.
 
-## Demo Status
+## Official Screen Recording
 
-Local demo command:
+Committed artifact:
 
-```powershell
-cd rag_demo
-streamlit run src\ui\app.py
-```
+`demo/task1_rag_walkthrough.mp4`
+
+Raw main-branch link:
+
+`https://raw.githubusercontent.com/hassanasifai/polarity-fo-dataset-rag/main/demo/task1_rag_walkthrough.mp4`
 
 Verified scenarios:
 
@@ -72,4 +71,4 @@ Verified scenarios:
 - Filtered SEC California listing
 - Cat Trail vs Ohana comparison
 
-The included `demo/task1_rag_walkthrough.mp4` is a 36-second local Streamlit walkthrough of the same six scenarios. For final email submission, upload that MP4 to an unlisted YouTube/Drive link or attach it if file-size policy allows.
+The recording is the official Task 1 screen-recording deliverable for this submission.

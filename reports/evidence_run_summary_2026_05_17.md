@@ -9,8 +9,8 @@ Apify and Firecrawl without treating raw scraper output as final truth.
 
 | Layer | Tool / Actor | Output |
 |---|---|---|
-| Exact source snapshots | `apify/website-content-crawler` | 100 crawled items; `apify_crawl_evidence.csv` has 112 source rows and 103 matched crawl rows |
-| Independent source snapshots | Firecrawl batch scrape | 101 scraped pages; `firecrawl_crawl_evidence.csv` has 112 source rows and 101 matched rows |
+| Exact source snapshots | `apify/website-content-crawler` | 100 crawled items; `apify_crawl_evidence.csv` has the original 112 row-level source rows and 103 matched crawl rows |
+| Independent source snapshots | Firecrawl batch scrape | 101 scraped pages; `firecrawl_crawl_evidence.csv` has the original 112 row-level source rows and 101 matched rows |
 | Discovery candidates | `apify/google-search-scraper` | US and global discovery runs; 120 SERP rows flattened across two CSVs |
 | Public contact extraction | `vdrmota/contact-info-scraper` | 50 official websites processed; 31 rows with emails and 20 rows with phones |
 | Email validation | `account56/email-verifier` | Blocked by Apify full-permission approval requirement; local syntax/MX fallback generated for 53 public emails |
@@ -56,4 +56,4 @@ Apify and Firecrawl without treating raw scraper output as final truth.
 - `pytest tests/ -v --cov=. --cov-report=term-missing --cov-fail-under=80`
   passed with 23 tests and 81.09% coverage.
 - `ruff check .` passed.
-- `pip-audit -r rag_demo\requirements.txt` reported no known vulnerabilities for the local RAG demo dependencies.
+- Dependency auditing is separate from this evidence-layer run and should be executed against the pinned submission environment.

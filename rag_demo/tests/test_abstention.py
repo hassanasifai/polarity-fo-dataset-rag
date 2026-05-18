@@ -34,6 +34,18 @@ def test_abstains_on_missing_cat_aum() -> None:
     assert "$" not in answer.answer
 
 
+def test_generic_aum_does_not_use_sec_aum_but_regulatory_aum_can() -> None:
+    _ensure_lexical_index()
+    _, generic_answer = ask("What is Ohana Advisors' AUM?")
+    assert generic_answer.abstain is True
+    assert "2778546190" not in generic_answer.answer
+    assert "not evidenced" in (generic_answer.answer + " ".join(generic_answer.missing_data)).lower()
+
+    _, regulatory_answer = ask("What is Ohana Advisors' SEC regulatory AUM?")
+    assert regulatory_answer.abstain is False
+    assert "SEC regulatory AUM: 2778546190" in regulatory_answer.answer
+
+
 def test_abstains_on_unmatched_sensitive_field_request() -> None:
     _ensure_lexical_index()
     _, answer = ask("What is the AUM of a fake family office named Polar Falcon Capital?")
@@ -56,3 +68,12 @@ def test_empty_retrieval_abstains_cleanly() -> None:
     answer = answer_from_retrieval(result)
     assert answer.abstain is True
     assert "No evidence" in answer.answer
+
+
+def test_zero_hit_filtered_listing_abstains_without_unfiltered_fallback() -> None:
+    _ensure_lexical_index()
+    result, answer = ask("Which SEC-registered family offices in Belgium are in the dataset?")
+    assert result.intent.intent == "filtered_listing"
+    assert result.intent.filters == {"sec_registered": True, "country": "Belgium"}
+    assert result.hits == []
+    assert answer.abstain is True

@@ -114,6 +114,8 @@ GROUPS: tuple[dict, ...] = (
             "sec_address_city",
             "sec_address_state",
             "sec_address_country",
+            "sec_near_match_review_status",
+            "sec_near_match_notes",
         ),
         "evidence": "sec_evidence_url",
         "confidence": "sec_confidence",
@@ -148,11 +150,11 @@ DERIVED_FIELDS = {
     "contact_location": "Derived from validated city, state/region, and country.",
     "data_completion_score_text": "Computed against the sample-workbook denominator.",
     "data_completion_score_visual": "Rendered from data_completion_score_text.",
-    "recent_activity_age_days": "Derived from recent_activity_date as of 2026-05-18.",
-    "recent_activity_recency_label": "Derived recency bucket from recent_activity_age_days.",
     "secondary_email_validation_code": "Explicit no-secondary-evidence marker.",
     "email_code_explanation_secondary": "Human-readable explanation for absent secondary email.",
     "email_quality_assessment_secondary": "Explicit no-secondary-evidence marker.",
+    "source_content_review_status": "Manual status for source-content drift or crawler mismatch.",
+    "source_content_review_notes": "Human rationale for accepted source-content exceptions.",
 }
 
 

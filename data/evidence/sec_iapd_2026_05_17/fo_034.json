@@ -1,20 +1,61 @@
 {
   "record_id": "fo_034",
   "family_office_name": "AlTi Tiedemann Global",
-  "queried_at_utc": "2026-05-17T09:56:11.450085+00:00",
+  "queried_at_utc": "2026-05-18T00:00:00+00:00",
   "queries_tried": [
     {
-      "query": "AlTi Tiedemann Global",
-      "hit_count": 0
-    },
-    {
-      "query": "alti tiedemann",
-      "hit_count": 2
+      "query": "AlTi Tiedemann",
+      "hit_count": 1
     }
   ],
   "match_threshold": 0.6,
-  "match_score": 0.5,
-  "match_reason": "name_jaccard=0.50 (vs 'ALVARIUM TIEDEMANN ALTI')",
-  "sec_registered": false,
-  "notes": "No IAPD match above threshold — typical for single-family offices managing only family wealth (no SEC registration requirement)."
+  "match_score": "manual_review_accept",
+  "match_reason": "Accepted on 2026-05-18 after manual review: AlTi Tiedemann Global maps to ALTI WEALTH MANAGEMENT (US INTERNATIONAL), INC. (CRD 152104) through the ALVARIUM TIEDEMANN ALTI alias.",
+  "manual_review_status": "accepted",
+  "manual_review_notes": "Accepted on 2026-05-18 after manual review: AlTi Tiedemann Global maps to ALTI WEALTH MANAGEMENT (US INTERNATIONAL), INC. (CRD 152104) through the ALVARIUM TIEDEMANN ALTI alias.",
+  "sec_registered": true,
+  "sec_crd_number": "152104",
+  "sec_file_number": "801-70809",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "ALTI WEALTH MANAGEMENT (US INTERNATIONAL), INC.",
+  "firm_other_names": [
+    "ALTI WEALTH MANAGEMENT (US INTERNATIONAL), INC.",
+    "LJ PARTNERSHIP",
+    "LJ INVESTMENT ADVISORS",
+    "GUGGENHEIM PARTNERS LATIN AMERICA, INC.",
+    "ALVARIUM TIEDEMANN ALTI",
+    "ALVARIUM INVESTMENT ADVISORS (US), INC.",
+    "ALVARIUM"
+  ],
+  "firm_branches_count": 1,
+  "sec_address": {
+    "city": "CORAL GABLES",
+    "state": "FL",
+    "country": "United States"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/152104/PDF/152104.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/152104",
+  "form_adv_parse_status": "parsed_with_aum",
+  "sec_aum_usd": "690860427",
+  "sec_fee_structure": "fixed_fees; hourly_fees; performance_based_fees",
+  "previous_automated_result": {
+    "record_id": "fo_034",
+    "family_office_name": "AlTi Tiedemann Global",
+    "queried_at_utc": "2026-05-17T09:56:11.450085+00:00",
+    "queries_tried": [
+      {
+        "query": "AlTi Tiedemann Global",
+        "hit_count": 0
+      },
+      {
+        "query": "alti tiedemann",
+        "hit_count": 2
+      }
+    ],
+    "match_threshold": 0.6,
+    "match_score": 0.5,
+    "match_reason": "name_jaccard=0.50 (vs 'ALVARIUM TIEDEMANN ALTI')",
+    "sec_registered": false,
+    "notes": "No IAPD match above threshold — typical for single-family offices managing only family wealth (no SEC registration requirement)."
+  }
 }

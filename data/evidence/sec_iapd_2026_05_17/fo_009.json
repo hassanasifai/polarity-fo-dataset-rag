@@ -1,7 +1,7 @@
 {
   "record_id": "fo_009",
   "family_office_name": "Venitage",
-  "queried_at_utc": "2026-05-17T09:55:51.837152+00:00",
+  "queried_at_utc": "2026-05-18T00:00:00+00:00",
   "queries_tried": [
     {
       "query": "Venitage",
@@ -9,8 +9,43 @@
     }
   ],
   "match_threshold": 0.6,
-  "match_score": 0.5,
-  "match_reason": "name_jaccard=0.50 (vs 'VENITAGE, LLC')",
-  "sec_registered": false,
-  "notes": "No IAPD match above threshold — typical for single-family offices managing only family wealth (no SEC registration requirement)."
+  "match_score": "manual_review_accept",
+  "match_reason": "Accepted on 2026-05-18 after manual review: SEC/IAPD returned VENITAGE, LLC (CRD 295330). The old scraper row for venitage.com returned unrelated restaurant text, so that crawler output was rejected rather than used as support.",
+  "manual_review_status": "accepted",
+  "manual_review_notes": "Accepted on 2026-05-18 after manual review: SEC/IAPD returned VENITAGE, LLC (CRD 295330). The old scraper row for venitage.com returned unrelated restaurant text, so that crawler output was rejected rather than used as support.",
+  "sec_registered": true,
+  "sec_crd_number": "295330",
+  "sec_file_number": "",
+  "sec_registration_status": "INACTIVE",
+  "firm_name_iapd": "VENITAGE, LLC",
+  "firm_other_names": [
+    "VENITAGE, LLC"
+  ],
+  "firm_branches_count": 0,
+  "sec_address": {
+    "city": "EDEN PRAIRIE",
+    "state": "MN",
+    "country": "United States"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/295330/PDF/295330.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/295330",
+  "form_adv_parse_status": "parsed_no_reliable_aum_pattern",
+  "sec_aum_usd": "",
+  "sec_fee_structure": "fixed_fees; hourly_fees; performance_based_fees",
+  "previous_automated_result": {
+    "record_id": "fo_009",
+    "family_office_name": "Venitage",
+    "queried_at_utc": "2026-05-17T09:55:51.837152+00:00",
+    "queries_tried": [
+      {
+        "query": "Venitage",
+        "hit_count": 1
+      }
+    ],
+    "match_threshold": 0.6,
+    "match_score": 0.5,
+    "match_reason": "name_jaccard=0.50 (vs 'VENITAGE, LLC')",
+    "sec_registered": false,
+    "notes": "No IAPD match above threshold — typical for single-family offices managing only family wealth (no SEC registration requirement)."
+  }
 }

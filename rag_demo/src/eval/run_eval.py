@@ -12,6 +12,15 @@ from src.config import GOLDEN_EVAL_PATH, REPORTS_DIR
 from src.eval.golden_set import GOLDEN_QUESTIONS
 from src.retrieval.hybrid import retrieve
 
+ENTITY_RESOLUTION_INTENTS = {
+    "entity_lookup",
+    "contact_lookup",
+    "regulatory",
+    "recent_activity",
+    "comparison",
+}
+RETRIEVAL_METRIC_KEYS = ["hit_at_3", "mrr", "record_recall_at_5"]
+
 
 def write_golden_eval(path: Path = GOLDEN_EVAL_PATH) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -104,6 +113,42 @@ def _citation_score(answer: Any, retrieved_chunk_ids: set[str]) -> float:
     )
 
 
+def _entity_resolution_score(row: dict[str, Any], result: Any) -> float | None:
+    expected_intent = row.get("expected_intent")
+    if expected_intent not in ENTITY_RESOLUTION_INTENTS:
+        return None
+
+    gold_record_ids = row.get("gold_record_ids", [])
+    matched_record_ids = result.intent.matched_record_ids
+    if not gold_record_ids:
+        return 1.0 if not matched_record_ids else 0.0
+    return 1.0 if set(gold_record_ids) & set(matched_record_ids) else 0.0
+
+
+def _structured_filter_score(row: dict[str, Any], result: Any, *, answer_abstained: bool) -> float | None:
+    if row.get("expected_intent") != "filtered_listing":
+        return None
+
+    expected_abstain = row.get("expected_behavior") == "abstain"
+    if expected_abstain:
+        return 1.0 if answer_abstained else 0.0
+    if answer_abstained or result.intent.intent != "filtered_listing":
+        return 0.0
+
+    gold_record_ids = row.get("gold_record_ids", [])
+    if not gold_record_ids:
+        return 1.0
+    top_records = set(_unique_record_ids([hit.record_id for hit in result.hits])[:5])
+    return 1.0 if top_records & set(gold_record_ids) else 0.0
+
+
+def _negative_control_score(row: dict[str, Any], *, answer_abstained: bool, text_ok: bool) -> float | None:
+    is_negative = row.get("expected_behavior") == "abstain" and not row.get("gold_record_ids", [])
+    if not is_negative:
+        return None
+    return 1.0 if answer_abstained and text_ok else 0.0
+
+
 def evaluate_questions(rows: list[dict[str, Any]]) -> dict[str, Any]:
     details: list[dict[str, Any]] = []
     unsupported_claim_count = 0
@@ -118,14 +163,39 @@ def evaluate_questions(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "answer_text_accuracy": [],
         "intent_accuracy": [],
     }
+    bm25_metric_lists: dict[str, list[float]] = {key: [] for key in RETRIEVAL_METRIC_KEYS}
+    entity_resolution_scores: list[float] = []
+    structured_filter_scores: list[float] = []
+    negative_control_scores: list[float] = []
 
     for row in rows:
-        result = retrieve(row["question"], top_k=12, dense_top_k=0)
-        answer = answer_from_retrieval(result)
-        ranked_record_ids = [hit.record_id for hit in result.hits]
+        ui_result = retrieve(row["question"], top_k=12)
+        answer = answer_from_retrieval(ui_result)
+        metric_result = retrieve(
+            row["question"],
+            top_k=12,
+            include_exact_seeds=False,
+            include_filter_seeds=False,
+        )
+        bm25_result = retrieve(
+            row["question"],
+            top_k=12,
+            dense_top_k=0,
+            include_exact_seeds=False,
+            include_filter_seeds=False,
+        )
+
+        ranked_record_ids = [hit.record_id for hit in metric_result.hits]
         unique_records = _unique_record_ids(ranked_record_ids)
+        ui_records = _unique_record_ids([hit.record_id for hit in ui_result.hits])
+        bm25_records = _unique_record_ids([hit.record_id for hit in bm25_result.hits])
         hit_at_3, reciprocal_rank, recall_at_5 = _record_scores(
             ranked_record_ids,
+            row.get("gold_record_ids", []),
+            answer_abstained=answer.abstain,
+        )
+        bm25_hit_at_3, bm25_reciprocal_rank, bm25_recall_at_5 = _record_scores(
+            [hit.record_id for hit in bm25_result.hits],
             row.get("gold_record_ids", []),
             answer_abstained=answer.abstain,
         )
@@ -136,17 +206,29 @@ def evaluate_questions(rows: list[dict[str, Any]]) -> dict[str, Any]:
         forbidden = row.get("must_exclude", [])
         text_ok = _contains_all(body, required) and _excludes_all(body, forbidden)
         expected_intent = row.get("expected_intent")
-        intent_ok = result.intent.intent == expected_intent if expected_intent else True
-        retrieved_chunk_ids = {hit.chunk_id for hit in result.hits}
+        intent_ok = ui_result.intent.intent == expected_intent if expected_intent else True
+        retrieved_chunk_ids = {hit.chunk_id for hit in ui_result.hits}
+        entity_score = _entity_resolution_score(row, ui_result)
+        structured_score = _structured_filter_score(row, ui_result, answer_abstained=answer.abstain)
+        negative_score = _negative_control_score(row, answer_abstained=answer.abstain, text_ok=text_ok)
 
         metric_lists["hit_at_3"].append(hit_at_3)
         metric_lists["mrr"].append(reciprocal_rank)
         metric_lists["record_recall_at_5"].append(recall_at_5)
+        bm25_metric_lists["hit_at_3"].append(bm25_hit_at_3)
+        bm25_metric_lists["mrr"].append(bm25_reciprocal_rank)
+        bm25_metric_lists["record_recall_at_5"].append(bm25_recall_at_5)
         metric_lists["citation_accuracy"].append(_citation_score(answer, retrieved_chunk_ids))
         metric_lists["abstention_accuracy"].append(1.0 if answer.abstain == expected_abstain else 0.0)
         metric_lists["missing_data_honesty"].append(_missing_honesty_score(expected_abstain, body))
         metric_lists["answer_text_accuracy"].append(1.0 if text_ok else 0.0)
         metric_lists["intent_accuracy"].append(1.0 if intent_ok else 0.0)
+        if entity_score is not None:
+            entity_resolution_scores.append(entity_score)
+        if structured_score is not None:
+            structured_filter_scores.append(structured_score)
+        if negative_score is not None:
+            negative_control_scores.append(negative_score)
         unsupported_claim_count += answer.unsupported_claim_count
 
         details.append(
@@ -154,19 +236,27 @@ def evaluate_questions(rows: list[dict[str, Any]]) -> dict[str, Any]:
                 "id": row["id"],
                 "category": row["category"],
                 "question": row["question"],
-                "intent": result.intent.intent,
+                "intent": ui_result.intent.intent,
                 "expected_intent": expected_intent or "-",
-                "top_records": unique_records[:5],
+                "top_records": ui_records[:5],
+                "retrieval_top_records": unique_records[:5],
+                "bm25_top_records": bm25_records[:5],
                 "answer_abstain": answer.abstain,
                 "expected_behavior": row.get("expected_behavior", "answer"),
                 "hit_at_3": hit_at_3,
                 "mrr": reciprocal_rank,
                 "record_recall_at_5": recall_at_5,
+                "bm25_hit_at_3": bm25_hit_at_3,
+                "bm25_mrr": bm25_reciprocal_rank,
+                "bm25_record_recall_at_5": bm25_recall_at_5,
                 "citation_accuracy": metric_lists["citation_accuracy"][-1],
                 "abstention_accuracy": metric_lists["abstention_accuracy"][-1],
                 "missing_data_honesty": metric_lists["missing_data_honesty"][-1],
                 "answer_text_accuracy": metric_lists["answer_text_accuracy"][-1],
                 "intent_accuracy": metric_lists["intent_accuracy"][-1],
+                "entity_resolution_accuracy": entity_score,
+                "structured_filter_accuracy": structured_score,
+                "negative_control_accuracy": negative_score,
                 "failure_mode": row.get("failure_mode", ""),
                 "notes": row.get("notes", ""),
                 "answer_excerpt": answer.answer[:180].replace("\n", " "),
@@ -180,6 +270,10 @@ def evaluate_questions(rows: list[dict[str, Any]]) -> dict[str, Any]:
     }
     for key, values in metric_lists.items():
         metrics[key] = _mean(values)
+    metrics["bm25_fallback"] = {key: _mean(values) for key, values in bm25_metric_lists.items()}
+    metrics["entity_resolution_accuracy"] = _mean(entity_resolution_scores)
+    metrics["structured_filter_accuracy"] = _mean(structured_filter_scores)
+    metrics["negative_control_accuracy"] = _mean(negative_control_scores)
     metrics["category_summary"] = _category_summary(details)
     return metrics
 
@@ -214,8 +308,9 @@ def _markdown_report(metrics: dict[str, Any]) -> str:
         "# PolarityIQ Stage 1 Local RAG Evaluation Report",
         "",
         "This report is generated by `python -m src.eval.run_eval` against the locked local dataset and local indexes.",
-        "The eval runner disables dense retrieval (`dense_top_k=0`) so the audit is fast, deterministic, and not",
-        "dependent on local transformer model cache state; the Streamlit app still exposes the full hybrid path.",
+        "Answer quality is evaluated on the same default hybrid retrieval path used by the Streamlit app.",
+        "Retrieval Hit@3/MRR/Recall@5 are computed on a hybrid retrieval-only pass with exact entity and metadata",
+        "seeds disabled, so entity resolution and structured filter assistance are reported separately.",
         "The golden set is intentionally not a showcase script: it includes canonical queries, negative controls,",
         "sensitive-field probes, entity aliases, broad filters, multi-hop questions, and typo/adversarial wording.",
         "",
@@ -231,6 +326,17 @@ def _markdown_report(metrics: dict[str, Any]) -> str:
         f"- missing_data_honesty: {metrics['missing_data_honesty']:.3f}",
         f"- answer_text_accuracy: {metrics['answer_text_accuracy']:.3f}",
         f"- intent_accuracy: {metrics['intent_accuracy']:.3f}",
+        f"- entity_resolution_accuracy: {metrics['entity_resolution_accuracy']:.3f}",
+        f"- structured_filter_accuracy: {metrics['structured_filter_accuracy']:.3f}",
+        f"- negative_control_accuracy: {metrics['negative_control_accuracy']:.3f}",
+        "",
+        "## BM25-Only Fallback Metrics",
+        "",
+        "These metrics use `dense_top_k=0` and the same seed-disabled retrieval metric pass.",
+        "",
+        f"- bm25_hit_at_3: {metrics['bm25_fallback']['hit_at_3']:.3f}",
+        f"- bm25_MRR: {metrics['bm25_fallback']['mrr']:.3f}",
+        f"- bm25_record_recall_at_5: {metrics['bm25_fallback']['record_recall_at_5']:.3f}",
         "",
         "## Per-Category Metrics",
         "",
@@ -248,15 +354,17 @@ def _markdown_report(metrics: dict[str, Any]) -> str:
             "",
             "## Question Details",
             "",
-            "| ID | Category | Intent | Expected | Top Records | Hit@3 | MRR | Recall@5 | Abstain OK | Citation OK | Text OK | Intent OK |",
-            "|---|---|---|---|---|---:|---:|---:|---:|---:|---:|---:|",
+            "| ID | Category | Intent | Expected | UI Top Records | Metric Top Records | BM25 Top Records | Hit@3 | MRR | Recall@5 | BM25 Hit@3 | Abstain OK | Citation OK | Text OK | Intent OK |",
+            "|---|---|---|---|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|",
         ]
     )
     for row in metrics["details"]:
         lines.append(
-            "| {id} | {category} | {intent} | {expected_behavior} | {top_records} | {hit_at_3:.0f} | "
-            "{mrr:.3f} | {record_recall_at_5:.3f} | {abstention_accuracy:.0f} | "
-            "{citation_accuracy:.0f} | {answer_text_accuracy:.0f} | {intent_accuracy:.0f} |".format(**row)
+            "| {id} | {category} | {intent} | {expected_behavior} | {top_records} | "
+            "{retrieval_top_records} | {bm25_top_records} | {hit_at_3:.0f} | "
+            "{mrr:.3f} | {record_recall_at_5:.3f} | {bm25_hit_at_3:.0f} | "
+            "{abstention_accuracy:.0f} | {citation_accuracy:.0f} | {answer_text_accuracy:.0f} | "
+            "{intent_accuracy:.0f} |".format(**row)
         )
 
     known_limits = _known_limits(metrics["details"])
@@ -274,7 +382,8 @@ def _markdown_report(metrics: dict[str, Any]) -> str:
         notes = row.get("notes") or "No extra notes."
         lines.append(
             f"- `{row['id']}` ({row['category']}): {failure}. "
-            f"Observed intent `{row['intent']}`, top records `{row['top_records']}`. {notes}"
+            f"Observed intent `{row['intent']}`, UI top records `{row['top_records']}`, "
+            f"metric top records `{row['retrieval_top_records']}`. {notes}"
         )
 
     lines.extend(

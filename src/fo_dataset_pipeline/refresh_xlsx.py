@@ -105,6 +105,20 @@ BASE_DEFINITIONS = {
     "sec_form_adv_evidence_path": (
         "Public SEC PDF URL used as evidence for the parsed Form ADV fields."
     ),
+    "sec_near_match_review_status": (
+        "Manual-review status for SEC/IAPD matches that were below the original "
+        "automated threshold."
+    ),
+    "sec_near_match_notes": (
+        "Human rationale for accepting, rejecting, or flagging a threshold-edge SEC/IAPD match."
+    ),
+    "source_content_review_status": (
+        "Manual source-content review status when crawler output conflicts with "
+        "live/source evidence."
+    ),
+    "source_content_review_notes": (
+        "Human rationale for source-content drift, crawler mismatch, or accepted source exception."
+    ),
 }
 
 

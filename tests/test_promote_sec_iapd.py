@@ -9,6 +9,9 @@ from typer.testing import CliRunner
 from fo_dataset_pipeline.promote_sec_iapd import (
     CONFIDENCE_VALUE,
     EVIDENCE_COLUMN,
+    MANUAL_REVIEW_CONFIDENCE_VALUE,
+    NEAR_MATCH_NOTES_COLUMN,
+    NEAR_MATCH_STATUS_COLUMN,
     PROMOTED_COLUMNS,
     UNCERTAINTY_SENTINEL,
     _append_uncertainty_note,
@@ -68,6 +71,26 @@ def test_build_updates_promotes_registered_firm() -> None:
     assert updates["sec_address_city"] == "ENGLEWOOD"
     assert updates[EVIDENCE_COLUMN].endswith("/151736")
     assert updates["sec_confidence"] == CONFIDENCE_VALUE
+
+
+def test_build_updates_carries_manual_review_status_for_near_match_acceptance() -> None:
+    evidence = {
+        "record_id": "fo_009",
+        "sec_registered": True,
+        "sec_crd_number": "295330",
+        "firm_name_iapd": "VENITAGE, LLC",
+        "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/295330",
+        "manual_review_status": "accepted",
+        "manual_review_notes": (
+            "Accepted because the returned IAPD firm name exactly matches Venitage, LLC."
+        ),
+    }
+    updates = build_updates({"record_id": "fo_009"}, evidence)
+    assert updates["sec_registered"] == "True"
+    assert updates["sec_crd_number"] == "295330"
+    assert updates["sec_confidence"] == MANUAL_REVIEW_CONFIDENCE_VALUE
+    assert updates[NEAR_MATCH_STATUS_COLUMN] == "accepted"
+    assert "Venitage" in updates[NEAR_MATCH_NOTES_COLUMN]
 
 
 def test_build_updates_does_not_overwrite_existing_value_columns() -> None:

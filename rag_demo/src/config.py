@@ -20,12 +20,12 @@ UPSTREAM_JSON_PATH = (
 UPSTREAM_XLSX_PATH = (
     ROOT_DIR.parent / "data" / "processed" / "family_offices_validated.xlsx"
 )
-EXPECTED_COLUMN_COUNT = 133
+EXPECTED_COLUMN_COUNT = 137
 
 CHUNKS_PATH = PROCESSED_DIR / "chunks.jsonl"
 GOLDEN_EVAL_PATH = PROCESSED_DIR / "golden_eval.jsonl"
 MANIFEST_PATH = PROCESSED_DIR / "rag_manifest.json"
-BM25_INDEX_PATH = BM25_DIR / "bm25_index.pkl"
+BM25_INDEX_PATH = BM25_DIR / "bm25_index.json"
 CHROMA_COLLECTION = "polarityiq_family_offices"
 
 DEFAULT_EMBEDDING_MODEL = os.getenv("POLARITYIQ_EMBEDDING_MODEL", "BAAI/bge-small-en-v1.5")

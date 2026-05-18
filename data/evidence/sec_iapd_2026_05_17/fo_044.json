@@ -1,7 +1,7 @@
 {
   "record_id": "fo_044",
   "family_office_name": "Greycourt",
-  "queried_at_utc": "2026-05-17T09:56:16.603980+00:00",
+  "queried_at_utc": "2026-05-18T00:00:00+00:00",
   "queries_tried": [
     {
       "query": "Greycourt",
@@ -9,8 +9,43 @@
     }
   ],
   "match_threshold": 0.6,
-  "match_score": 0.583,
-  "match_reason": "name_jaccard=0.33 (vs 'GREYCOURT & CO., INC.'); address_match=city+state",
-  "sec_registered": false,
-  "notes": "No IAPD match above threshold — typical for single-family offices managing only family wealth (no SEC registration requirement)."
+  "match_score": "manual_review_accept",
+  "match_reason": "Accepted on 2026-05-18 after manual review: Greycourt maps to GREYCOURT & CO., INC. (CRD 111936), with city/state corroboration.",
+  "manual_review_status": "accepted",
+  "manual_review_notes": "Accepted on 2026-05-18 after manual review: Greycourt maps to GREYCOURT & CO., INC. (CRD 111936), with city/state corroboration.",
+  "sec_registered": true,
+  "sec_crd_number": "111936",
+  "sec_file_number": "801-60297",
+  "sec_registration_status": "ACTIVE",
+  "firm_name_iapd": "GREYCOURT & CO., INC.",
+  "firm_other_names": [
+    "GREYCOURT & CO., INC."
+  ],
+  "firm_branches_count": 2,
+  "sec_address": {
+    "city": "PITTSBURGH",
+    "state": "PA",
+    "country": "United States"
+  },
+  "form_adv_brochure_url": "https://reports.adviserinfo.sec.gov/reports/ADV/111936/PDF/111936.pdf",
+  "sec_summary_url": "https://adviserinfo.sec.gov/firm/summary/111936",
+  "form_adv_parse_status": "parsed_with_aum",
+  "sec_aum_usd": "6608873377",
+  "sec_fee_structure": "fixed_fees; hourly_fees; performance_based_fees",
+  "previous_automated_result": {
+    "record_id": "fo_044",
+    "family_office_name": "Greycourt",
+    "queried_at_utc": "2026-05-17T09:56:16.603980+00:00",
+    "queries_tried": [
+      {
+        "query": "Greycourt",
+        "hit_count": 1
+      }
+    ],
+    "match_threshold": 0.6,
+    "match_score": 0.583,
+    "match_reason": "name_jaccard=0.33 (vs 'GREYCOURT & CO., INC.'); address_match=city+state",
+    "sec_registered": false,
+    "notes": "No IAPD match above threshold — typical for single-family offices managing only family wealth (no SEC registration requirement)."
+  }
 }
