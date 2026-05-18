@@ -4,6 +4,18 @@ Owner: Hassan Asif
 Assessment date: 2026-05-17  
 Submission target: `optimize@falconscaling.com`
 
+## Deliverable Status Matrix
+
+| Task 1 deliverable | Status | Where to verify |
+|---|---:|---|
+| Structured dataset file with 50 validated Family Office records | Complete | `data/processed/family_offices_validated.xlsx`, `00_family_office_records.csv`; workbook audit reports 50 accepted rows x 137 columns. |
+| Methodology summary: discovery, enrichment, validation, improvements | Complete | `reports/methodology_summary.md`; includes HVL trace, enrichment passes, validation boundaries, and improvement priorities. |
+| Three full validation chains | Complete | `reports/validation_chains.md`; Cat Trail Capital, JFG Family Office, and Verlinvest each include discovery source, extraction method, enrichment steps, validation logic, confidence basis, quotes, links, uncertainty, and falsification conditions. |
+| Working GitHub repository with full RAG pipeline | Complete | `https://github.com/hassanasifai/polarity-fo-dataset-rag/tree/main`; RAG pipeline lives in `rag_demo/` with local Chroma, BM25, hybrid retrieval, deterministic answering, Streamlit UI, tests, and eval. |
+| Live demo evidence returning real results from the dataset | Complete for the official brief via screen recording | `demo/task1_rag_walkthrough.mp4` and raw link below. The Stage 1 brief accepts a live URL or screen recording. A hosted Streamlit/HF URL is not included because no deployment provider token/login is stored in this environment. |
+| RAG documentation note: stack, chunking, embedding, retrieval, works/doesn't/improve | Complete | `rag_demo/README.md`; includes stack-choice rationale, chunking strategy, retrieval flow, abstention behavior, known limits, improvements, and architecture diagram. |
+| Time + effort / AI disclosure | Complete | `EFFORT_AND_AI_DISCLOSURE.md`; includes total hours, allocation, AI-assisted portions, and human-owned validation work. |
+
 ## What To Open First
 
 1. `reports/methodology_summary.md`  

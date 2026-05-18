@@ -10,6 +10,20 @@ The official screen-recording deliverable is committed in this repository:
 
 The MP4 was generated from the local review UI on 2026-05-18 and covers the six scenarios below.
 
+## Hosted URL Status
+
+The Stage 1 task document asks for **a live URL or screen recording**. This submission uses the committed screen recording as the official demo evidence because no Hugging Face, Streamlit Community Cloud, or equivalent deployment token/login is available in this environment.
+
+If a hosted URL is added later, deploy from:
+
+- GitHub repository: `https://github.com/hassanasifai/polarity-fo-dataset-rag/tree/main`
+- Streamlit entrypoint: `rag_demo/src/ui/app.py`
+- Working directory: `rag_demo`
+- Build command: `pip install -r requirements.txt && python scripts/build_all.py`
+- Run command: `streamlit run src/ui/app.py`
+
+After deployment, replace this section's status line and add the public app URL to `SUBMISSION_COVER.md`, `README.md`, and this file.
+
 ## Walkthrough Scenarios
 
 1. Cat Trail entity lookup: shows selected `fo_001` evidence and source domains.

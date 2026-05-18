@@ -25,6 +25,28 @@ Open these files first during review:
 No paid API keys, hosted vector databases, SaaS tracing, or billing-dependent services are required.
 The dependency audit command used here is `pip-audit -r requirements.txt`; some pip installations do not expose a `pip audit` subcommand.
 
+## RAG Architecture
+
+```mermaid
+flowchart TD
+    A[Locked Task 1 dataset<br/>50 records x 137 fields] --> B[Chunk builder<br/>record_profile, contact_policy,<br/>regulatory, recent_activity, field_evidence]
+    B --> C[Local dense index<br/>ChromaDB + BGE-small fallback chain]
+    B --> D[Local lexical index<br/>BM25 JSON artifact]
+    E[Evaluator query] --> F[Intent classifier<br/>entity, contact, regulatory,<br/>recent, listing, comparison]
+    F --> C
+    F --> D
+    C --> G[Reciprocal rank fusion]
+    D --> G
+    G --> H[Metadata filters<br/>state, country, SEC, office type]
+    H --> I[Optional local cross-encoder reranker]
+    I --> J[Record-grouped evidence]
+    J --> K[Deterministic answerer<br/>copy supported fields or abstain]
+    K --> L[Streamlit assessor UI<br/>answer, facts, citations, missing data,<br/>reasoning path, evidence chunks]
+    J --> M[45-question eval<br/>retrieval, answer text, abstention,<br/>negative controls]
+```
+
+The key design choice is that the answerer never becomes a second source of truth. Retrieval selects evidence from the locked local dataset; the deterministic answerer either copies supported fields with citations or returns an abstention with missing-data reasons.
+
 ## Setup: Windows PowerShell
 
 ```powershell
